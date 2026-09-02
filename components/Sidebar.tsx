@@ -118,7 +118,7 @@ export default function Sidebar() {
             <SparkleIcon size={28} className="flex-shrink-0 group-hover:scale-105 transition-transform text-[#0A84FF]" />
             <div className="flex flex-col leading-tight">
               <span className="font-bold text-base sm:text-lg tracking-tight text-[#F5F5F7]">
-                PONSTHINK
+                APOLLO
               </span>
               <span className="text-[10px] text-[#A1A1A6] font-medium uppercase tracking-wider">
                 Robinhood L2

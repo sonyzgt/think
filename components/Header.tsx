@@ -22,11 +22,11 @@ export default function Header() {
         <Link href="/" className="flex items-center gap-3 cursor-pointer group">
           <div className="w-9 h-9 rounded-xl skeuo-button flex items-center justify-center p-1 shadow-md group-hover:border-[#FF6A00] transition-all border border-[#343A41] overflow-hidden bg-[#15191E]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="ATLAS Logo" className="w-full h-full object-contain rounded-lg drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
+            <img src="/logo.png" alt="APOLLO Logo" className="w-full h-full object-contain rounded-lg drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
           </div>
           <div className="flex flex-col">
             <span className="text-base font-black tracking-widest text-[#F5F5F5] uppercase font-mono group-hover:text-[#FF6A00] transition-colors">
-              ATLAS
+              APOLLO
             </span>
             <span className="text-[9px] text-[#FF6A00] font-mono tracking-wider uppercase font-bold">
               WORLD TOKEN MAP

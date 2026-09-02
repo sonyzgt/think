@@ -24,7 +24,7 @@ export default function ChatPage() {
             <div>
               <div className="flex items-center gap-2.5">
                 <h1 className="text-lg sm:text-xl font-bold text-[#F5F5F7] tracking-tight">
-                  PONSTHINK AI Trading Assistant
+                  APOLLO AI Trading Assistant
                 </h1>
                 <span className="text-[11px] font-semibold bg-[#30D158]/15 text-[#30D158] border border-[#30D158]/30 px-2.5 py-0.5 rounded-full shadow-sm">
                   Active

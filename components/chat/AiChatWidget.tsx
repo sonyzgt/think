@@ -93,7 +93,7 @@ export default function AiChatWidget({
         id: 'welcome-1',
         role: 'assistant',
         content:
-          'PONSTHINK AI Trading Assistant online.\nI can parse and execute DeFi trading commands directly on Robinhood Chain.\n\nExamples:\n- `buy 10$ 0xf373...` or `buy 0.005 ETH 0x...`\n- `sell all 0xf373...` or `sell 50% 0x...`\n- `check balance` or `launch token $PEPE`\n\nEnter your command below.',
+          'APOLLO AI Trading Assistant online.\nI can parse and execute DeFi trading commands directly on Robinhood Chain.\n\nExamples:\n- `buy 10$ 0xf373...` or `buy 0.005 ETH 0x...`\n- `sell all 0xf373...` or `sell 50% 0x...`\n- `check balance` or `launch token $PEPE`\n\nEnter your command below.',
         timestamp: Date.now(),
       },
     ]
@@ -528,7 +528,7 @@ export default function AiChatWidget({
           <div>
             <div className="flex items-center gap-2">
               <span className="text-sm font-semibold text-[#F5F5F7] tracking-tight">
-                PONSTHINK Assistant
+                APOLLO Assistant
               </span>
               <span className="text-[10px] font-medium bg-[#30D158]/15 text-[#30D158] px-2 py-0.5 rounded-full border border-[#30D158]/30">
                 Online
@@ -572,7 +572,7 @@ export default function AiChatWidget({
             >
               {/* Sender Label */}
               <span className="text-[11px] font-medium text-[#6E6E73] px-2">
-                {isUser ? 'You' : 'PONSTHINK AI'}
+                {isUser ? 'You' : 'APOLLO AI'}
               </span>
 
               {/* Chat Bubble */}

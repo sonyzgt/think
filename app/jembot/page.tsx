@@ -195,7 +195,7 @@ export default function JembotAdminPage() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <SparkleIcon size={28} />
-                <span className="font-black text-lg text-white tracking-tight uppercase">PONSCORE // ADMIN</span>
+                <span className="font-black text-lg text-white tracking-tight uppercase">APOLLO ADMIN</span>
               </div>
               <span className="text-[10px] font-black bg-rose-600 text-white px-2 py-0.5 border border-black shadow-[1px_1px_0px_0px_#000000]">
                 RESTRICTED
@@ -216,7 +216,7 @@ export default function JembotAdminPage() {
           >
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-black uppercase text-zinc-300">
-                // ADMIN_PASSWORD
+                ADMIN PASSWORD
               </label>
               <input
                 type="password"
@@ -265,7 +265,7 @@ export default function JembotAdminPage() {
             <SparkleIcon size={32} />
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-black text-base sm:text-lg text-white">PONSCORE ADMIN</span>
+                <span className="font-black text-base sm:text-lg text-white">APOLLO ADMIN</span>
                 <span className="text-[9px] font-black bg-emerald-500 text-black px-1.5 py-0.2 border border-black">
                   ACTIVE
                 </span>

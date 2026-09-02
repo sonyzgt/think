@@ -13,7 +13,7 @@ export default function SparkleIcon({ size = 40, className = '' }: SparkleIconPr
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src="/logo.png"
-      alt="ATLAS Logo"
+      alt="APOLLO Logo"
       width={size}
       height={size}
       className={`object-contain inline-block flex-shrink-0 select-none ${className}`}

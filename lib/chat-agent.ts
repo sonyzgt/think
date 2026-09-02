@@ -246,7 +246,7 @@ export async function parseChatMessageWithAI(
   // 1. Try OpenAI if API key is present
   if (openAiKey) {
     try {
-      const systemPrompt = `You are "PONSTHINK AI", an intelligent, high-speed Web3 DeFi Trading Agent on the Robinhood Chain (EVM chain 4663, Pons V2 Launchpad & Uniswap V4 DEX).
+      const systemPrompt = `You are "APOLLO AI", an intelligent, high-speed Web3 DeFi Trading Agent on the Robinhood Chain (EVM chain 4663, Pons V2 Launchpad & Uniswap V4 DEX).
 
 CRITICAL RULES:
 1. ALWAYS reply in ENGLISH ONLY.
@@ -385,5 +385,5 @@ export function generateDefaultReply(action: ParsedActionData, originalPrompt: s
   }
 
   // General fallback
-  return `PONSTHINK AI Trading Assistant is online. You can execute commands like:\n- "buy 10$ 0x..." (Buy using USD value)\n- "buy 0.005 ETH 0x..."\n- "swap all 0x..." (Sell all token balance)\n- "sell 50% 0x..."\n- "check balance"\n- "launch token $PEPE"\n\nType your command below.`
+  return `APOLLO AI Trading Assistant is online. You can execute commands like:\n- "buy 10$ 0x..." (Buy using USD value)\n- "buy 0.005 ETH 0x..."\n- "swap all 0x..." (Sell all token balance)\n- "sell 50% 0x..."\n- "check balance"\n- "launch token $PEPE"\n\nType your command below.`
 }

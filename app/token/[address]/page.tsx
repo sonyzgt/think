@@ -401,7 +401,7 @@ export default function TokenDetailPage({ params }: PageProps) {
                 {activeTab === 'overview' ? (
                   <div className="flex flex-col gap-3 text-xs sm:text-sm text-[#A1A1A6] leading-relaxed">
                     <p className="whitespace-pre-wrap text-[#F5F5F7]">
-                      {token.description || `${token.name} ($${token.symbol}) is a fair-launched token on Robinhood Chain using the PONSTHINK Bonding Curve protocol.`}
+                      {token.description || `${token.name} ($${token.symbol}) is a fair-launched token on Robinhood Chain using the APOLLO Bonding Curve protocol.`}
                     </p>
 
                     <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex flex-col gap-2.5 text-xs text-[#A1A1A6] mt-2">
