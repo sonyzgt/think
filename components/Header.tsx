@@ -17,54 +17,54 @@ export default function Header() {
     : null
 
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-white/[0.08] bg-[#050506]/85 backdrop-blur-2xl select-none">
-      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4">
-        {/* Left: Brand Logo & Title */}
+    <header className="sticky top-0 z-30 w-full skeuo-panel select-none border-b border-black/80">
+      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
+        {/* Left: Physical Embossed Emblem & Title */}
         <Link href="/" className="flex items-center gap-3 cursor-pointer group">
-          <div className="w-9 h-9 rounded-2xl bg-white/[0.06] border border-white/[0.12] flex items-center justify-center shadow-sm group-hover:bg-white/[0.10] transition-colors">
-            <SparkleIcon size={20} className="text-white" />
+          <div className="w-9 h-9 rounded-xl skeuo-button flex items-center justify-center p-1.5 shadow-lg group-hover:brightness-110 transition-all">
+            <SparkleIcon size={18} className="text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm sm:text-base font-black tracking-wider text-white uppercase font-mono">
+            <span className="text-sm font-black tracking-widest text-white uppercase font-mono drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
               PONSTHINK
             </span>
-            <span className="text-[10px] text-zinc-400 font-medium tracking-tight">
-              World Token Map
+            <span className="text-[9px] text-zinc-400 font-mono tracking-wider uppercase">
+              // WORLD TOKEN MAP
             </span>
           </div>
         </Link>
 
-        {/* Right: Network Status + Wallet Connect Button */}
+        {/* Right: Tactile Network Indicator + 3D Wallet Button */}
         <div className="flex items-center gap-3">
-          {/* Network Indicator */}
-          <div className="hidden sm:flex items-center gap-2 bg-white/[0.04] border border-white/[0.08] px-3 py-1.5 rounded-full text-xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-            <span className="text-zinc-200 font-medium text-[11px]">Robinhood Chain</span>
+          {/* Physical Instrument Status LED */}
+          <div className="hidden sm:flex items-center gap-2 skeuo-inset px-3 py-1.5 rounded-xl text-xs">
+            <span className="w-2.5 h-2.5 rounded-full skeuo-led-green flex-shrink-0" />
+            <span className="text-zinc-300 font-mono text-[11px] font-bold tracking-tight">
+              ROBINHOOD #4663
+            </span>
           </div>
 
-          {/* Wallet Button */}
+          {/* 3D Tactile Wallet Button */}
           {authenticated && shortAddress ? (
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={logout}
-                className="flex items-center gap-2 bg-white/[0.08] hover:bg-white/[0.14] border border-white/15 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium text-white transition-all cursor-pointer"
-                title="Click to disconnect"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span>{shortAddress}</span>
-                {balance?.formatted && (
-                  <span className="text-zinc-400 font-normal pl-1 border-l border-white/10 hidden md:inline">
-                    {parseFloat(balance.formatted).toFixed(4)} ETH
-                  </span>
-                )}
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={logout}
+              className="skeuo-button px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold text-white flex items-center gap-2 cursor-pointer active:scale-95"
+              title="Click to disconnect"
+            >
+              <span className="w-2 h-2 rounded-full skeuo-led-green flex-shrink-0" />
+              <span className="text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">{shortAddress}</span>
+              {balance?.formatted && (
+                <span className="text-emerald-400 pl-1.5 border-l border-white/10 hidden md:inline font-mono">
+                  {parseFloat(balance.formatted).toFixed(4)} ETH
+                </span>
+              )}
+            </button>
           ) : (
             <button
               type="button"
               onClick={login}
-              className="px-4 py-1.5 rounded-full bg-white hover:bg-zinc-200 text-black font-bold text-xs transition-all shadow-md active:scale-95 cursor-pointer"
+              className="skeuo-button-primary px-4 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase cursor-pointer"
             >
               Connect Wallet
             </button>

@@ -217,13 +217,13 @@ export default function WorldFlagMap({
               onFocus={() => setSearchFocused(true)}
               onBlur={() => setTimeout(() => setSearchFocused(false), 250)}
               placeholder="Search country..."
-              className="w-full bg-[#0B0F14]/90 backdrop-blur-xl hover:bg-[#10161D] focus:bg-[#121A22] border border-white/15 focus:border-white/40 text-white placeholder-zinc-500 pl-9 pr-3.5 py-2 rounded-2xl text-xs transition-all outline-none shadow-2xl"
+              className="w-full skeuo-inset text-white placeholder-zinc-500 pl-9 pr-3.5 py-2 rounded-xl text-xs font-mono outline-none shadow-inner"
             />
           </div>
 
           {/* Autocomplete Results Popover */}
           {searchFocused && searchResults.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#090D12]/95 border border-white/15 rounded-2xl p-1.5 shadow-2xl z-40 flex flex-col gap-1 backdrop-blur-2xl animate-fadeIn">
+            <div className="absolute top-full left-0 right-0 mt-1.5 skeuo-panel rounded-xl p-1.5 shadow-2xl z-40 flex flex-col gap-1 backdrop-blur-2xl animate-fadeIn">
               {searchResults.map((c) => {
                 const status = countryStatusMap.get(c.code.toUpperCase())
                 const isActive = !!status?.isActive
@@ -238,20 +238,20 @@ export default function WorldFlagMap({
                       handleCountryClick(c)
                       setSearchQuery('')
                     }}
-                    className="flex items-center justify-between p-2 rounded-xl hover:bg-white/10 text-left transition-all cursor-pointer"
+                    className="flex items-center justify-between p-2 rounded-lg hover:bg-white/10 text-left transition-all cursor-pointer"
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-base">{c.flagEmoji}</span>
-                      <span className="text-xs font-semibold text-white">{c.name}</span>
+                      <span className="text-xs font-bold text-white">{c.name}</span>
                       <span className="text-[10px] text-zinc-400 font-mono">${c.symbol}</span>
                     </div>
 
                     {isActive ? (
-                      <span className="text-[9px] font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                      <span className="text-[9px] font-bold font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-2 py-0.5 rounded">
                         ● ACTIVE
                       </span>
                     ) : (
-                      <span className="text-[9px] font-medium text-zinc-400 bg-white/5 border border-white/10 px-2 py-0.5 rounded-full">
+                      <span className="text-[9px] font-mono text-zinc-400 bg-black/40 border border-white/10 px-2 py-0.5 rounded">
                         ○ NOT LAUNCHED
                       </span>
                     )}
@@ -263,15 +263,15 @@ export default function WorldFlagMap({
         </div>
 
         {/* Minimal Floating Map Legend */}
-        <div className="hidden sm:flex items-center gap-3 bg-[#0B0F14]/85 backdrop-blur-xl border border-white/10 px-3.5 py-1.5 rounded-full text-xs shadow-xl pointer-events-auto">
+        <div className="hidden sm:flex items-center gap-3 skeuo-panel px-3.5 py-1.5 rounded-xl text-xs shadow-xl pointer-events-auto">
           <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
-            <span className="text-white font-semibold text-[11px]">{activeCount} Active</span>
+            <span className="w-2.5 h-2.5 rounded-full skeuo-led-green flex-shrink-0" />
+            <span className="text-white font-mono font-bold text-[11px]">{activeCount} ACTIVE</span>
           </div>
           <span className="text-white/15">|</span>
           <div className="flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-white/30 border border-white/20" />
-            <span className="text-zinc-400 font-medium text-[11px]">{availableCount} Available</span>
+            <span className="w-2.5 h-2.5 rounded-full skeuo-led-off flex-shrink-0" />
+            <span className="text-zinc-400 font-mono text-[11px]">{availableCount} AVAILABLE</span>
           </div>
         </div>
       </div>
@@ -283,13 +283,13 @@ export default function WorldFlagMap({
         onFocusCountry={focusCountry}
       />
 
-      {/* 3. Floating Minimal Zoom Controls */}
-      <div className="absolute bottom-5 right-5 z-20 flex flex-col gap-1 bg-[#090D12]/90 backdrop-blur-xl border border-white/15 p-1 rounded-2xl shadow-2xl">
+      {/* 3. Floating Tactile 3D Zoom Controls */}
+      <div className="absolute bottom-5 right-5 z-20 flex flex-col gap-1.5 skeuo-panel p-1.5 rounded-xl shadow-2xl">
         <button
           type="button"
           onClick={(e) => { e.stopPropagation(); handleZoom(1.3) }}
           title="Zoom In"
-          className="w-7 h-7 flex items-center justify-center rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-black font-bold text-sm transition-all active:scale-95 cursor-pointer"
+          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-white font-black text-sm cursor-pointer"
         >
           +
         </button>
@@ -297,7 +297,7 @@ export default function WorldFlagMap({
           type="button"
           onClick={(e) => { e.stopPropagation(); handleZoom(0.75) }}
           title="Zoom Out"
-          className="w-7 h-7 flex items-center justify-center rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-black font-bold text-sm transition-all active:scale-95 cursor-pointer"
+          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-white font-black text-sm cursor-pointer"
         >
           −
         </button>
@@ -305,7 +305,7 @@ export default function WorldFlagMap({
           type="button"
           onClick={(e) => { e.stopPropagation(); handleResetView() }}
           title="Reset Map View"
-          className="w-7 h-7 flex items-center justify-center rounded-xl bg-white/[0.06] hover:bg-white text-white hover:text-black text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-white text-xs font-bold cursor-pointer"
         >
           ⟲
         </button>

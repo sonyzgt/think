@@ -50,7 +50,6 @@ export default function NationLeaderboard({
         priceNative,
       }
     }).sort((a, b) => {
-      // Active first, sorted by Market Cap descending, then progress
       if (a.isActive && !b.isActive) return -1
       if (!a.isActive && b.isActive) return 1
       if (a.isActive && b.isActive) {
@@ -80,34 +79,38 @@ export default function NationLeaderboard({
   return (
     <div
       className={`absolute left-4 top-16 z-20 transition-all duration-300 pointer-events-auto select-none ${
-        isCollapsed ? 'w-11' : 'w-80 sm:w-[340px]'
+        isCollapsed ? 'w-11' : 'w-80 sm:w-[350px]'
       }`}
     >
-      <div className="bg-[#070B0E]/85 backdrop-blur-3xl border border-white/[0.12] rounded-2xl shadow-[0_24px_50px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.15)] overflow-hidden flex flex-col max-h-[calc(100vh-130px)] transition-all">
-        {/* Header Bar */}
-        <div className="flex items-center justify-between px-3.5 py-3 border-b border-white/[0.08] bg-gradient-to-r from-white/[0.04] to-transparent">
+      {/* Skeuomorphic Hardware Console Box */}
+      <div className="skeuo-panel rounded-2xl overflow-hidden flex flex-col max-h-[calc(100vh-130px)]">
+        {/* Console Header Bar */}
+        <div className="flex items-center justify-between px-3.5 py-3 border-b border-black/80 bg-gradient-to-r from-white/[0.08] via-transparent to-black/30">
           {!isCollapsed && (
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-amber-400/20 to-emerald-500/20 border border-amber-400/30 flex items-center justify-center text-xs shadow-inner">
+              <div className="w-7 h-7 rounded-lg skeuo-inset flex items-center justify-center text-xs shadow-inner">
                 🏆
               </div>
               <div className="flex flex-col">
-                <span className="text-xs font-black text-white tracking-wider uppercase font-mono">
-                  Top Nation MCAP
+                <span className="text-xs font-black text-white tracking-widest uppercase font-mono drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
+                  MCAP LEADERBOARD
                 </span>
-                <span className="text-[10px] text-zinc-400 font-medium">
-                  <strong className="text-emerald-400 font-bold">{activeCount}</strong> Live Nation Tokens
-                </span>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="w-2 h-2 rounded-full skeuo-led-green flex-shrink-0" />
+                  <span className="text-[10px] text-zinc-300 font-mono">
+                    <strong className="text-emerald-400">{activeCount}</strong> ACTIVE NATIONS
+                  </span>
+                </div>
               </div>
             </div>
           )}
 
-          {/* Collapse/Expand Toggle Button */}
+          {/* Skeuomorphic Physical Toggle Button */}
           <button
             type="button"
             onClick={() => setIsCollapsed(!isCollapsed)}
-            title={isCollapsed ? 'Expand Leaderboard' : 'Collapse Leaderboard'}
-            className="w-7 h-7 rounded-xl bg-white/[0.06] hover:bg-white/[0.15] border border-white/10 text-zinc-300 hover:text-white text-xs font-bold transition-all cursor-pointer flex items-center justify-center active:scale-95 ml-auto"
+            title={isCollapsed ? 'Expand Console' : 'Collapse Console'}
+            className="w-7 h-7 rounded-lg skeuo-button text-zinc-300 hover:text-white text-xs font-black transition-all cursor-pointer flex items-center justify-center ml-auto"
           >
             {isCollapsed ? '🏆' : '✕'}
           </button>
@@ -115,56 +118,57 @@ export default function NationLeaderboard({
 
         {!isCollapsed && (
           <>
-            {/* Filter Tabs & Quick Search */}
-            <div className="px-3 pt-2.5 pb-2 flex flex-col gap-2 border-b border-white/[0.06] bg-black/20">
+            {/* Skeuomorphic Instrument Controls & Recessed Filter Tray */}
+            <div className="px-3 pt-2.5 pb-2 flex flex-col gap-2 border-b border-black/70 bg-black/40">
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1 bg-white/[0.04] p-0.5 rounded-xl border border-white/[0.08]">
+                {/* 3D Rocker Tabs */}
+                <div className="flex items-center gap-1 skeuo-inset p-1 rounded-xl">
                   <button
                     type="button"
                     onClick={() => setActiveTab('all')}
-                    className={`px-2.5 py-1 text-[10px] font-bold rounded-lg transition-all cursor-pointer ${
+                    className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-lg transition-all cursor-pointer ${
                       activeTab === 'all'
-                        ? 'bg-white text-black shadow-sm'
-                        : 'text-zinc-400 hover:text-white'
+                        ? 'skeuo-button text-white shadow-md'
+                        : 'text-zinc-400 hover:text-zinc-200'
                     }`}
                   >
-                    All ({rankedCountries.length})
+                    ALL ({rankedCountries.length})
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveTab('active')}
-                    className={`px-2.5 py-1 text-[10px] font-bold rounded-lg transition-all cursor-pointer ${
+                    className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-lg transition-all cursor-pointer ${
                       activeTab === 'active'
-                        ? 'bg-emerald-400 text-black shadow-sm'
-                        : 'text-emerald-400/80 hover:text-emerald-300'
+                        ? 'skeuo-button-green text-black'
+                        : 'text-emerald-400 hover:text-emerald-300'
                     }`}
                   >
-                    🟢 Active ({activeCount})
+                    ACTIVE ({activeCount})
                   </button>
                 </div>
 
-                {/* Search inside leaderboard */}
+                {/* Debossed Search Recess */}
                 <div className="relative flex-1 max-w-[130px]">
                   <input
                     type="text"
                     value={filterQuery}
                     onChange={(e) => setFilterQuery(e.target.value)}
                     placeholder="Filter..."
-                    className="w-full bg-white/[0.05] hover:bg-white/[0.08] focus:bg-white/[0.10] border border-white/10 text-white placeholder-zinc-500 px-2.5 py-1 rounded-xl text-[10px] outline-none transition-all"
+                    className="w-full skeuo-inset text-white placeholder-zinc-500 px-2.5 py-1 rounded-xl text-[10px] font-mono outline-none"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Nations List */}
-            <div className="overflow-y-auto divide-y divide-white/[0.03] scrollbar-thin scrollbar-thumb-white/10 p-1.5 flex-1 max-h-[460px]">
+            {/* Nations List (Recessed Monitor Screen) */}
+            <div className="overflow-y-auto divide-y divide-black/60 p-1.5 flex-1 max-h-[460px] skeuo-inset m-2 rounded-xl">
               {filteredList.length === 0 ? (
-                <div className="py-8 text-center text-xs text-zinc-500">
-                  No matching nation tokens found
+                <div className="py-8 text-center text-xs text-zinc-500 font-mono">
+                  // NO MATCHING TOKENS
                 </div>
               ) : (
                 filteredList.map((item, index) => {
-                  const { country, isActive, token, mcapUsd, progress, priceNative } = item
+                  const { country, isActive, token, mcapUsd, progress } = item
                   const rank = index + 1
 
                   return (
@@ -174,80 +178,80 @@ export default function NationLeaderboard({
                         onFocusCountry(country)
                         onSelectCountry(country)
                       }}
-                      className={`flex items-center justify-between p-2 rounded-xl transition-all cursor-pointer group relative overflow-hidden mb-1 ${
+                      className={`flex items-center justify-between p-2 rounded-lg transition-all cursor-pointer group mb-1 ${
                         isActive
-                          ? 'bg-gradient-to-r from-emerald-500/[0.08] to-transparent hover:from-emerald-500/[0.15] border border-emerald-500/20 hover:border-emerald-500/40'
-                          : 'hover:bg-white/[0.05] border border-transparent'
+                          ? 'bg-gradient-to-r from-emerald-950/40 via-emerald-900/20 to-transparent border-t border-emerald-500/30 border-b border-black hover:brightness-125'
+                          : 'hover:bg-white/[0.04] border-t border-white/[0.04] border-b border-black'
                       }`}
                     >
-                      {/* Left: Rank, Flag & Info */}
+                      {/* Left: 3D Rank Medal, Flag & Info */}
                       <div className="flex items-center gap-2.5 overflow-hidden flex-1 mr-2">
-                        {/* Rank Badge */}
+                        {/* 3D Physical Metallic Badge */}
                         <div
-                          className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-mono font-bold flex-shrink-0 ${
+                          className={`w-5 h-5 rounded flex items-center justify-center text-[10px] font-mono font-black flex-shrink-0 shadow-sm ${
                             rank === 1
-                              ? 'bg-amber-400 text-black shadow-[0_0_8px_rgba(251,191,36,0.6)]'
+                              ? 'bg-gradient-to-b from-yellow-300 via-amber-400 to-yellow-600 text-black border border-yellow-200'
                               : rank === 2
-                              ? 'bg-zinc-300 text-black shadow-sm'
+                              ? 'bg-gradient-to-b from-slate-200 via-slate-300 to-slate-500 text-black border border-white'
                               : rank === 3
-                              ? 'bg-amber-700 text-white shadow-sm'
-                              : 'bg-white/[0.06] text-zinc-400'
+                              ? 'bg-gradient-to-b from-amber-600 via-amber-700 to-amber-900 text-white border border-amber-500'
+                              : 'skeuo-inset text-zinc-400'
                           }`}
                         >
                           {rank}
                         </div>
 
-                        {/* Country Flag */}
-                        <div className="w-6 h-4 rounded overflow-hidden bg-black/40 border border-white/15 flex items-center justify-center flex-shrink-0 shadow-sm">
+                        {/* Country Flag Badge */}
+                        <div className="w-6 h-4 rounded overflow-hidden skeuo-inset p-0.5 flex items-center justify-center flex-shrink-0">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={country.flagUrl}
                             alt={country.name}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover rounded-sm"
                           />
                         </div>
 
                         {/* Country Name & Ticker */}
                         <div className="flex flex-col overflow-hidden">
-                          <div className="flex items-center gap-1">
-                            <span className="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors truncate">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors truncate drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
                               {country.name}
                             </span>
                             {isActive && (
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+                              <span className="w-1.5 h-1.5 rounded-full skeuo-led-green flex-shrink-0" />
                             )}
                           </div>
-                          <span className="text-[10px] font-mono text-zinc-400">
+                          <span className="text-[9px] font-mono text-zinc-400">
                             ${country.symbol}
                           </span>
                         </div>
                       </div>
 
-                      {/* Right: Market Cap, Progress Bar & Action */}
+                      {/* Right: Market Cap & Tactile Action */}
                       <div className="flex flex-col items-end flex-shrink-0">
                         {isActive && token ? (
                           <div className="flex flex-col items-end">
-                            <span className="text-xs font-mono font-bold text-white tracking-tight">
+                            <span className="text-xs font-mono font-bold text-emerald-400 tracking-tight drop-shadow-[0_0_6px_rgba(52,211,153,0.4)]">
                               ${mcapUsd >= 1000 ? (mcapUsd / 1000).toFixed(1) + 'k' : mcapUsd.toFixed(0)}
                             </span>
                             
-                            {/* Curve Progress Meter */}
+                            {/* Inset Meter Bar */}
                             <div className="flex items-center gap-1.5 mt-0.5">
-                              <div className="w-12 h-1 bg-black/40 rounded-full overflow-hidden border border-white/10">
+                              <div className="w-12 h-1.5 skeuo-inset rounded-full overflow-hidden p-0.5">
                                 <div
-                                  className="h-full bg-gradient-to-r from-emerald-400 to-teal-300 rounded-full"
-                                  style={{ width: `${Math.min(100, Math.max(2, progress))}%` }}
+                                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-300 rounded-full shadow-[0_0_6px_rgba(52,211,153,0.6)]"
+                                  style={{ width: `${Math.min(100, Math.max(3, progress))}%` }}
                                 />
                               </div>
-                              <span className="text-[9px] font-mono font-bold text-emerald-400">
+                              <span className="text-[9px] font-mono font-bold text-emerald-300">
                                 {progress}%
                               </span>
                             </div>
                           </div>
                         ) : (
                           <div className="flex items-center gap-1">
-                            <span className="text-[9px] font-semibold text-zinc-400 bg-white/[0.06] group-hover:bg-white group-hover:text-black border border-white/10 px-2 py-0.5 rounded-full transition-colors">
-                              + Launch
+                            <span className="text-[9px] font-mono font-bold text-zinc-300 skeuo-button px-2 py-0.5 rounded-md">
+                              LAUNCH
                             </span>
                           </div>
                         )}
@@ -258,10 +262,10 @@ export default function NationLeaderboard({
               )}
             </div>
 
-            {/* Leaderboard Footer */}
-            <div className="px-3 py-2 border-t border-white/[0.06] bg-white/[0.02] flex items-center justify-between text-[10px] text-zinc-400">
-              <span>Robinhood Chain Mainnet</span>
-              <span className="font-mono text-zinc-400">PonsV2 Bonding Curve</span>
+            {/* Chassis Footer Trim */}
+            <div className="px-3 py-2 border-t border-black/80 bg-black/50 flex items-center justify-between text-[10px] font-mono text-zinc-400">
+              <span>SYS: ROBINHOOD MAINNET</span>
+              <span className="text-emerald-500 font-bold">● ONLINE</span>
             </div>
           </>
         )}

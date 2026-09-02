@@ -61,6 +61,144 @@ body {
   background: rgba(255, 255, 255, 0.3);
 }
 
+/* ── SKEUOMORPHIC DESIGN SYSTEM ── */
+
+/* Skeuomorphic Machined Chassis / Panel */
+.skeuo-panel {
+  background: linear-gradient(180deg, #161b22 0%, #0d1117 50%, #070a0e 100%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.9) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.8),
+    0 20px 45px rgba(0, 0, 0, 0.85),
+    0 4px 10px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Skeuomorphic Debossed Inset Screen / Tray */
+.skeuo-inset {
+  background: linear-gradient(180deg, #050709 0%, #080b0f 100%) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.95) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-left: 1px solid rgba(0, 0, 0, 0.8) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.8) !important;
+  box-shadow: 
+    inset 0 3px 6px rgba(0, 0, 0, 0.95),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Skeuomorphic 3D Push Button (Neutral Titanium) */
+.skeuo-button {
+  background: linear-gradient(180deg, #28303c 0%, #1a2028 48%, #11151c 100%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.9) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.75),
+    0 4px 10px rgba(0, 0, 0, 0.65),
+    0 1px 2px rgba(0, 0, 0, 0.8) !important;
+  transition: all 0.12s ease !important;
+}
+
+.skeuo-button:hover {
+  background: linear-gradient(180deg, #323b49 0%, #202732 48%, #161c24 100%) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.45),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.8),
+    0 6px 14px rgba(0, 0, 0, 0.75) !important;
+}
+
+.skeuo-button:active {
+  transform: translateY(1.5px) !important;
+  background: linear-gradient(180deg, #10141a 0%, #181f27 100%) !important;
+  box-shadow: 
+    inset 0 3px 6px rgba(0, 0, 0, 0.9),
+    0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Skeuomorphic Primary 3D Switch (Emerald / White Accent) */
+.skeuo-button-primary {
+  background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 45%, #cbd5e1 100%) !important;
+  color: #05070a !important;
+  border-top: 1px solid #ffffff !important;
+  border-bottom: 2px solid #64748b !important;
+  border-left: 1px solid #e2e8f0 !important;
+  border-right: 1px solid #e2e8f0 !important;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 6px 16px rgba(0, 0, 0, 0.7),
+    0 2px 4px rgba(0, 0, 0, 0.9) !important;
+  font-weight: 800 !important;
+  transition: all 0.12s ease !important;
+}
+
+.skeuo-button-primary:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 45%, #e2e8f0 100%) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.25),
+    0 8px 20px rgba(255, 255, 255, 0.15),
+    0 3px 6px rgba(0, 0, 0, 0.8) !important;
+}
+
+.skeuo-button-primary:active {
+  transform: translateY(2px) !important;
+  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%) !important;
+  box-shadow: 
+    inset 0 3px 6px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Skeuomorphic Green Accent Button */
+.skeuo-button-green {
+  background: linear-gradient(180deg, #34d399 0%, #10b981 48%, #059669 100%) !important;
+  color: #022c16 !important;
+  border-top: 1px solid #6ee7b7 !important;
+  border-bottom: 2px solid #047857 !important;
+  border-left: 1px solid #10b981 !important;
+  border-right: 1px solid #10b981 !important;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    0 6px 16px rgba(16, 185, 129, 0.35),
+    0 2px 4px rgba(0, 0, 0, 0.9) !important;
+  font-weight: 800 !important;
+  transition: all 0.12s ease !important;
+}
+
+.skeuo-button-green:active {
+  transform: translateY(2px) !important;
+  background: linear-gradient(180deg, #059669 0%, #047857 100%) !important;
+  box-shadow: 
+    inset 0 3px 6px rgba(0, 0, 0, 0.6),
+    0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Skeuomorphic Glass LED Status Indicator */
+.skeuo-led-green {
+  background: radial-gradient(circle at 35% 35%, #86efac 0%, #22c55e 50%, #15803d 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.8) !important;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.6),
+    0 0 10px #22c55e,
+    0 0 18px rgba(34, 197, 94, 0.5) !important;
+}
+
+.skeuo-led-off {
+  background: radial-gradient(circle at 35% 35%, #64748b 0%, #334155 60%, #1e293b 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.9) !important;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.25),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.8) !important;
+}
+
 /* ── APPLE LIQUID GLASS DESIGN SYSTEM ── */
 
 /* Liquid Glass Card / Main Container */
