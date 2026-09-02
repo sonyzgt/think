@@ -26,7 +26,7 @@ export default function Header() {
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-black tracking-widest text-white uppercase font-mono drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
-              PONSTHINK
+              ATLAS
             </span>
             <span className="text-[9px] text-zinc-300 font-mono tracking-wider uppercase font-bold">
               // WORLD TOKEN MAP
