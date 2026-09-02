@@ -168,6 +168,8 @@ export interface PonsV2TokenInfo {
   priceNative: number
   priceUsd: number
   progress: number // 0.0 to 1.0 (graduation progress)
+  createdAt?: number
+  expiresAt?: number
 }
 
 /**

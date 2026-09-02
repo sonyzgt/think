@@ -44,6 +44,10 @@ export default function WorldFlagMap({
     country: CountryData
     token: PonsV2TokenInfo
   } | null>(null)
+  const [occupiedAnnouncement, setOccupiedAnnouncement] = useState<{
+    country: CountryData
+    symbol: string
+  } | null>(null)
 
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -503,10 +507,17 @@ export default function WorldFlagMap({
           country={selectedInactiveCountry}
           open={!!selectedInactiveCountry}
           onClose={() => setSelectedInactiveCountry(null)}
-          onLaunchSuccess={() => {
+          onLaunchSuccess={(tokenAddress) => {
+            const launched = selectedInactiveCountry
             setSelectedInactiveCountry(null)
             if (onTokenRefresh) onTokenRefresh()
-            toast.success(`${selectedInactiveCountry.name} nation token activated successfully!`)
+            if (launched) {
+              setOccupiedAnnouncement({
+                country: launched,
+                symbol: launched.symbol,
+              })
+              focusCountry(launched)
+            }
           }}
         />
       )}
@@ -522,6 +533,73 @@ export default function WorldFlagMap({
             if (onTokenRefresh) onTokenRefresh()
           }}
         />
+      )}
+
+      {/* 7. Occupied Nation Pop-up Notification Announcement Modal */}
+      {occupiedAnnouncement && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fadeIn select-none font-mono">
+          <div className="w-full max-w-md skeuo-panel p-5 rounded-2xl border-2 border-white shadow-2xl flex flex-col items-center text-center gap-4 animate-scaleUp">
+            {/* Medallion */}
+            <div className="relative">
+              <div className="w-16 h-16 rounded-2xl skeuo-inset p-1 shadow-inner">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={occupiedAnnouncement.country.flagUrl}
+                  alt={occupiedAnnouncement.country.name}
+                  className="w-full h-full object-cover rounded-xl"
+                />
+              </div>
+              <span className="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white text-black shadow">
+                {occupiedAnnouncement.country.code}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-lg">{occupiedAnnouncement.country.flagEmoji}</span>
+                <h3 className="text-xl font-black text-white uppercase tracking-tight">
+                  {occupiedAnnouncement.country.name} OCCUPIED!
+                </h3>
+              </div>
+              <span className="text-xs font-mono text-zinc-300">
+                Nation token <strong className="text-white font-bold">${occupiedAnnouncement.symbol}</strong> is now officially active.
+              </span>
+            </div>
+
+            {/* Inactivity notice */}
+            <div className="w-full p-3 rounded-xl skeuo-inset text-left flex flex-col gap-1 text-[11px] border border-amber-400/30">
+              <div className="flex items-center gap-1.5 text-amber-300 font-bold">
+                <span>⏱️</span>
+                <span>10-Minute Activity Window</span>
+              </div>
+              <p className="text-zinc-300 font-sans leading-relaxed">
+                If no buy transactions occur within 10 minutes, this nation slot will automatically reset and become available again for anyone to claim!
+              </p>
+            </div>
+
+            {/* Action buttons */}
+            <div className="w-full flex flex-col gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  const targetCountry = occupiedAnnouncement.country
+                  setOccupiedAnnouncement(null)
+                  handleCountryClick(targetCountry)
+                }}
+                className="w-full py-2.5 px-4 rounded-xl skeuo-button-primary text-black text-xs font-black uppercase tracking-wider cursor-pointer"
+              >
+                VIEW & TRADE ${occupiedAnnouncement.symbol}
+              </button>
+              <button
+                type="button"
+                onClick={() => setOccupiedAnnouncement(null)}
+                className="w-full py-1.5 px-4 rounded-xl skeuo-button text-black text-xs font-mono font-bold cursor-pointer"
+              >
+                DISMISS
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

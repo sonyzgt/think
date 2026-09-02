@@ -11,35 +11,62 @@ export const dynamic = 'force-dynamic'
 
 const REGISTRY_FILE = path.join(process.cwd(), 'data', 'launched_tokens.json')
 
-const PLATFORM_TOKENS: string[] = []
+export interface StoredTokenEntry {
+  tokenAddress: string
+  curveAddress?: string
+  name?: string
+  symbol?: string
+  countryCode?: string
+  createdAt?: number
+  initialMcapUsd?: number
+  lastMcapUsd?: number
+  swapCount?: number
+}
 
-async function getStoredTokens(): Promise<string[]> {
+async function getStoredEntries(): Promise<StoredTokenEntry[]> {
   try {
     const raw = await readFile(REGISTRY_FILE, 'utf-8')
     const parsed = JSON.parse(raw)
-    if (Array.isArray(parsed) && parsed.length > 0) {
-      const addresses: string[] = []
+    if (Array.isArray(parsed)) {
+      const results: StoredTokenEntry[] = []
       for (const item of parsed) {
-        const addr = typeof item === 'string' ? item : item?.tokenAddress || item?.address
-        if (addr && isAddress(addr)) {
-          addresses.push(getAddress(addr))
+        if (typeof item === 'string' && isAddress(item)) {
+          results.push({
+            tokenAddress: getAddress(item),
+            createdAt: Date.now(),
+          })
+        } else if (item && typeof item === 'object') {
+          const addr = item.tokenAddress || item.address
+          if (addr && isAddress(addr)) {
+            results.push({
+              tokenAddress: getAddress(addr),
+              curveAddress: item.curveAddress ? getAddress(item.curveAddress) : undefined,
+              name: item.name,
+              symbol: item.symbol,
+              countryCode: item.countryCode,
+              createdAt: item.createdAt || Date.now(),
+              initialMcapUsd: item.initialMcapUsd || 0,
+              lastMcapUsd: item.lastMcapUsd || 0,
+              swapCount: item.swapCount || 0,
+            })
+          }
         }
       }
-      return Array.from(new Set(addresses))
+      return results
     }
   } catch {
     try {
       await mkdir(path.dirname(REGISTRY_FILE), { recursive: true })
-      await writeFile(REGISTRY_FILE, JSON.stringify(PLATFORM_TOKENS, null, 2))
+      await writeFile(REGISTRY_FILE, JSON.stringify([], null, 2))
     } catch { /* ignore */ }
   }
-  return PLATFORM_TOKENS
+  return []
 }
 
-async function saveStoredTokens(addresses: string[]) {
+async function saveStoredEntries(entries: StoredTokenEntry[]) {
   try {
     await mkdir(path.dirname(REGISTRY_FILE), { recursive: true })
-    await writeFile(REGISTRY_FILE, JSON.stringify(addresses, null, 2))
+    await writeFile(REGISTRY_FILE, JSON.stringify(entries, null, 2))
   } catch (e) {
     console.error('Error saving platform tokens registry:', e)
   }
@@ -62,34 +89,60 @@ if (!g.__tokensCache) {
   }
 }
 
+const TEN_MINUTES_MS = 10 * 60 * 1000 // 10 minutes in milliseconds
+
 async function refreshTokensInBackground() {
   if (g.__tokensCache?.isFetching) return
   if (g.__tokensCache) g.__tokensCache.isFetching = true
 
   try {
-    const tokenAddresses = new Set<string>()
-    const stored = await getStoredTokens()
-    for (const t of stored) {
-      if (isAddress(t)) tokenAddresses.add(getAddress(t))
+    const storedEntries = await getStoredEntries()
+    const validEntries: StoredTokenEntry[] = []
+    const tokenInfos: PonsV2TokenInfo[] = []
+    const now = Date.now()
+
+    for (const entry of storedEntries) {
+      try {
+        const info = await getPonsTokenInfo(entry.tokenAddress)
+        if (!info) continue
+
+        const createdAt = entry.createdAt || now
+        const expiresAt = createdAt + TEN_MINUTES_MS
+        const age = now - createdAt
+
+        // Check if there was any buy activity on the bonding curve
+        const progress = info.progress || 0
+        const hasQuoteReserve = info.realQuoteReserve && info.realQuoteReserve !== '0'
+        const hasTrades = progress > 0 || hasQuoteReserve || info.graduated
+
+        // If 10 minutes have elapsed and ZERO buys occurred, AUTO-RESET this nation token
+        if (age > TEN_MINUTES_MS && !hasTrades) {
+          console.log(`[Inactivity Reset] Token ${info.symbol} (${entry.tokenAddress}) had 0 buys in 10 minutes. Resetting country slot.`)
+          // Do not include in validEntries -> Automatically purged from registry
+          continue
+        }
+
+        // Attach timing metadata to token info
+        const enrichedInfo: PonsV2TokenInfo = {
+          ...info,
+          createdAt,
+          expiresAt: hasTrades ? undefined : expiresAt,
+        }
+
+        tokenInfos.push(enrichedInfo)
+        validEntries.push({
+          ...entry,
+          createdAt,
+          lastMcapUsd: (info.priceUsd || (info.priceNative * 2500) || 0) * 1000000000,
+        })
+      } catch (e) {
+        console.error(`Error resolving token ${entry.tokenAddress}:`, e)
+      }
     }
 
-    const currentList = Array.from(tokenAddresses)
-
-    // Preserve exact order from launched_tokens.json (top of json = index 0 / leftmost)
-    const tokenMap = new Map<string, PonsV2TokenInfo>()
-    await Promise.all(
-      currentList.map(async (addr) => {
-        try {
-          const info = await getPonsTokenInfo(addr)
-          if (info) tokenMap.set(addr.toLowerCase(), info)
-        } catch { /* continue */ }
-      })
-    )
-
-    const tokenInfos: PonsV2TokenInfo[] = []
-    for (const addr of currentList) {
-      const found = tokenMap.get(addr.toLowerCase())
-      if (found) tokenInfos.push(found)
+    // If any stagnant token was purged, update the registry file
+    if (validEntries.length !== storedEntries.length) {
+      await saveStoredEntries(validEntries)
     }
 
     // Always update in-memory and disk cache
@@ -170,11 +223,18 @@ export async function POST(req: NextRequest) {
     }
 
     const clean = getAddress(rawAddress)
-    const stored = await getStoredTokens()
+    const stored = await getStoredEntries()
 
-    if (!stored.map((s) => s.toLowerCase()).includes(clean.toLowerCase())) {
-      stored.unshift(clean)
-      await saveStoredTokens(stored)
+    if (!stored.some((s) => s.tokenAddress.toLowerCase() === clean.toLowerCase())) {
+      stored.unshift({
+        tokenAddress: clean,
+        curveAddress: body.curveAddress ? getAddress(body.curveAddress) : undefined,
+        name: body.name,
+        symbol: body.symbol,
+        countryCode: body.countryCode,
+        createdAt: Date.now(),
+      })
+      await saveStoredEntries(stored)
     }
 
     // Invalidate cache immediately so new token appears instantly
