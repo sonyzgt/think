@@ -199,7 +199,7 @@ export default function Sidebar() {
             onClick={() => {
               if (typeof window !== 'undefined' && window.innerWidth < 768) closeSidebar()
             }}
-            className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-gradient-to-b from-white to-[#e5e5ea] text-black font-semibold text-xs tracking-tight hover:scale-[1.02] active:scale-[0.98] transition-all rounded-xl shadow-[0_4px_14px_rgba(255,255,255,0.2)]"
+            className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-gradient-to-b from-[#34c759] to-[#28cd41] text-black font-bold text-xs tracking-tight hover:scale-[1.02] active:scale-[0.98] transition-all rounded-xl shadow-[0_4px_18px_rgba(48,209,88,0.45)]"
           >
             <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
@@ -225,7 +225,7 @@ export default function Sidebar() {
                 }}
                 className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-white text-black font-semibold shadow-[0_2px_10px_rgba(255,255,255,0.2)]'
+                    ? 'bg-gradient-to-r from-[#34c759] to-[#28cd41] text-black font-bold shadow-[0_4px_16px_rgba(48,209,88,0.35)]'
                     : 'text-zinc-300 hover:text-white hover:bg-white/[0.08]'
                 }`}
               >

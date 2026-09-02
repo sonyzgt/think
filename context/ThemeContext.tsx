@@ -16,7 +16,7 @@ const ThemeContext = createContext<ThemeContextType>({
 })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [themeId, setThemeIdState] = useState<string>('apple_silver')
+  const [themeId, setThemeIdState] = useState<string>('apple_green')
 
   useEffect(() => {
     try {

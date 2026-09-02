@@ -3,18 +3,18 @@
 :root {
   --background: #000000;
   --foreground: #f5f5f7;
-  --theme-color: #0071e3;
-  --theme-light: #2997ff;
-  --theme-dark: #0056b3;
-  --theme-glow: rgba(0, 113, 227, 0.35);
-  --theme-subtle: rgba(0, 113, 227, 0.12);
-  --theme-border: rgba(255, 255, 255, 0.15);
+  --theme-color: #30d158;
+  --theme-light: #34c759;
+  --theme-dark: #248a3d;
+  --theme-glow: rgba(48, 209, 88, 0.45);
+  --theme-subtle: rgba(48, 209, 88, 0.12);
+  --theme-border: rgba(48, 209, 88, 0.35);
   --accent: var(--theme-color);
   --accent-hover: var(--theme-light);
   --surface: #1c1c1e;
   --surface-secondary: #2c2c2e;
   --surface-border: rgba(255, 255, 255, 0.12);
-  --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
   --apple-mono: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
 }
 
@@ -53,10 +53,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(48, 209, 88, 0.6);
 }
 
-/* ── APPLE HIG DESIGN SYSTEM (macOS & visionOS Glassmorphism) ── */
+/* ── 100% APPLE HIG DESIGN SYSTEM (macOS & visionOS Glassmorphism) ── */
 
 /* Frosted Glass Card / Container */
 .brutal-card,
@@ -66,8 +66,8 @@ body {
   backdrop-filter: blur(30px) saturate(190%) !important;
   -webkit-backdrop-filter: blur(30px) saturate(190%) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 20px !important;
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.12) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 14px 44px 0 rgba(0, 0, 0, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.12) !important;
   position: relative;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -75,14 +75,14 @@ body {
 .brutal-card-highlight,
 .liquid-glass:hover,
 .apple-glass:hover {
-  border-color: rgba(255, 255, 255, 0.24) !important;
+  border-color: rgba(48, 209, 88, 0.35) !important;
 }
 
 /* Interactive Card (Token Grid / Items) */
 .brutal-card-interactive,
 .liquid-glass-card,
 .apple-card-interactive {
-  background: rgba(28, 28, 30, 0.5) !important;
+  background: rgba(28, 28, 30, 0.52) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -96,8 +96,8 @@ body {
 .liquid-glass-card:hover,
 .apple-card-interactive:hover {
   transform: translateY(-3px) scale(1.008) !important;
-  border-color: rgba(255, 255, 255, 0.28) !important;
-  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 0 20px -2px var(--theme-glow), inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(48, 209, 88, 0.5) !important;
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 0 24px -2px rgba(48, 209, 88, 0.35), inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 .brutal-card-interactive:active,
@@ -123,17 +123,17 @@ body {
 .liquid-pill:hover,
 .apple-pill:hover {
   background: rgba(255, 255, 255, 0.12) !important;
-  border-color: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(48, 209, 88, 0.3) !important;
 }
 
 .brutal-pill-active,
 .liquid-pill-active,
 .apple-pill-active {
-  background: #ffffff !important;
+  background: linear-gradient(180deg, #34c759 0%, #30d158 100%) !important;
   color: #000000 !important;
-  font-weight: 600 !important;
-  border: 1px solid rgba(255, 255, 255, 0.9) !important;
-  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.25) !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 16px rgba(48, 209, 88, 0.4) !important;
 }
 
 .brutal-pill-active *,
@@ -142,16 +142,16 @@ body {
   color: #000000 !important;
 }
 
-/* Apple Primary Button */
+/* Apple Green Primary Button */
 .brutal-btn-primary,
 .liquid-btn-primary,
 .apple-btn-primary {
-  background: linear-gradient(180deg, #ffffff 0%, #ebebef 100%) !important;
+  background: linear-gradient(180deg, #34c759 0%, #30d158 50%, #28cd41 100%) !important;
   color: #000000 !important;
-  font-weight: 600 !important;
-  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
   border-radius: 14px !important;
-  box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 4px 18px 0 rgba(48, 209, 88, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.7) !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
@@ -159,14 +159,14 @@ body {
 .liquid-btn-primary:hover,
 .apple-btn-primary:hover {
   transform: scale(1.02) !important;
-  box-shadow: 0 6px 22px 0 rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 6px 24px 0 rgba(48, 209, 88, 0.55), inset 0 1px 0 0 rgba(255, 255, 255, 0.9) !important;
 }
 
 .brutal-btn-primary:active,
 .liquid-btn-primary:active,
 .apple-btn-primary:active {
   transform: scale(0.97) !important;
-  box-shadow: 0 2px 8px 0 rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 2px 10px 0 rgba(48, 209, 88, 0.3) !important;
 }
 
 /* Apple Secondary Button */
@@ -188,7 +188,7 @@ body {
 .liquid-btn-secondary:hover,
 .apple-btn-secondary:hover {
   background: rgba(255, 255, 255, 0.14) !important;
-  border-color: rgba(255, 255, 255, 0.22) !important;
+  border-color: rgba(48, 209, 88, 0.35) !important;
   transform: scale(1.02) !important;
 }
 
@@ -227,11 +227,11 @@ body {
 /* Apple Input Fields */
 .brutal-input,
 .apple-input {
-  background: rgba(28, 28, 30, 0.6) !important;
+  background: rgba(28, 28, 30, 0.65) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   color: #ffffff !important;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -240,8 +240,8 @@ body {
 .brutal-input:focus,
 .apple-input:focus {
   outline: none !important;
-  border-color: rgba(255, 255, 255, 0.45) !important;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12), inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  border-color: rgba(48, 209, 88, 0.6) !important;
+  box-shadow: 0 0 0 4px rgba(48, 209, 88, 0.15), inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* ── Animation Helpers ── */

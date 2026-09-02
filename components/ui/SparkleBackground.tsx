@@ -9,6 +9,7 @@ interface Orb {
   vx: number
   vy: number
   baseAlpha: number
+  color: string
 }
 
 interface Particle {
@@ -58,11 +59,11 @@ export default function SparkleBackground() {
     }
     window.addEventListener('resize', handleResize)
 
-    // Ambient floating light orbs (Apple visionOS / macOS dynamic wallpaper style)
+    // Ambient floating light orbs (Apple visionOS & macOS dynamic wallpaper with Apple Green glow)
     const orbs: Orb[] = [
-      { x: width * 0.2, y: height * 0.3, radius: 350, vx: 0.3, vy: 0.2, baseAlpha: 0.08 },
-      { x: width * 0.8, y: height * 0.6, radius: 450, vx: -0.25, vy: -0.15, baseAlpha: 0.06 },
-      { x: width * 0.5, y: height * 0.8, radius: 300, vx: 0.15, vy: -0.2, baseAlpha: 0.05 },
+      { x: width * 0.2, y: height * 0.25, radius: 380, vx: 0.25, vy: 0.15, baseAlpha: 0.09, color: '48, 209, 88' },
+      { x: width * 0.85, y: height * 0.6, radius: 440, vx: -0.2, vy: -0.15, baseAlpha: 0.07, color: '52, 199, 89' },
+      { x: width * 0.45, y: height * 0.85, radius: 320, vx: 0.15, vy: -0.2, baseAlpha: 0.06, color: '40, 205, 65' },
     ]
 
     // Stardust particles
@@ -70,8 +71,8 @@ export default function SparkleBackground() {
       x: Math.random() * width,
       y: Math.random() * height,
       size: Math.random() * 1.5 + 0.5,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
       alpha: Math.random() * 0.5 + 0.1,
     }))
 
@@ -81,7 +82,7 @@ export default function SparkleBackground() {
       const mx = mouseRef.current.x
       const my = mouseRef.current.y
 
-      // 1. Draw ambient gradient orbs
+      // 1. Draw ambient gradient orbs with Apple Green tint
       orbs.forEach((orb) => {
         orb.x += orb.vx
         orb.y += orb.vy
@@ -90,8 +91,8 @@ export default function SparkleBackground() {
         if (orb.y - orb.radius < 0 || orb.y + orb.radius > height) orb.vy *= -1
 
         const grad = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius)
-        grad.addColorStop(0, `rgba(255, 255, 255, ${orb.baseAlpha})`)
-        grad.addColorStop(0.5, `rgba(180, 180, 195, ${orb.baseAlpha * 0.5})`)
+        grad.addColorStop(0, `rgba(${orb.color}, ${orb.baseAlpha})`)
+        grad.addColorStop(0.5, `rgba(${orb.color}, ${orb.baseAlpha * 0.45})`)
         grad.addColorStop(1, 'rgba(0, 0, 0, 0)')
 
         ctx.fillStyle = grad
@@ -100,11 +101,11 @@ export default function SparkleBackground() {
         ctx.fill()
       })
 
-      // 2. Draw subtle mouse spotlight (Apple cursor ambient glow)
+      // 2. Draw subtle mouse spotlight (Apple cursor ambient green/white glow)
       if (mx > 0 && my > 0) {
         const mouseGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 320)
-        mouseGrad.addColorStop(0, 'rgba(255, 255, 255, 0.06)')
-        mouseGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.02)')
+        mouseGrad.addColorStop(0, 'rgba(48, 209, 88, 0.08)')
+        mouseGrad.addColorStop(0.5, 'rgba(48, 209, 88, 0.02)')
         mouseGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
 
         ctx.fillStyle = mouseGrad
