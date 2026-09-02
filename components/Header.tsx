@@ -34,15 +34,21 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Right: Tactile Network Indicator + Modern Orange Wallet Button */}
+        {/* Right: Twitter Button + Modern Orange Wallet Button */}
         <div className="flex items-center gap-3">
-          {/* Physical Instrument Status LED */}
-          <div className="hidden sm:flex items-center gap-2 skeuo-inset px-3 py-1.5 rounded-xl text-xs border border-[#20252B] bg-[#080A0D]">
-            <span className="w-2.5 h-2.5 rounded-full skeuo-led-orange flex-shrink-0" />
-            <span className="text-[#F5F5F5] font-mono text-[11px] font-bold tracking-tight">
-              ROBINHOOD #4663
-            </span>
-          </div>
+          {/* Official Twitter (X) Button */}
+          <a
+            href="https://x.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Follow on X (Twitter)"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono font-bold text-[#F5F5F5] hover:text-white bg-[#15191E] hover:bg-[#1C2229] border border-[#343A41] hover:border-[#FF6A00] transition-all cursor-pointer shadow-sm active:scale-95 group"
+          >
+            <svg className="w-3.5 h-3.5 fill-current text-[#F5F5F5] group-hover:text-[#FF6A00] transition-colors" viewBox="0 0 24 24">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+            <span className="text-[11px] tracking-tight">TWITTER</span>
+          </a>
 
           {/* 3D Tactile Wallet Button */}
           {authenticated && shortAddress ? (
