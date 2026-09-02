@@ -153,14 +153,14 @@ export default function Sidebar() {
         />
       )}
 
-      {/* Sidebar Container (Slides in/out fully) */}
+      {/* Sidebar Container (Apple macOS Frosted Glass) */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#0a0d11] border-r-2 border-zinc-800 flex flex-col transition-transform duration-300 ease-in-out font-mono select-none ${
-          isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full pointer-events-none'
+        className={`fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#0c0c0e]/85 backdrop-blur-3xl border-r border-white/[0.08] flex flex-col transition-transform duration-300 ease-out select-none ${
+          isOpen ? 'translate-x-0 shadow-[20px_0_50px_rgba(0,0,0,0.8)]' : '-translate-x-full pointer-events-none'
         }`}
       >
         {/* 1. Header: Logo + Close Sidebar Toggle Button */}
-        <div className="p-3.5 sm:p-4 border-b-2 border-zinc-800 flex items-center justify-between gap-2">
+        <div className="p-3.5 sm:p-4 border-b border-white/[0.08] flex items-center justify-between gap-2">
           <Link
             href="/chat"
             onClick={() => {
@@ -168,26 +168,26 @@ export default function Sidebar() {
             }}
             className="flex items-center gap-2.5 group overflow-hidden"
           >
-            <SparkleIcon size={28} className="flex-shrink-0 group-hover:scale-110 transition-transform text-[var(--theme-color)]" />
-            <div className="flex flex-col leading-none">
-              <span className="font-black text-base sm:text-lg tracking-tight text-white font-mono">
+            <SparkleIcon size={28} className="flex-shrink-0 group-hover:scale-105 transition-transform text-[var(--theme-color)]" />
+            <div className="flex flex-col leading-tight">
+              <span className="font-bold text-base sm:text-lg tracking-tight text-white">
                 PONSCORE
               </span>
-              <span className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest mt-0.5">
-                ROBINHOOD L2
+              <span className="text-[10px] text-zinc-400 font-medium uppercase tracking-wider">
+                Robinhood L2
               </span>
             </div>
           </Link>
 
-          {/* Close Sidebar Button (ChatGPT style << button) */}
+          {/* Close Sidebar Button (Apple Style) */}
           <button
             type="button"
             onClick={closeSidebar}
             title="Close sidebar"
-            className="flex items-center justify-center p-1.5 rounded-md bg-[#12161d] border border-zinc-700 hover:border-white text-zinc-400 hover:text-white cursor-pointer transition-all shadow-[1px_1px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5"
+            className="flex items-center justify-center p-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] text-zinc-400 hover:text-white cursor-pointer transition-all active:scale-95 shadow-sm"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
             </svg>
           </button>
         </div>
@@ -199,20 +199,19 @@ export default function Sidebar() {
             onClick={() => {
               if (typeof window !== 'undefined' && window.innerWidth < 768) closeSidebar()
             }}
-            style={{ boxShadow: '2px 2px 0px 0px #ffffff' }}
-            className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-[var(--theme-color)] text-black border-2 border-black font-black text-xs uppercase hover:opacity-90 active:translate-x-0.5 active:translate-y-0.5 transition-all rounded-md"
+            className="flex items-center justify-center gap-2 w-full py-2.5 px-3 bg-gradient-to-b from-white to-[#e5e5ea] text-black font-semibold text-xs tracking-tight hover:scale-[1.02] active:scale-[0.98] transition-all rounded-xl shadow-[0_4px_14px_rgba(255,255,255,0.2)]"
           >
             <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
             </svg>
-            <span>NEW AI CHAT</span>
+            <span>New AI Chat</span>
           </Link>
         </div>
 
         {/* 3. Navigation Links List */}
-        <div className="flex-1 overflow-y-auto px-3 py-2 flex flex-col gap-1.5 custom-scrollbar">
-          <div className="px-2 py-1 text-[10px] font-black text-zinc-500 uppercase tracking-wider">
-            // NAVIGATION
+        <div className="flex-1 overflow-y-auto px-3 py-2 flex flex-col gap-1 custom-scrollbar">
+          <div className="px-3 py-1 text-[11px] font-semibold text-zinc-400 tracking-wider">
+            Menu
           </div>
 
           {navLinks.map((link) => {
@@ -224,53 +223,52 @@ export default function Sidebar() {
                 onClick={() => {
                   if (typeof window !== 'undefined' && window.innerWidth < 768) closeSidebar()
                 }}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-mono font-bold transition-all ${
+                className={`flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-[var(--theme-color)] text-black border-2 border-white shadow-[2px_2px_0px_0px_#ffffff]'
-                    : 'text-zinc-300 hover:text-white hover:bg-white/[0.08] border-2 border-transparent'
+                    ? 'bg-white text-black font-semibold shadow-[0_2px_10px_rgba(255,255,255,0.2)]'
+                    : 'text-zinc-300 hover:text-white hover:bg-white/[0.08]'
                 }`}
               >
                 <div className="flex-shrink-0">{link.icon}</div>
                 <div className="flex items-center justify-between flex-1 overflow-hidden">
                   <span className="truncate">{link.label}</span>
-                  <span className="text-[10px] opacity-60 ml-2">[{link.code}]</span>
                 </div>
               </Link>
             )
           })}
 
           {/* On-Chain Status */}
-          <div className="mt-4 pt-3 border-t border-zinc-800/80 flex flex-col gap-1">
-            <div className="px-2 py-1 text-[10px] font-black text-zinc-500 uppercase tracking-wider">
-              // ON-CHAIN NETWORK
+          <div className="mt-4 pt-3 border-t border-white/[0.08] flex flex-col gap-1">
+            <div className="px-3 py-1 text-[11px] font-semibold text-zinc-400 tracking-wider">
+              Network
             </div>
-            <div className="px-3 py-2 rounded-lg bg-[#12161e] border border-zinc-800 flex items-center justify-between text-[11px]">
+            <div className="px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-bold text-zinc-200">Robinhood L2</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)] animate-pulse" />
+                <span className="font-medium text-zinc-200">Robinhood L2</span>
               </div>
-              <span className="text-[10px] text-zinc-400">#4663</span>
+              <span className="text-[11px] text-zinc-400 font-mono">#4663</span>
             </div>
           </div>
         </div>
 
         {/* 4. Bottom Footer Section (User Profile + Theme Palette + Connect) */}
-        <div className="p-3 border-t-2 border-zinc-800 bg-[#07090c] flex flex-col gap-2">
+        <div className="p-3 border-t border-white/[0.08] bg-[#070709]/80 backdrop-blur-xl flex flex-col gap-2">
           {/* Theme Selector Button */}
           <div className="relative">
             <button
               type="button"
               onClick={() => setThemeMenuOpen((prev) => !prev)}
-              className="w-full flex items-center justify-between gap-2 bg-[#12161d] border border-zinc-700 hover:border-white px-2.5 py-1.5 rounded-md text-xs text-zinc-300 hover:text-white transition-all cursor-pointer"
+              className="w-full flex items-center justify-between gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-white/[0.2] px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white transition-all cursor-pointer shadow-sm"
             >
               <div className="flex items-center gap-2">
                 <div
-                  className="w-3.5 h-3.5 border border-black shadow-[1px_1px_0px_0px_#ffffff] flex-shrink-0"
+                  className="w-3.5 h-3.5 rounded-full border border-white/20 shadow-sm flex-shrink-0"
                   style={{ backgroundColor: theme.color }}
                 />
-                <span className="text-[11px] font-bold uppercase">{theme.name}</span>
+                <span className="text-xs font-medium">{theme.name}</span>
               </div>
-              <span className="text-[10px] text-zinc-500 font-bold font-mono">THEME ▾</span>
+              <span className="text-[11px] text-zinc-400 font-medium">Theme ▾</span>
             </button>
 
             {/* Theme Selector Popover */}
@@ -278,12 +276,11 @@ export default function Sidebar() {
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setThemeMenuOpen(false)} />
                 <div
-                  style={{ boxShadow: `4px 4px 0px 0px ${theme.color}` }}
-                  className="absolute bottom-full left-0 mb-2 w-52 bg-[#0e1115] border-2 border-white rounded-lg p-2 z-50 flex flex-col gap-1 shadow-2xl animate-fadeIn font-mono"
+                  className="absolute bottom-full left-0 mb-2 w-52 bg-[#1c1c1e]/90 backdrop-blur-2xl border border-white/[0.15] rounded-2xl p-2 z-50 flex flex-col gap-1 shadow-2xl animate-fadeIn"
                 >
-                  <div className="px-2 py-1 flex items-center justify-between border-b border-zinc-800 mb-1">
-                    <span className="text-[10px] font-black text-zinc-400 uppercase">// ACCENT_THEMES</span>
-                    <span className="text-[10px] text-zinc-500">[{themes.length}]</span>
+                  <div className="px-2 py-1 flex items-center justify-between border-b border-white/[0.08] mb-1">
+                    <span className="text-[11px] font-semibold text-zinc-400">Accent Colors</span>
+                    <span className="text-[10px] text-zinc-500 font-mono">[{themes.length}]</span>
                   </div>
                   <div className="grid grid-cols-1 gap-1">
                     {themes.map((t) => {
@@ -296,7 +293,7 @@ export default function Sidebar() {
                             setThemeId(t.id)
                             setThemeMenuOpen(false)
                           }}
-                          className={`flex items-center justify-between px-2.5 py-1.5 rounded text-xs font-bold transition-all cursor-pointer ${
+                          className={`flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
                             isSelected
                               ? 'bg-[var(--theme-color)] text-black border border-white'
                               : 'text-zinc-300 hover:text-white hover:bg-white/[0.08]'
@@ -322,25 +319,25 @@ export default function Sidebar() {
           {/* User Account / Connect Section */}
           {isConnected ? (
             <div className="flex flex-col gap-1.5">
-              <div className="flex items-center gap-2 p-2 rounded-lg bg-[#12161e] border border-zinc-800">
+              <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white/[0.05] border border-white/[0.08]">
                 <div
-                  className="w-6 h-6 rounded border border-white text-black font-black text-xs flex items-center justify-center flex-shrink-0"
+                  className="w-7 h-7 rounded-full text-black font-bold text-xs flex items-center justify-center flex-shrink-0 shadow-sm"
                   style={{ backgroundColor: theme.color }}
                 >
                   {displayName[1]?.toUpperCase() || displayName[0]?.toUpperCase() || 'U'}
                 </div>
                 <div className="flex flex-col overflow-hidden flex-1">
-                  <span className="text-xs font-bold text-white truncate">{displayName}</span>
-                  {shortAddr && <span className="text-[10px] text-zinc-400 truncate">{shortAddr}</span>}
+                  <span className="text-xs font-semibold text-white truncate">{displayName}</span>
+                  {shortAddr && <span className="text-[10px] text-zinc-400 font-mono truncate">{shortAddr}</span>}
                 </div>
               </div>
 
               <button
                 onClick={handleDisconnect}
                 disabled={isDisconnecting}
-                className="w-full py-1.5 px-2 bg-rose-950/40 hover:bg-rose-900 border border-rose-800/80 hover:border-rose-500 text-rose-300 text-[11px] font-black uppercase rounded transition-all cursor-pointer"
+                className="w-full py-1.5 px-2 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-medium rounded-xl transition-all cursor-pointer active:scale-98"
               >
-                {isDisconnecting ? '...' : '[✕] DISCONNECT'}
+                {isDisconnecting ? 'Disconnecting...' : 'Disconnect'}
               </button>
             </div>
           ) : (
@@ -350,38 +347,37 @@ export default function Sidebar() {
                 size="sm"
                 onClick={() => setLoginMenuOpen((prev) => !prev)}
                 loading={loggingIn}
-                className="w-full text-xs font-black uppercase py-2 shadow-[2px_2px_0px_0px_#ffffff]"
+                className="w-full text-xs font-semibold py-2.5 rounded-xl"
               >
-                CONNECT WALLET
+                Connect Wallet
               </Button>
 
               {loginMenuOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setLoginMenuOpen(false)} />
                   <div
-                    style={{ boxShadow: `4px 4px 0px 0px ${theme.color}` }}
-                    className="absolute bottom-full left-0 mb-2 w-56 bg-[#0e1115] border-2 border-white rounded-lg p-2.5 z-50 flex flex-col gap-1.5 shadow-2xl animate-fadeIn font-mono"
+                    className="absolute bottom-full left-0 mb-2 w-56 bg-[#1c1c1e]/90 backdrop-blur-2xl border border-white/[0.15] rounded-2xl p-2.5 z-50 flex flex-col gap-1.5 shadow-2xl animate-fadeIn"
                   >
-                    <div className="px-2 py-1 border-b border-zinc-800 mb-1 flex items-center justify-between">
-                      <span className="text-[10px] font-black text-zinc-400 uppercase">// SELECT_LOGIN</span>
-                      <span className="text-[10px] text-emerald-400">ROBINHOOD L2</span>
+                    <div className="px-2 py-1 border-b border-white/[0.08] mb-1 flex items-center justify-between">
+                      <span className="text-[11px] font-semibold text-zinc-400">Sign In</span>
+                      <span className="text-[10px] text-emerald-400 font-medium">Robinhood L2</span>
                     </div>
 
                     <button
                       type="button"
                       onClick={() => handleOAuth('twitter')}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-md bg-[#161a22] hover:bg-white text-zinc-200 hover:text-black font-bold text-xs transition-all border border-zinc-700 hover:border-white cursor-pointer"
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.06] hover:bg-white text-zinc-200 hover:text-black font-medium text-xs transition-all border border-white/[0.08] cursor-pointer"
                     >
                       <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                       </svg>
-                      <span>TWITTER (X)</span>
+                      <span>Twitter (X)</span>
                     </button>
 
                     <button
                       type="button"
                       onClick={() => handleOAuth('google')}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-md bg-[#161a22] hover:bg-white text-zinc-200 hover:text-black font-bold text-xs transition-all border border-zinc-700 hover:border-white cursor-pointer"
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.06] hover:bg-white text-zinc-200 hover:text-black font-medium text-xs transition-all border border-white/[0.08] cursor-pointer"
                     >
                       <svg className="w-4 h-4" viewBox="0 0 24 24">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -389,18 +385,18 @@ export default function Sidebar() {
                         <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
                         <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
                       </svg>
-                      <span>GOOGLE</span>
+                      <span>Google</span>
                     </button>
 
                     <button
                       type="button"
                       onClick={handleWalletLogin}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-md bg-[#161a22] hover:bg-white text-zinc-200 hover:text-black font-bold text-xs transition-all border border-zinc-700 hover:border-white cursor-pointer"
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.06] hover:bg-white text-zinc-200 hover:text-black font-medium text-xs transition-all border border-white/[0.08] cursor-pointer"
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                       </svg>
-                      <span>WEB3 WALLET</span>
+                      <span>Web3 Wallet</span>
                     </button>
                   </div>
                 </>

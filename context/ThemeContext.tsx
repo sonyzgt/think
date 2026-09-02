@@ -16,7 +16,7 @@ const ThemeContext = createContext<ThemeContextType>({
 })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [themeId, setThemeIdState] = useState<string>('chrome')
+  const [themeId, setThemeIdState] = useState<string>('apple_silver')
 
   useEffect(() => {
     try {

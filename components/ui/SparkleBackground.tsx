@@ -2,6 +2,24 @@
 
 import { useEffect, useRef } from 'react'
 
+interface Orb {
+  x: number
+  y: number
+  radius: number
+  vx: number
+  vy: number
+  baseAlpha: number
+}
+
+interface Particle {
+  x: number
+  y: number
+  size: number
+  vx: number
+  vy: number
+  alpha: number
+}
+
 export default function SparkleBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const mouseRef = useRef<{ x: number; y: number }>({ x: -2000, y: -2000 })
@@ -40,74 +58,76 @@ export default function SparkleBackground() {
     }
     window.addEventListener('resize', handleResize)
 
-    const GRID_SIZE = 36
+    // Ambient floating light orbs (Apple visionOS / macOS dynamic wallpaper style)
+    const orbs: Orb[] = [
+      { x: width * 0.2, y: height * 0.3, radius: 350, vx: 0.3, vy: 0.2, baseAlpha: 0.08 },
+      { x: width * 0.8, y: height * 0.6, radius: 450, vx: -0.25, vy: -0.15, baseAlpha: 0.06 },
+      { x: width * 0.5, y: height * 0.8, radius: 300, vx: 0.15, vy: -0.2, baseAlpha: 0.05 },
+    ]
+
+    // Stardust particles
+    const particles: Particle[] = Array.from({ length: 45 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 1.5 + 0.5,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.5 + 0.1,
+    }))
 
     const render = () => {
       ctx.clearRect(0, 0, width, height)
 
-      const cssColor = getComputedStyle(document.documentElement)
-        .getPropertyValue('--theme-color').trim() || '#10b981'
-
       const mx = mouseRef.current.x
       const my = mouseRef.current.y
 
-      // Draw subtle brutalist technical grid
-      ctx.lineWidth = 1
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)'
+      // 1. Draw ambient gradient orbs
+      orbs.forEach((orb) => {
+        orb.x += orb.vx
+        orb.y += orb.vy
 
-      // Vertical lines
-      for (let x = 0; x < width; x += GRID_SIZE) {
+        if (orb.x - orb.radius < 0 || orb.x + orb.radius > width) orb.vx *= -1
+        if (orb.y - orb.radius < 0 || orb.y + orb.radius > height) orb.vy *= -1
+
+        const grad = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius)
+        grad.addColorStop(0, `rgba(255, 255, 255, ${orb.baseAlpha})`)
+        grad.addColorStop(0.5, `rgba(180, 180, 195, ${orb.baseAlpha * 0.5})`)
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)')
+
+        ctx.fillStyle = grad
         ctx.beginPath()
-        ctx.moveTo(x, 0)
-        ctx.lineTo(x, height)
-        ctx.stroke()
-      }
+        ctx.arc(orb.x, orb.y, orb.radius, 0, Math.PI * 2)
+        ctx.fill()
+      })
 
-      // Horizontal lines
-      for (let y = 0; y < height; y += GRID_SIZE) {
-        ctx.beginPath()
-        ctx.moveTo(0, y)
-        ctx.lineTo(width, y)
-        ctx.stroke()
-      }
-
-      // Draw grid intersection pluses/crosses (+)
-      const crossSize = 2.5
-      for (let x = 0; x < width; x += GRID_SIZE * 2) {
-        for (let y = 0; y < height; y += GRID_SIZE * 2) {
-          const dx = x - mx
-          const dy = y - my
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          const isNear = dist < 140
-
-          ctx.strokeStyle = isNear ? cssColor : 'rgba(255, 255, 255, 0.12)'
-          ctx.lineWidth = isNear ? 1.5 : 1
-
-          ctx.beginPath()
-          ctx.moveTo(x - crossSize, y)
-          ctx.lineTo(x + crossSize, y)
-          ctx.moveTo(x, y - crossSize)
-          ctx.lineTo(x, y + crossSize)
-          ctx.stroke()
-        }
-      }
-
-      // Draw subtle interactive crosshair at cursor
+      // 2. Draw subtle mouse spotlight (Apple cursor ambient glow)
       if (mx > 0 && my > 0) {
-        ctx.strokeStyle = cssColor
-        ctx.lineWidth = 1
-        ctx.setLineDash([4, 4])
-        ctx.beginPath()
-        ctx.moveTo(mx, 0)
-        ctx.lineTo(mx, height)
-        ctx.moveTo(0, my)
-        ctx.lineTo(width, my)
-        ctx.stroke()
-        ctx.setLineDash([])
+        const mouseGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 320)
+        mouseGrad.addColorStop(0, 'rgba(255, 255, 255, 0.06)')
+        mouseGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.02)')
+        mouseGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
 
-        // Center box indicator
-        ctx.strokeRect(mx - 8, my - 8, 16, 16)
+        ctx.fillStyle = mouseGrad
+        ctx.beginPath()
+        ctx.arc(mx, my, 320, 0, Math.PI * 2)
+        ctx.fill()
       }
+
+      // 3. Draw gentle stardust particles
+      particles.forEach((p) => {
+        p.x += p.vx
+        p.y += p.vy
+
+        if (p.x < 0) p.x = width
+        if (p.x > width) p.x = 0
+        if (p.y < 0) p.y = height
+        if (p.y > height) p.y = 0
+
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
+        ctx.fill()
+      })
 
       animationFrameId = requestAnimationFrame(render)
     }
@@ -122,10 +142,10 @@ export default function SparkleBackground() {
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#000000]">
-      {/* Dark Brutalist Base */}
+      {/* Deep Apple OLED Black Backdrop */}
       <div className="absolute inset-0 bg-[#000000]" />
 
-      {/* Interactive Blueprint Canvas */}
+      {/* Dynamic Ambient Vision Glass Canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none"

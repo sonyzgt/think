@@ -20,16 +20,16 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-30 w-full border-b-2 border-zinc-800 bg-[#08090a]/95 backdrop-blur-md select-none font-mono">
+    <header className="sticky top-0 z-30 w-full border-b border-white/[0.08] bg-[#000000]/60 backdrop-blur-2xl select-none">
       <div className="w-full max-w-[1720px] mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4">
         {/* Left: Universal Sidebar Toggle Button & Breadcrumb */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          {/* Sidebar Toggle Button (ChatGPT style toggle) */}
+          {/* Sidebar Toggle Button (Apple style) */}
           <button
             type="button"
             onClick={toggleSidebar}
             title={isOpen ? 'Close sidebar' : 'Open sidebar'}
-            className="flex items-center justify-center p-2 rounded-md bg-[#12161d] border-2 border-zinc-700 hover:border-white text-zinc-200 hover:text-white cursor-pointer shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+            className="flex items-center justify-center p-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] border border-white/[0.12] text-zinc-300 hover:text-white cursor-pointer shadow-sm active:scale-95 transition-all"
           >
             <svg
               className="w-4 h-4"
@@ -37,14 +37,13 @@ export default function Navbar() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
 
           {/* Active Section Breadcrumb */}
           <div className="flex items-center gap-2">
-            <span className="hidden sm:inline text-xs font-mono text-zinc-500 font-bold tracking-wider">//</span>
-            <span className="text-xs sm:text-sm font-black text-white uppercase tracking-tight bg-[#12161d] px-2.5 py-1 rounded border border-zinc-800">
+            <span className="text-xs sm:text-sm font-semibold text-zinc-200 uppercase tracking-tight bg-white/[0.06] backdrop-blur-md px-3 py-1 rounded-xl border border-white/[0.08]">
               {getPageTitle()}
             </span>
           </div>
@@ -52,10 +51,10 @@ export default function Navbar() {
 
         {/* Right Section: Clean Network Status Badge */}
         <div className="flex items-center gap-2">
-          <div className="hidden sm:flex items-center gap-2 bg-[#12161d] border border-zinc-800 px-2.5 py-1 rounded text-[11px] font-mono">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-zinc-400 font-bold">ROBINHOOD CHAIN</span>
-            <span className="text-zinc-500 font-mono">#4663</span>
+          <div className="hidden sm:flex items-center gap-2 bg-white/[0.06] backdrop-blur-md border border-white/[0.08] px-3 py-1 rounded-xl text-xs">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)] animate-pulse" />
+            <span className="text-zinc-300 font-medium">Robinhood Chain</span>
+            <span className="text-zinc-500 font-mono text-[11px]">#4663</span>
           </div>
         </div>
       </div>

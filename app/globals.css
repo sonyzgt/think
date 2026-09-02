@@ -2,254 +2,256 @@
 
 :root {
   --background: #000000;
-  --foreground: #f8fafc;
-  --theme-color: #e2e8f0;
-  --theme-light: #ffffff;
-  --theme-dark: #94a3b8;
-  --theme-glow: rgba(255, 255, 255, 0.55);
-  --theme-subtle: rgba(226, 232, 240, 0.15);
-  --theme-border: #cbd5e1;
+  --foreground: #f5f5f7;
+  --theme-color: #0071e3;
+  --theme-light: #2997ff;
+  --theme-dark: #0056b3;
+  --theme-glow: rgba(0, 113, 227, 0.35);
+  --theme-subtle: rgba(0, 113, 227, 0.12);
+  --theme-border: rgba(255, 255, 255, 0.15);
   --accent: var(--theme-color);
-  --accent-hover: var(--theme-dark);
-  --surface: #07080a;
-  --surface-border: #27272a;
-  --brutal-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-  --brutal-shadow-theme: 4px 4px 0px 0px var(--theme-color);
-  --brutal-shadow-white: 4px 4px 0px 0px #ffffff;
-  --chrome-gradient: linear-gradient(135deg, #ffffff 0%, #cbd5e1 45%, #94a3b8 75%, #e2e8f0 100%);
-  --silver-gradient: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
+  --accent-hover: var(--theme-light);
+  --surface: #1c1c1e;
+  --surface-secondary: #2c2c2e;
+  --surface-border: rgba(255, 255, 255, 0.12);
+  --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --apple-mono: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--theme-color);
-  --font-sans: var(--font-geist-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
-  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+  --font-sans: var(--apple-font);
+  --font-mono: var(--apple-mono);
 }
 
 body {
   background-color: #000000;
-  color: #f8fafc;
-  font-family: var(--font-sans);
+  color: #f5f5f7;
+  font-family: var(--apple-font);
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.015em;
 }
 
-/* Custom scrollbars - Minimalist Brutalist Chrome */
+/* Apple Smooth Minimalist Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000000;
-  border-left: 1px solid #1f242d;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #475569;
-  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #e2e8f0;
+  background: rgba(255, 255, 255, 0.35);
 }
 
-/* ── BLACK + CHROME + SILVER DESIGN SYSTEM ── */
+/* ── APPLE HIG DESIGN SYSTEM (macOS & visionOS Glassmorphism) ── */
 
-/* Chrome Metallic Gradient Text */
-.chrome-text {
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 40%, #94a3b8 70%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Silver Shimmer Effect */
-.silver-shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.03) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-/* Brutalist Main Card / Container */
+/* Frosted Glass Card / Container */
 .brutal-card,
-.liquid-glass {
-  background-color: #07090c;
-  border: 2px solid rgba(255, 255, 255, 0.16);
-  border-radius: 12px;
-  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.05);
+.liquid-glass,
+.apple-glass {
+  background: rgba(28, 28, 30, 0.65) !important;
+  backdrop-filter: blur(30px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.12) !important;
   position: relative;
-  transition: all 0.15s ease-in-out;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .brutal-card-highlight,
-.liquid-glass:hover {
-  border-color: rgba(255, 255, 255, 0.35);
+.liquid-glass:hover,
+.apple-glass:hover {
+  border-color: rgba(255, 255, 255, 0.24) !important;
 }
 
-/* Brutalist Interactive Card (Token Grid / Items) */
+/* Interactive Card (Token Grid / Items) */
 .brutal-card-interactive,
-.liquid-glass-card {
-  background-color: #0a0d12;
-  border: 2px solid #27272a;
-  border-radius: 12px;
-  box-shadow: 3px 3px 0px 0px #000000;
+.liquid-glass-card,
+.apple-card-interactive {
+  background: rgba(28, 28, 30, 0.5) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.08) !important;
   position: relative;
-  transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s ease-out;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease !important;
 }
 
 .brutal-card-interactive:hover,
-.liquid-glass-card:hover {
-  transform: translate(-2px, -2px);
-  border-color: #ffffff;
-  box-shadow: 4px 4px 0px 0px #ffffff;
+.liquid-glass-card:hover,
+.apple-card-interactive:hover {
+  transform: translateY(-3px) scale(1.008) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.65), 0 0 20px -2px var(--theme-glow), inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
 }
 
 .brutal-card-interactive:active,
-.liquid-glass-card:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px 0px #ffffff;
+.liquid-glass-card:active,
+.apple-card-interactive:active {
+  transform: translateY(0px) scale(0.99) !important;
 }
 
-/* Brutalist Pill / Tab / Filter Badge */
+/* Apple Pill / Segmented Tab Control */
 .brutal-pill,
-.liquid-pill {
-  background-color: #0c0f14;
-  border: 1.5px solid #27272a;
-  border-radius: 8px;
-  box-shadow: 2px 2px 0px 0px #000000;
-  transition: all 0.12s ease-out;
+.liquid-pill,
+.apple-pill {
+  background: rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .brutal-pill:hover,
-.liquid-pill:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0px 0px #000000;
+.liquid-pill:hover,
+.apple-pill:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
 }
 
 .brutal-pill-active,
-.liquid-pill-active {
-  background-color: var(--theme-color) !important;
+.liquid-pill-active,
+.apple-pill-active {
+  background: #ffffff !important;
   color: #000000 !important;
-  font-weight: 800 !important;
-  border: 1.5px solid #ffffff !important;
-  box-shadow: 3px 3px 0px 0px #000000 !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.25) !important;
 }
 
 .brutal-pill-active *,
-.liquid-pill-active * {
+.liquid-pill-active *,
+.apple-pill-active * {
   color: #000000 !important;
 }
 
-/* Brutalist Buttons (Tactile 3D Hard Shadow) */
+/* Apple Primary Button */
 .brutal-btn-primary,
-.liquid-btn-primary {
-  background: var(--chrome-gradient) !important;
+.liquid-btn-primary,
+.apple-btn-primary {
+  background: linear-gradient(180deg, #ffffff 0%, #ebebef 100%) !important;
   color: #000000 !important;
-  font-weight: 900 !important;
-  border: 2px solid #ffffff !important;
-  border-radius: 8px !important;
-  box-shadow: 3px 3px 0px 0px #ffffff !important;
-  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.9) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .brutal-btn-primary:hover,
-.liquid-btn-primary:hover {
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 5px 5px 0px 0px #ffffff !important;
+.liquid-btn-primary:hover,
+.apple-btn-primary:hover {
+  transform: scale(1.02) !important;
+  box-shadow: 0 6px 22px 0 rgba(255, 255, 255, 0.35) !important;
 }
 
 .brutal-btn-primary:active,
-.liquid-btn-primary:active {
-  transform: translate(2px, 2px) !important;
-  box-shadow: 0px 0px 0px 0px transparent !important;
+.liquid-btn-primary:active,
+.apple-btn-primary:active {
+  transform: scale(0.97) !important;
+  box-shadow: 0 2px 8px 0 rgba(255, 255, 255, 0.15) !important;
 }
 
-/* Chrome Theme Override */
-[data-theme="chrome"] .brutal-btn-primary,
-[data-theme="chrome"] .liquid-btn-primary,
-[data-theme="silver"] .brutal-btn-primary,
-[data-theme="silver"] .liquid-btn-primary,
-[data-theme="platinum"] .brutal-btn-primary,
-[data-theme="platinum"] .liquid-btn-primary {
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%) !important;
-  color: #000000 !important;
-  border: 2px solid #ffffff !important;
-  box-shadow: 3px 3px 0px 0px #ffffff !important;
-}
-
+/* Apple Secondary Button */
 .brutal-btn-secondary,
-.liquid-btn-secondary {
-  background-color: #0e1217 !important;
-  color: #f1f5f9 !important;
-  font-weight: 700 !important;
-  border: 2px solid #334155 !important;
-  border-radius: 8px !important;
-  box-shadow: 3px 3px 0px 0px #000000 !important;
-  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, border-color 0.1s ease-out !important;
+.liquid-btn-secondary,
+.apple-btn-secondary {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  color: #f5f5f7 !important;
+  font-weight: 500 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.06) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .brutal-btn-secondary:hover,
-.liquid-btn-secondary:hover {
-  border-color: #ffffff !important;
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 4px 4px 0px 0px #ffffff !important;
+.liquid-btn-secondary:hover,
+.apple-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  transform: scale(1.02) !important;
 }
 
 .brutal-btn-secondary:active,
-.liquid-btn-secondary:active {
-  transform: translate(2px, 2px) !important;
-  box-shadow: 0px 0px 0px 0px transparent !important;
+.liquid-btn-secondary:active,
+.apple-btn-secondary:active {
+  transform: scale(0.97) !important;
 }
 
+/* Apple Danger Button */
 .brutal-btn-danger,
-.liquid-btn-danger {
-  background-color: #e11d48 !important;
+.liquid-btn-danger,
+.apple-btn-danger {
+  background: linear-gradient(180deg, #ff453a 0%, #d70015 100%) !important;
   color: #ffffff !important;
-  font-weight: 800 !important;
-  border: 2px solid #fda4af !important;
-  border-radius: 8px !important;
-  box-shadow: 3px 3px 0px 0px #000000 !important;
-  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255, 69, 58, 0.5) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 14px rgba(255, 69, 58, 0.35) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .brutal-btn-danger:hover,
-.liquid-btn-danger:hover {
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 5px 5px 0px 0px #000000 !important;
+.liquid-btn-danger:hover,
+.apple-btn-danger:hover {
+  transform: scale(1.02) !important;
+  box-shadow: 0 6px 20px rgba(255, 69, 58, 0.5) !important;
 }
 
-/* Brutalist Inputs */
-.brutal-input {
-  background-color: #05070a;
-  border: 2px solid #27272a;
-  border-radius: 8px;
-  color: #ffffff;
-  box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.8);
-  transition: border-color 0.12s ease-out, box-shadow 0.12s ease-out;
+.brutal-btn-danger:active,
+.liquid-btn-danger:active,
+.apple-btn-danger:active {
+  transform: scale(0.97) !important;
 }
 
-.brutal-input:focus {
-  outline: none;
-  border-color: #ffffff;
-  box-shadow: 0 0 0 1px #ffffff, inset 2px 2px 0px 0px rgba(0, 0, 0, 0.8);
+/* Apple Input Fields */
+.brutal-input,
+.apple-input {
+  background: rgba(28, 28, 30, 0.6) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.brutal-input:focus,
+.apple-input:focus {
+  outline: none !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12), inset 0 1px 3px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* ── Animation Helpers ── */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.18s ease-out forwards;
+  animation: fadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ── Marquee / Ticker ── */
@@ -266,13 +268,4 @@ body {
 
 .animate-marquee:hover {
   animation-play-state: paused;
-}
-
-/* ── Subtle Technical Glow ── */
-.theme-glow {
-  box-shadow: 0 0 25px -4px var(--theme-glow);
-}
-
-.chrome-glow {
-  box-shadow: 0 0 30px -4px rgba(255, 255, 255, 0.25);
 }
