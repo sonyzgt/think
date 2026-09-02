@@ -195,15 +195,18 @@ export default function WorldFlagMap({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onWheel={handleWheel}
-      className="relative w-full h-full min-h-[calc(100vh-57px)] flex-1 overflow-hidden bg-white select-none cursor-grab active:cursor-grabbing"
+      className="relative w-full h-full min-h-[calc(100vh-57px)] flex-1 overflow-hidden select-none cursor-grab active:cursor-grabbing bg-[#081B30]"
+      style={{
+        backgroundImage: 'radial-gradient(ellipse at 50% 50%, #0F2D4E 0%, #081B30 55%, #040E1B 100%)',
+      }}
     >
-      {/* 1. Floating Top Overlay: Minimal Search Bar & Real Dynamic Legend */}
+      {/* 1. Floating Top Overlay: Dark Search Bar & Real Dynamic Legend */}
       <div className="absolute top-4 left-4 right-4 z-20 flex items-start justify-between pointer-events-none gap-3">
-        {/* Search Bar with Autocomplete Dropdown */}
+        {/* Search Bar with Autocomplete Dropdown (Dark Hardware Panel) */}
         <div className="relative w-full max-w-xs sm:max-w-sm pointer-events-auto">
           <div className="relative">
             <svg
-              className="w-3.5 h-3.5 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
+              className="w-3.5 h-3.5 text-[#737B84] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -217,13 +220,13 @@ export default function WorldFlagMap({
               onFocus={() => setSearchFocused(true)}
               onBlur={() => setTimeout(() => setSearchFocused(false), 250)}
               placeholder="Search country..."
-              className="w-full bg-white border border-[#D8D8D8] focus:border-[#FF6A00] focus:ring-2 focus:ring-[#FF6A00]/20 text-[#111111] placeholder-zinc-400 pl-9 pr-3.5 py-2 rounded-xl text-xs font-mono outline-none shadow-sm transition-all"
+              className="w-full bg-[#0A0D11] border border-[#30363D] focus:border-[#FF6A00] focus:ring-2 focus:ring-[#FF6A00]/25 text-[#F5F5F5] placeholder-[#737B84] pl-9 pr-3.5 py-2 rounded-xl text-xs font-mono outline-none shadow-xl transition-all"
             />
           </div>
 
-          {/* Autocomplete Results Popover */}
+          {/* Autocomplete Results Popover (Dark Panel) */}
           {searchFocused && searchResults.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-[#D8D8D8] rounded-xl p-1.5 shadow-xl z-40 flex flex-col gap-1 animate-fadeIn">
+            <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#0B0E12] border border-[#292F36] rounded-xl p-1.5 shadow-2xl z-40 flex flex-col gap-1 animate-fadeIn">
               {searchResults.map((c) => {
                 const status = countryStatusMap.get(c.code.toUpperCase())
                 const isActive = !!status?.isActive
@@ -238,12 +241,12 @@ export default function WorldFlagMap({
                       handleCountryClick(c)
                       setSearchQuery('')
                     }}
-                    className="flex items-center justify-between p-2 rounded-lg hover:bg-[#FFF0E6] text-left transition-all cursor-pointer"
+                    className="flex items-center justify-between p-2 rounded-lg hover:bg-[#15191E] text-left transition-all cursor-pointer"
                   >
                     <div className="flex items-center gap-2">
                       <span className="text-base">{c.flagEmoji}</span>
-                      <span className="text-xs font-bold text-[#111111]">{c.name}</span>
-                      <span className="text-[10px] text-[#888888] font-mono">${c.symbol}</span>
+                      <span className="text-xs font-bold text-[#F5F5F5]">{c.name}</span>
+                      <span className="text-[10px] text-[#8A929B] font-mono">${c.symbol}</span>
                     </div>
 
                     {isActive ? (
@@ -251,7 +254,7 @@ export default function WorldFlagMap({
                         ● ACTIVE
                       </span>
                     ) : (
-                      <span className="text-[9px] font-mono text-[#888888] bg-[#F5F5F3] border border-[#E2E2E2] px-2 py-0.5 rounded">
+                      <span className="text-[9px] font-mono text-[#8A929B] bg-[#15191E] border border-[#2A3036] px-2 py-0.5 rounded">
                         ○ NOT LAUNCHED
                       </span>
                     )}
@@ -262,34 +265,34 @@ export default function WorldFlagMap({
           )}
         </div>
 
-        {/* Minimal Floating Map Legend */}
-        <div className="hidden sm:flex items-center gap-3 bg-white border border-[#D8D8D8] px-3.5 py-1.5 rounded-xl text-xs shadow-sm pointer-events-auto">
+        {/* Floating Map Legend (Dark Hardware Panel) */}
+        <div className="hidden sm:flex items-center gap-3 bg-[#0B0E12] border border-[#2A3036] px-3.5 py-1.5 rounded-xl text-xs shadow-xl pointer-events-auto">
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full skeuo-led-orange flex-shrink-0" />
-            <span className="text-[#111111] font-mono font-bold text-[11px]">{activeCount} ACTIVE</span>
+            <span className="text-[#F5F5F5] font-mono font-bold text-[11px]">{activeCount} ACTIVE</span>
           </div>
-          <span className="text-[#D8D8D8]">|</span>
+          <span className="text-[#2A3036]">|</span>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full skeuo-led-off flex-shrink-0" />
-            <span className="text-[#777777] font-mono text-[11px]">{availableCount} AVAILABLE</span>
+            <span className="text-[#8A929B] font-mono text-[11px]">{availableCount} AVAILABLE</span>
           </div>
         </div>
       </div>
 
-      {/* 2. Left Floating Market Cap Leaderboard */}
+      {/* 2. Left Floating Dark Market Cap Leaderboard */}
       <NationLeaderboard
         tokens={tokens}
         onSelectCountry={handleCountryClick}
         onFocusCountry={focusCountry}
       />
 
-      {/* 3. Floating Tactile 3D Zoom Controls */}
-      <div className="absolute bottom-5 right-5 z-20 flex flex-col gap-1.5 bg-white border border-[#D8D8D8] p-1.5 rounded-xl shadow-md">
+      {/* 3. Floating Tactile 3D Zoom Controls (Dark Hardware Panel) */}
+      <div className="absolute bottom-5 right-5 z-20 flex flex-col gap-1.5 bg-[#0B0E12] border border-[#2A3036] p-1.5 rounded-xl shadow-2xl">
         <button
           type="button"
           onClick={(e) => { e.stopPropagation(); handleZoom(1.3) }}
           title="Zoom In"
-          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-[#111111] font-black text-sm cursor-pointer hover:text-[#FF6A00]"
+          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-[#E5E7E9] font-black text-sm cursor-pointer hover:text-[#FF6A00]"
         >
           +
         </button>
@@ -297,7 +300,7 @@ export default function WorldFlagMap({
           type="button"
           onClick={(e) => { e.stopPropagation(); handleZoom(0.75) }}
           title="Zoom Out"
-          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-[#111111] font-black text-sm cursor-pointer hover:text-[#FF6A00]"
+          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-[#E5E7E9] font-black text-sm cursor-pointer hover:text-[#FF6A00]"
         >
           −
         </button>
@@ -305,13 +308,13 @@ export default function WorldFlagMap({
           type="button"
           onClick={(e) => { e.stopPropagation(); handleResetView() }}
           title="Reset Map View"
-          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-[#111111] text-xs font-bold cursor-pointer hover:text-[#FF6A00]"
+          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-[#E5E7E9] text-xs font-bold cursor-pointer hover:text-[#FF6A00]"
         >
           ⟲
         </button>
       </div>
 
-      {/* 3. True Fullscreen Geographical SVG Map Engine */}
+      {/* 3. True Fullscreen Geographical SVG Map Engine (On White Canvas) */}
       <div
         className="w-full h-full flex items-center justify-center transition-transform duration-75 ease-out"
         style={{
@@ -361,12 +364,12 @@ export default function WorldFlagMap({
 
             {/* Glowing Orange Filter for Active Countries */}
             <filter id="geo-active-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="1" stdDeviation="2.5" floodColor="#FF6A00" floodOpacity="0.45" />
+              <feDropShadow dx="0" dy="1" stdDeviation="2.5" floodColor="#FF6A00" floodOpacity="0.55" />
             </filter>
           </defs>
 
-          {/* Graticule / Clean Cartographic Grid */}
-          <g opacity="0.45" stroke="#E5E7EB" strokeWidth="0.75" strokeDasharray="3,3">
+          {/* Graticule / Nautical Ocean Grid */}
+          <g opacity="0.14" stroke="#38BDF8" strokeWidth="0.75" strokeDasharray="3,3">
             <line x1="0" y1="260" x2="1000" y2="260" />
             <line x1="500" y1="0" x2="500" y2="520" />
             <line x1="250" y1="0" x2="250" y2="520" />
@@ -427,16 +430,16 @@ export default function WorldFlagMap({
                         ? '#FF6A00'
                         : isActive
                         ? '#FF6A00'
-                        : '#D8D8D8'
+                        : 'rgba(255, 255, 255, 0.35)'
                     }
                     strokeWidth={
                       isHighlighted
                         ? 2.5
                         : isActive
                         ? 2.0
-                        : 0.75
+                        : 0.65
                     }
-                    className="hover:stroke-[#FF6A00] hover:stroke-[2px] hover:opacity-100 transition-all duration-100 filter hover:brightness-110"
+                    className="hover:stroke-[#FF6A00] hover:stroke-[2px] hover:opacity-100 transition-all duration-100 filter hover:brightness-125"
                     filter={isActive || isHighlighted ? 'url(#geo-active-glow)' : undefined}
                   />
 
@@ -463,10 +466,10 @@ export default function WorldFlagMap({
         </svg>
       </div>
 
-      {/* 4. Clean Minimal Country Hover Tooltip */}
+      {/* 4. Clean Floating Country Hover Tooltip (Dark Hardware Panel) */}
       {hoveredCountry && (
         <div
-          className="absolute z-30 pointer-events-none bg-white border border-[#D8D8D8] rounded-xl px-3 py-1.5 shadow-xl flex items-center gap-2 animate-fadeIn transition-transform"
+          className="absolute z-30 pointer-events-none bg-[#0B0E12] border border-[#292F36] rounded-xl px-3 py-1.5 shadow-2xl flex items-center gap-2 animate-fadeIn transition-transform select-none"
           style={{
             left: `${Math.min(
               (containerRef.current?.clientWidth || 500) - 170,
@@ -480,7 +483,7 @@ export default function WorldFlagMap({
         >
           <span className="text-base">{hoveredCountry.country.flagEmoji}</span>
           <div className="flex flex-col">
-            <span className="text-xs font-bold text-[#111111] tracking-tight uppercase">
+            <span className="text-xs font-bold text-[#F5F5F5] tracking-tight uppercase">
               {hoveredCountry.country.name}
             </span>
             {hoveredCountry.isActive ? (
@@ -488,7 +491,7 @@ export default function WorldFlagMap({
                 ● ACTIVE
               </span>
             ) : (
-              <span className="text-[10px] font-medium text-[#777777]">
+              <span className="text-[10px] font-medium text-[#8A929B]">
                 ○ NOT LAUNCHED
               </span>
             )}
@@ -530,13 +533,13 @@ export default function WorldFlagMap({
         />
       )}
 
-      {/* 7. Occupied Nation Pop-up Notification Announcement Modal */}
+      {/* 7. Occupied Nation Pop-up Notification Announcement Modal (Dark Panel) */}
       {occupiedAnnouncement && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-fadeIn select-none font-mono">
-          <div className="w-full max-w-md bg-white p-5 rounded-2xl border border-[#D8D8D8] shadow-2xl flex flex-col items-center text-center gap-4 animate-scaleUp">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fadeIn select-none font-mono">
+          <div className="w-full max-w-md bg-[#0B0E12] p-5 rounded-2xl border border-[#292F36] shadow-2xl flex flex-col items-center text-center gap-4 animate-scaleUp">
             {/* Medallion */}
             <div className="relative">
-              <div className="w-16 h-16 rounded-2xl bg-[#F5F5F3] border border-[#E2E2E2] p-1 shadow-inner flex items-center justify-center">
+              <div className="w-16 h-16 rounded-2xl bg-[#080A0D] border border-[#20252B] p-1 shadow-inner flex items-center justify-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={occupiedAnnouncement.country.flagUrl}
@@ -552,22 +555,22 @@ export default function WorldFlagMap({
             <div className="flex flex-col gap-1">
               <div className="flex items-center justify-center gap-2">
                 <span className="text-lg">{occupiedAnnouncement.country.flagEmoji}</span>
-                <h3 className="text-xl font-black text-[#111111] uppercase tracking-tight">
+                <h3 className="text-xl font-black text-[#F5F5F5] uppercase tracking-tight">
                   {occupiedAnnouncement.country.name} OCCUPIED!
                 </h3>
               </div>
-              <span className="text-xs font-mono text-[#555555]">
+              <span className="text-xs font-mono text-[#8A929B]">
                 Nation token <strong className="text-[#FF6A00] font-bold">${occupiedAnnouncement.symbol}</strong> is now officially active.
               </span>
             </div>
 
             {/* Inactivity notice */}
-            <div className="w-full p-3 rounded-xl bg-[#FFF7F2] border border-[#FFE0CC] text-left flex flex-col gap-1 text-[11px]">
+            <div className="w-full p-3 rounded-xl bg-[#15191E] border border-[#343A41] text-left flex flex-col gap-1 text-[11px]">
               <div className="flex items-center gap-1.5 text-[#FF6A00] font-bold">
                 <span>⏱️</span>
                 <span>10-Minute Activity Window</span>
               </div>
-              <p className="text-[#555555] font-sans leading-relaxed">
+              <p className="text-[#8A929B] font-sans leading-relaxed">
                 If no buy transactions occur within 10 minutes, this nation slot will automatically reset and become available again for anyone to claim!
               </p>
             </div>
@@ -588,7 +591,7 @@ export default function WorldFlagMap({
               <button
                 type="button"
                 onClick={() => setOccupiedAnnouncement(null)}
-                className="w-full py-1.5 px-4 rounded-xl skeuo-button text-[#111111] text-xs font-mono font-bold cursor-pointer"
+                className="w-full py-1.5 px-4 rounded-xl skeuo-button text-[#E5E7E9] text-xs font-mono font-bold cursor-pointer"
               >
                 DISMISS
               </button>

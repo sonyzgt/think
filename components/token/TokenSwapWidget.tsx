@@ -527,10 +527,10 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
   }
 
   return (
-    <div className="flex flex-col bg-white border border-[#D8D8D8] rounded-xl p-4 gap-3 select-none text-[#111111] shadow-xs">
+    <div className="flex flex-col bg-[#0B0E12] border border-[#292F36] rounded-xl p-4 gap-3 select-none text-[#F5F5F5] shadow-xl">
       {/* Buy / Sell Tabs */}
       <div className="flex items-center justify-between gap-3">
-        <div className="grid grid-cols-2 bg-[#F5F5F3] p-1 rounded-xl border border-[#E2E2E2] w-full">
+        <div className="grid grid-cols-2 bg-[#080A0D] p-1 rounded-xl border border-[#20252B] w-full">
           <button
             type="button"
             onClick={() => {
@@ -539,8 +539,8 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
             }}
             className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
               isBuy
-                ? 'bg-[#FF6A00] text-white shadow-xs'
-                : 'text-[#777777] hover:text-[#111111]'
+                ? 'bg-[#FF6A00] text-white shadow-md'
+                : 'text-[#8B929A] hover:text-[#F5F5F5]'
             }`}
           >
             Buy ${token.symbol}
@@ -553,8 +553,8 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
             }}
             className={`py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
               !isBuy
-                ? 'bg-[#D94F00] text-white shadow-xs'
-                : 'text-[#777777] hover:text-[#111111]'
+                ? 'bg-[#D94F00] text-white shadow-md'
+                : 'text-[#8B929A] hover:text-[#F5F5F5]'
             }`}
           >
             Sell ${token.symbol}
@@ -565,7 +565,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
         <button
           type="button"
           onClick={() => setShowSettings((p) => !p)}
-          className="p-2 rounded-xl bg-[#F5F5F3] hover:bg-[#FFF0E6] text-[#777777] hover:text-[#FF6A00] border border-[#E2E2E2] hover:border-[#FF6A00] transition-all text-xs font-bold flex items-center gap-1.5 flex-shrink-0 cursor-pointer shadow-xs active:scale-95"
+          className="p-2 rounded-xl bg-[#15191E] hover:bg-[#1C2229] text-[#8B929A] hover:text-[#FF6A00] border border-[#343A41] hover:border-[#FF6A00] transition-all text-xs font-bold flex items-center gap-1.5 flex-shrink-0 cursor-pointer shadow-sm active:scale-95"
           title="Slippage Settings"
         >
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -583,9 +583,9 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
 
       {/* Slippage Settings Drawer */}
       {showSettings && (
-        <div className="bg-[#F5F5F3] border border-[#E2E2E2] rounded-xl p-3 flex flex-col gap-2 animate-fadeIn">
+        <div className="bg-[#080A0D] border border-[#20252B] rounded-xl p-3 flex flex-col gap-2 animate-fadeIn">
           <div className="flex justify-between items-center text-xs">
-            <span className="font-bold text-[#777777]">Slippage Tolerance</span>
+            <span className="font-bold text-[#8B929A]">Slippage Tolerance</span>
             <span className="text-[#FF6A00] font-bold">{slippage}%</span>
           </div>
           <div className="grid grid-cols-4 gap-2">
@@ -596,8 +596,8 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
                 onClick={() => setSlippage(s)}
                 className={`py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
                   slippage === s
-                    ? 'bg-[#FF6A00] text-white border-[#D94F00] shadow-xs'
-                    : 'bg-white text-[#777777] border-[#D8D8D8] hover:text-[#111111]'
+                    ? 'bg-[#FF6A00] text-white border-[#FF6A00] shadow-sm'
+                    : 'bg-[#15191E] text-[#8B929A] border-[#343A41] hover:text-[#F5F5F5]'
                 }`}
               >
                 {s}%
@@ -609,20 +609,20 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
 
       {/* Graduated Notification Banner */}
       {isGraduated && (
-        <div className="bg-[#FFF7F2] border border-[#FFE0CC] rounded-xl p-3 flex items-center justify-between gap-2 animate-fadeIn">
+        <div className="bg-[#15191E] border border-[#FF6A00]/30 rounded-xl p-3 flex items-center justify-between gap-2 animate-fadeIn">
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-bold px-2 py-0.5 bg-[#FF6A00] text-white rounded-md">
               Graduated
             </span>
-            <span className="text-xs text-[#111111] font-bold">100% Raised → Uniswap v4 Locked</span>
+            <span className="text-xs text-[#F5F5F5] font-bold">100% Raised → Uniswap v4 Locked</span>
           </div>
           <span className="text-[11px] text-[#FF6A00] font-bold hidden sm:inline">Uniswap Pool</span>
         </div>
       )}
 
       {/* Amount Input Box */}
-      <div className="bg-[#F5F5F3] border border-[#E2E2E2] rounded-xl p-3.5 flex flex-col gap-2.5">
-        <div className="flex items-center justify-between text-xs text-[#777777]">
+      <div className="bg-[#080A0D] border border-[#20252B] rounded-xl p-3.5 flex flex-col gap-2.5 shadow-inner">
+        <div className="flex items-center justify-between text-xs text-[#8B929A]">
           <span className="font-bold">{isBuy ? 'You Pay' : `You Pay ($${token.symbol})`}</span>
           <div className="flex items-center gap-1.5">
             <span>
@@ -654,18 +654,18 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="0.0"
-            className="flex-1 w-0 min-w-0 bg-transparent text-2xl font-black text-[#111111] placeholder-zinc-400 focus:outline-none"
+            className="flex-1 w-0 min-w-0 bg-transparent text-2xl font-black text-[#F5F5F5] placeholder-[#5A626C] focus:outline-none"
           />
 
-          <div className="flex items-center gap-2 bg-white px-3 py-1.5 rounded-xl border border-[#D8D8D8] flex-shrink-0 shadow-xs">
+          <div className="flex items-center gap-2 bg-[#15191E] px-3 py-1.5 rounded-xl border border-[#343A41] flex-shrink-0 shadow-xs">
             {isBuy ? (
               <>
                 <SparkleIcon size={14} className="text-[#FF6A00] flex-shrink-0" />
-                <span className="text-xs font-bold text-[#111111]">ETH</span>
+                <span className="text-xs font-bold text-[#F5F5F5]">ETH</span>
               </>
             ) : (
               <>
-                <div className="w-5 h-5 rounded-full overflow-hidden border border-[#D8D8D8] flex items-center justify-center bg-white">
+                <div className="w-5 h-5 rounded-full overflow-hidden border border-[#343A41] flex items-center justify-center bg-[#080A0D]">
                   <TokenImage
                     src={token.logo}
                     alt={token.symbol}
@@ -674,7 +674,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="text-xs font-bold text-[#111111] truncate max-w-[80px]">
+                <span className="text-xs font-bold text-[#F5F5F5] truncate max-w-[80px]">
                   {token.symbol}
                 </span>
               </>
@@ -695,7 +695,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
                   key={c.label}
                   type="button"
                   onClick={() => setAmount(c.val)}
-                  className="py-1 rounded-lg bg-white hover:bg-[#FFF0E6] text-[#777777] hover:text-[#FF6A00] border border-[#D8D8D8] hover:border-[#FF6A00] text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                  className="py-1 rounded-lg bg-[#15191E] hover:bg-[#1C2229] text-[#8B929A] hover:text-[#FF6A00] border border-[#343A41] hover:border-[#FF6A00] text-xs font-bold transition-all cursor-pointer shadow-xs"
                 >
                   {c.label} ETH
                 </button>
@@ -713,7 +713,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
                     const raw = tokenBalanceNum * c.pct
                     setAmount(raw >= 1 ? Math.floor(raw).toString() : raw.toFixed(2))
                   }}
-                  className="py-1 rounded-lg bg-white hover:bg-[#FFF0E6] text-[#777777] hover:text-[#FF6A00] border border-[#D8D8D8] hover:border-[#FF6A00] text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                  className="py-1 rounded-lg bg-[#15191E] hover:bg-[#1C2229] text-[#8B929A] hover:text-[#FF6A00] border border-[#343A41] hover:border-[#FF6A00] text-xs font-bold transition-all cursor-pointer shadow-xs"
                 >
                   {c.label}
                 </button>
@@ -722,10 +722,10 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
       </div>
 
       {/* Output Preview */}
-      <div className="bg-[#F5F5F3] border border-[#E2E2E2] rounded-xl p-3.5 flex flex-col gap-1.5">
-        <div className="flex items-center justify-between text-xs text-[#777777]">
+      <div className="bg-[#080A0D] border border-[#20252B] rounded-xl p-3.5 flex flex-col gap-1.5">
+        <div className="flex items-center justify-between text-xs text-[#8B929A]">
           <span className="font-bold">{isBuy ? 'You Receive' : 'You Receive (ETH)'}</span>
-          <span className="text-[11px] text-[#888888] font-medium">
+          <span className="text-[11px] text-[#5A626C] font-medium">
             {fetchingQuote ? 'Fetching quote...' : 'Estimated output'}
           </span>
         </div>
@@ -738,17 +738,17 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
                 : estimatedOutput.toFixed(6)
               : '0.00'}
           </span>
-          <span className="text-xs font-bold text-[#111111] bg-white px-2.5 py-1 rounded-lg border border-[#D8D8D8] flex-shrink-0 shadow-2xs">
+          <span className="text-xs font-bold text-[#F5F5F5] bg-[#15191E] px-2.5 py-1 rounded-lg border border-[#343A41] flex-shrink-0 shadow-xs">
             {isBuy ? `$${token.symbol}` : 'ETH'}
           </span>
         </div>
       </div>
 
       {/* Breakdown Details */}
-      <div className="bg-white border border-[#E2E2E2] rounded-xl p-3 flex flex-col gap-1 text-xs text-[#777777]">
+      <div className="bg-[#15191E] border border-[#2A3036] rounded-xl p-3 flex flex-col gap-1 text-xs text-[#8B929A]">
         <div className="flex justify-between">
           <span>Min. Received ({slippage}% slip):</span>
-          <span className="text-[#111111] font-bold">
+          <span className="text-[#F5F5F5] font-bold">
             {minReceived > 0
               ? isBuy
                 ? `${minReceived.toLocaleString('en-US', { maximumFractionDigits: 2 })} $${token.symbol}`
@@ -762,7 +762,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
         </div>
         <div className="flex justify-between">
           <span>Execution Route:</span>
-          <span className="font-bold text-[#111111]">
+          <span className="font-bold text-[#F5F5F5]">
             {executionRouteDisplay}
           </span>
         </div>
@@ -776,7 +776,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
             setLoggingIn(true)
             await initOAuth({ provider: 'twitter' })
           }}
-          className="w-full py-3 text-xs font-black uppercase tracking-wider rounded-xl skeuo-button-primary text-white cursor-pointer shadow-md"
+          className="w-full py-3 text-xs font-black uppercase tracking-wider rounded-xl skeuo-button-primary text-white cursor-pointer shadow-lg"
         >
           {loggingIn ? 'Connecting...' : 'Connect Wallet to Swap'}
         </button>
@@ -785,9 +785,9 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
           type="button"
           onClick={handleSwap}
           disabled={!hasSufficientBalance || swapping}
-          className={`w-full py-3 text-xs font-black uppercase tracking-wider rounded-xl cursor-pointer text-white shadow-md transition-all ${
+          className={`w-full py-3 text-xs font-black uppercase tracking-wider rounded-xl cursor-pointer text-white shadow-lg transition-all ${
             !hasSufficientBalance
-              ? 'bg-zinc-300 text-zinc-500 cursor-not-allowed border border-zinc-400'
+              ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-700'
               : isBuy
               ? 'skeuo-button-primary'
               : 'bg-[#D94F00] hover:bg-[#FF6A00] border border-[#B83200]'
@@ -810,7 +810,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
             href={`https://dexscreener.com/robinhood/${token.tokenAddress}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="py-1.5 bg-[#F5F5F3] hover:bg-[#FFF0E6] text-[#555555] hover:text-[#FF6A00] border border-[#D8D8D8] text-[11px] font-bold text-center rounded-xl transition-all"
+            className="py-1.5 bg-[#15191E] hover:bg-[#1C2229] text-[#8B929A] hover:text-[#FF6A00] border border-[#343A41] text-[11px] font-bold text-center rounded-xl transition-all"
           >
             DexScreener ↗
           </a>
@@ -818,7 +818,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
             href={`https://gmgn.ai/robinhood/token/${token.tokenAddress}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="py-1.5 bg-[#F5F5F3] hover:bg-[#FFF0E6] text-[#555555] hover:text-[#FF6A00] border border-[#D8D8D8] text-[11px] font-bold text-center rounded-xl transition-all"
+            className="py-1.5 bg-[#15191E] hover:bg-[#1C2229] text-[#8B929A] hover:text-[#FF6A00] border border-[#343A41] text-[11px] font-bold text-center rounded-xl transition-all"
           >
             GMGN.ai ↗
           </a>
@@ -826,7 +826,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
             href={`https://robinhoodchain.blockscout.com/token/${token.tokenAddress}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="py-1.5 bg-[#F5F5F3] hover:bg-[#FFF0E6] text-[#555555] hover:text-[#FF6A00] border border-[#D8D8D8] text-[11px] font-bold text-center rounded-xl transition-all"
+            className="py-1.5 bg-[#15191E] hover:bg-[#1C2229] text-[#8B929A] hover:text-[#FF6A00] border border-[#343A41] text-[11px] font-bold text-center rounded-xl transition-all"
           >
             Explorer ↗
           </a>

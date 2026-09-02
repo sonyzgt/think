@@ -142,14 +142,14 @@ export default function SparkleBackground() {
   }, [])
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-white">
-      {/* Clean White Cartographic Backdrop */}
-      <div className="absolute inset-0 bg-white" />
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#080A0D]">
+      {/* Dark Ambient Backdrop */}
+      <div className="absolute inset-0 bg-[#080A0D]" />
 
       {/* Dynamic Ambient Canvas */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-20"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-25"
       />
     </div>
   )

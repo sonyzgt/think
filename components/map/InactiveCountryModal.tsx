@@ -36,7 +36,7 @@ export default function InactiveCountryModal({
         <div className="flex flex-col items-center text-center p-2 sm:p-4 gap-4 select-none font-mono">
           {/* Physical Country Flag Medallion */}
           <div className="relative group">
-            <div className="w-20 h-20 rounded-2xl bg-white border border-[#D8D8D8] p-1.5 shadow-md flex items-center justify-center">
+            <div className="w-20 h-20 rounded-2xl bg-[#080A0D] border border-[#20252B] p-1.5 shadow-xl flex items-center justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={country.flagUrl}
@@ -44,7 +44,7 @@ export default function InactiveCountryModal({
                 className="w-full h-full object-cover rounded-xl"
               />
             </div>
-            <span className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold bg-[#FF6A00] text-white shadow-sm">
+            <span className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded-lg text-[10px] font-mono font-bold bg-[#FF6A00] text-white shadow-md">
               {country.code}
             </span>
           </div>
@@ -53,24 +53,24 @@ export default function InactiveCountryModal({
           <div className="flex flex-col gap-1">
             <div className="flex items-center justify-center gap-2">
               <span className="text-xl">{country.flagEmoji}</span>
-              <h2 className="text-xl sm:text-2xl font-black text-[#111111] tracking-tight uppercase">
+              <h2 className="text-xl sm:text-2xl font-black text-[#F5F5F5] tracking-tight uppercase">
                 {country.name}
               </h2>
             </div>
-            <span className="text-xs text-[#777777] font-mono">
-              TICKER: <strong className="text-[#FF6A00] font-bold">${country.symbol}</strong> • REGION: <strong className="text-[#111111]">{country.region}</strong>
+            <span className="text-xs text-[#8A929B] font-mono">
+              TICKER: <strong className="text-[#FF6A00] font-bold">${country.symbol}</strong> • REGION: <strong className="text-[#F5F5F5]">{country.region}</strong>
             </span>
           </div>
 
           {/* Status Message */}
-          <div className="w-full p-3.5 rounded-xl bg-[#F5F5F3] border border-[#E2E2E2] flex flex-col gap-1.5 text-xs text-left">
+          <div className="w-full p-3.5 rounded-xl bg-[#080A0D] border border-[#20252B] flex flex-col gap-1.5 text-xs text-left">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full skeuo-led-off flex-shrink-0" />
-              <span className="text-[#777777] font-bold uppercase tracking-wider text-[10px]">
+              <span className="text-[#8A929B] font-bold uppercase tracking-wider text-[10px]">
                 STATUS: NOT LAUNCHED
               </span>
             </div>
-            <span className="text-[#555555] font-sans leading-relaxed text-[11px]">
+            <span className="text-[#C8D1DC] font-sans leading-relaxed text-[11px]">
               Be the first to launch and activate the <strong className="text-[#FF6A00] font-bold">{country.name}</strong> nation token on Robinhood Chain.
             </span>
           </div>
@@ -80,14 +80,14 @@ export default function InactiveCountryModal({
             <button
               type="button"
               onClick={() => setShowDeploymentForm(true)}
-              className="w-full py-3 px-5 rounded-xl skeuo-button-primary text-xs font-black uppercase tracking-wider cursor-pointer active:scale-98 flex items-center justify-center gap-2 text-white shadow-md hover:brightness-105"
+              className="w-full py-3 px-5 rounded-xl skeuo-button-primary text-xs font-black uppercase tracking-wider cursor-pointer active:scale-98 flex items-center justify-center gap-2 text-white shadow-xl hover:brightness-110"
             >
               <span>🚀 LAUNCH {country.symbol} TOKEN</span>
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="w-full py-2 px-4 rounded-xl skeuo-button text-xs font-mono font-bold text-[#777777] hover:text-[#111111] cursor-pointer"
+              className="w-full py-2 px-4 rounded-xl skeuo-button text-xs font-mono font-bold text-[#8A929B] hover:text-[#F5F5F5] cursor-pointer"
             >
               CANCEL
             </button>

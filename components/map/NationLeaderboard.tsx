@@ -76,25 +76,25 @@ export default function NationLeaderboard({
     })
   }, [rankedCountries, activeTab, filterQuery])
 
-  // 1. Standalone Modern Floating Trigger Button when Collapsed
+  // 1. Standalone Floating Trigger Button when Collapsed
   if (isCollapsed) {
     return (
       <button
         type="button"
         onClick={() => setIsCollapsed(false)}
         title="Open Market Cap Leaderboard"
-        className="absolute left-4 top-16 z-20 bg-white px-3.5 py-2.5 rounded-2xl flex items-center gap-3 shadow-md cursor-pointer group hover:border-[#FF6A00] transition-all select-none border border-[#D8D8D8]"
+        className="absolute left-4 top-16 z-20 bg-[#0B0E12] px-3.5 py-2.5 rounded-2xl flex items-center gap-3 shadow-2xl cursor-pointer group hover:border-[#FF6A00] transition-all select-none border border-[#2A3036]"
       >
-        <div className="w-8 h-8 rounded-xl bg-[#FF6A00] flex items-center justify-center text-sm shadow-sm border border-[#D94F00] flex-shrink-0 text-white">
+        <div className="w-8 h-8 rounded-xl bg-[#FF6A00] flex items-center justify-center text-sm shadow-md border border-[#D94F00] flex-shrink-0 text-white">
           🏆
         </div>
         <div className="flex flex-col text-left">
-          <span className="text-[11px] font-mono font-black text-[#111111] tracking-wider uppercase">
+          <span className="text-[11px] font-mono font-black text-[#F2F2F2] tracking-wider uppercase">
             LEADERBOARD
           </span>
           <div className="flex items-center gap-1.5 mt-0.5">
             <span className="w-2 h-2 rounded-full skeuo-led-orange flex-shrink-0" />
-            <span className="text-[10px] font-mono text-[#555555]">
+            <span className="text-[10px] font-mono text-[#8A929B]">
               <strong className="text-[#FF6A00] font-bold">{activeCount}</strong> ACTIVE
             </span>
           </div>
@@ -103,23 +103,23 @@ export default function NationLeaderboard({
     )
   }
 
-  // 2. Full Modern Cartographic Console when Expanded
+  // 2. Full Dark Command Center Console when Expanded
   return (
     <div className="absolute left-4 top-16 z-20 w-80 sm:w-[350px] transition-all duration-300 pointer-events-auto select-none">
-      <div className="bg-white rounded-2xl overflow-hidden flex flex-col max-h-[calc(100vh-130px)] border border-[#D8D8D8] shadow-xl">
+      <div className="bg-[#0B0E12] rounded-2xl overflow-hidden flex flex-col max-h-[calc(100vh-130px)] border border-[#2A3036] shadow-2xl">
         {/* Console Header Bar */}
-        <div className="flex items-center justify-between px-3.5 py-3 border-b border-[#E2E2E2] bg-white">
+        <div className="flex items-center justify-between px-3.5 py-3 border-b border-[#20252B] bg-[#080A0D]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-[#FF6A00] flex items-center justify-center text-sm shadow-sm border border-[#D94F00] flex-shrink-0 text-white">
+            <div className="w-8 h-8 rounded-xl bg-[#FF6A00] flex items-center justify-center text-sm shadow-md border border-[#D94F00] flex-shrink-0 text-white">
               🏆
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-black text-[#111111] tracking-widest uppercase font-mono">
+              <span className="text-xs font-black text-[#F2F2F2] tracking-widest uppercase font-mono">
                 MCAP LEADERBOARD
               </span>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span className="w-2 h-2 rounded-full skeuo-led-orange flex-shrink-0" />
-                <span className="text-[10px] text-[#777777] font-mono">
+                <span className="text-[10px] text-[#8A929B] font-mono">
                   <strong className="text-[#FF6A00] font-bold">{activeCount}</strong> ACTIVE NATIONS
                 </span>
               </div>
@@ -131,24 +131,24 @@ export default function NationLeaderboard({
             type="button"
             onClick={() => setIsCollapsed(true)}
             title="Minimize Leaderboard"
-            className="w-7 h-7 rounded-lg skeuo-button text-[#111111] hover:text-[#FF6A00] text-xs font-black transition-all cursor-pointer flex items-center justify-center"
+            className="w-7 h-7 rounded-lg skeuo-button text-[#E5E7E9] hover:text-[#FF6A00] text-xs font-black transition-all cursor-pointer flex items-center justify-center"
           >
             ✕
           </button>
         </div>
 
         {/* Filter Tray */}
-        <div className="px-3 pt-2.5 pb-2 flex flex-col gap-2 border-b border-[#E2E2E2] bg-[#F5F5F3]">
+        <div className="px-3 pt-2.5 pb-2 flex flex-col gap-2 border-b border-[#20252B] bg-[#080A0D]">
           <div className="flex items-center justify-between gap-2">
             {/* Tabs */}
-            <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-[#D8D8D8]">
+            <div className="flex items-center gap-1 bg-[#15191E] p-1 rounded-xl border border-[#2A3036]">
               <button
                 type="button"
                 onClick={() => setActiveTab('all')}
                 className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-lg transition-all cursor-pointer ${
                   activeTab === 'all'
-                    ? 'bg-[#111111] text-white shadow-sm'
-                    : 'text-[#777777] hover:text-[#111111]'
+                    ? 'bg-[#20252B] text-[#F2F2F2] shadow-sm'
+                    : 'text-[#8A929B] hover:text-[#F2F2F2]'
                 }`}
               >
                 ALL ({rankedCountries.length})
@@ -159,7 +159,7 @@ export default function NationLeaderboard({
                 className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-lg transition-all cursor-pointer ${
                   activeTab === 'active'
                     ? 'bg-[#FF6A00] text-white shadow-sm'
-                    : 'text-[#FF6A00] hover:bg-[#FFF0E6]'
+                    : 'text-[#FF6A00] hover:bg-[#FF6A00]/15'
                 }`}
               >
                 ACTIVE ({activeCount})
@@ -173,16 +173,16 @@ export default function NationLeaderboard({
                 value={filterQuery}
                 onChange={(e) => setFilterQuery(e.target.value)}
                 placeholder="Filter..."
-                className="w-full bg-white border border-[#D8D8D8] focus:border-[#FF6A00] text-[#111111] placeholder-zinc-400 px-2.5 py-1 rounded-xl text-[10px] font-mono outline-none shadow-inner"
+                className="w-full bg-[#15191E] border border-[#2A3036] focus:border-[#FF6A00] text-[#F2F2F2] placeholder-[#737B84] px-2.5 py-1 rounded-xl text-[10px] font-mono outline-none shadow-inner"
               />
             </div>
           </div>
         </div>
 
         {/* Nations List */}
-        <div className="overflow-y-auto divide-y divide-[#EFEFEF] p-1.5 flex-1 max-h-[460px] bg-white m-1 rounded-xl">
+        <div className="overflow-y-auto divide-y divide-[#20252B] p-1.5 flex-1 max-h-[460px] bg-[#0B0E12] m-1 rounded-xl">
           {filteredList.length === 0 ? (
-            <div className="py-8 text-center text-xs text-[#888888] font-mono">
+            <div className="py-8 text-center text-xs text-[#5A626C] font-mono">
               // NO MATCHING TOKENS
             </div>
           ) : (
@@ -199,11 +199,11 @@ export default function NationLeaderboard({
                   }}
                   className={`flex items-center justify-between p-2 rounded-lg transition-all cursor-pointer group mb-0.5 ${
                     isActive
-                      ? 'bg-[#FFF7F2] border-l-2 border-[#FF6A00] hover:bg-[#FFEBDC]'
-                      : 'hover:bg-[#F5F5F3]'
+                      ? 'bg-[#15191E] border-l-2 border-[#FF6A00] hover:bg-[#1C2229]'
+                      : 'hover:bg-[#15191E]/60'
                   }`}
                 >
-                  {/* Left: 3D Rank Medal, Flag & Info */}
+                  {/* Left: Rank Badge, Flag & Info */}
                   <div className="flex items-center gap-2.5 overflow-hidden flex-1 mr-2">
                     {/* Rank Badge */}
                     <div
@@ -211,17 +211,17 @@ export default function NationLeaderboard({
                         rank === 1
                           ? 'bg-[#FF6A00] text-white border border-[#D94F00]'
                           : rank === 2
-                          ? 'bg-slate-200 text-[#111111] border border-slate-300'
+                          ? 'bg-[#343A41] text-[#F2F2F2] border border-[#444C56]'
                           : rank === 3
-                          ? 'bg-amber-100 text-[#92400E] border border-amber-300'
-                          : 'bg-[#F5F5F3] text-[#777777] border border-[#E2E2E2]'
+                          ? 'bg-[#92400E] text-white border border-[#B45309]'
+                          : 'bg-[#15191E] text-[#8A929B] border border-[#20252B]'
                       }`}
                     >
                       {rank}
                     </div>
 
                     {/* Country Flag Badge */}
-                    <div className="w-6 h-4 rounded overflow-hidden border border-[#D8D8D8] p-0.5 flex items-center justify-center flex-shrink-0 bg-white shadow-xs">
+                    <div className="w-6 h-4 rounded overflow-hidden border border-[#2A3036] p-0.5 flex items-center justify-center flex-shrink-0 bg-[#080A0D] shadow-xs">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={country.flagUrl}
@@ -233,14 +233,14 @@ export default function NationLeaderboard({
                     {/* Country Name & Ticker */}
                     <div className="flex flex-col overflow-hidden">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-bold text-[#111111] group-hover:text-[#FF6A00] transition-colors truncate">
+                        <span className="text-xs font-bold text-[#F2F2F2] group-hover:text-[#FF6A00] transition-colors truncate">
                           {country.name}
                         </span>
                         {isActive && (
                           <span className="w-1.5 h-1.5 rounded-full skeuo-led-orange flex-shrink-0" />
                         )}
                       </div>
-                      <span className="text-[9px] font-mono text-[#888888]">
+                      <span className="text-[9px] font-mono text-[#8A929B]">
                         ${country.symbol}
                       </span>
                     </div>
@@ -256,20 +256,20 @@ export default function NationLeaderboard({
                         
                         {/* Progress Meter Bar */}
                         <div className="flex items-center gap-1.5 mt-0.5">
-                          <div className="w-12 h-1.5 bg-[#E2E2E2] rounded-full overflow-hidden p-0.5">
+                          <div className="w-12 h-1.5 bg-[#20252B] rounded-full overflow-hidden p-0.5">
                             <div
                               className="h-full bg-gradient-to-r from-[#FF6A00] to-[#FF8A22] rounded-full"
                               style={{ width: `${Math.min(100, Math.max(3, progress))}%` }}
                             />
                           </div>
-                          <span className="text-[9px] font-mono font-bold text-[#555555]">
+                          <span className="text-[9px] font-mono font-bold text-[#8A929B]">
                             {progress}%
                           </span>
                         </div>
                       </div>
                     ) : (
                       <div className="flex items-center gap-1">
-                        <span className="text-[9px] font-mono font-bold text-[#FF6A00] bg-[#FFF0E6] border border-[#FF6A00]/30 hover:bg-[#FF6A00] hover:text-white transition-colors px-2 py-0.5 rounded-md">
+                        <span className="text-[9px] font-mono font-bold text-[#FF6A00] bg-[#FF6A00]/15 border border-[#FF6A00]/30 hover:bg-[#FF6A00] hover:text-white transition-colors px-2 py-0.5 rounded-md">
                           LAUNCH
                         </span>
                       </div>
@@ -282,7 +282,7 @@ export default function NationLeaderboard({
         </div>
 
         {/* Chassis Footer Trim */}
-        <div className="px-3 py-2 border-t border-[#E2E2E2] bg-[#F5F5F3] flex items-center justify-between text-[10px] font-mono text-[#777777]">
+        <div className="px-3 py-2 border-t border-[#20252B] bg-[#080A0D] flex items-center justify-between text-[10px] font-mono text-[#8A929B]">
           <span>SYS: ROBINHOOD MAINNET</span>
           <span className="text-[#FF6A00] font-bold">● ONLINE</span>
         </div>

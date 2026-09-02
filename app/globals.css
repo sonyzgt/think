@@ -1,26 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FFFFFF;
-  --foreground: #111111;
-  --text-primary: #111111;
-  --text-secondary: #555555;
-  --text-muted: #888888;
-  --surface: #FFFFFF;
-  --surface-secondary: #F5F5F3;
-  --surface-elevated: #FFFFFF;
-  --surface-border: #D8D8D8;
-  --surface-border-subtle: #E2E2E2;
+  --background: #080A0D;
+  --foreground: #F5F5F5;
+  --text-primary: #F5F5F5;
+  --text-secondary: #8B929A;
+  --text-muted: #5A626C;
+  --surface: #0B0E12;
+  --surface-secondary: #080A0D;
+  --surface-elevated: #15191E;
+  --surface-border: #2A3036;
+  --surface-border-subtle: #20252B;
   --theme-color: #FF6A00;
   --theme-light: #FF7A00;
   --theme-dark: #D94F00;
-  --theme-soft: #FFB067;
-  --theme-hover: #FFF0E6;
-  --theme-glow: rgba(255, 106, 0, 0.20);
-  --theme-subtle: rgba(255, 106, 0, 0.08);
+  --theme-soft: #FF9A4D;
+  --theme-glow: rgba(255, 106, 0, 0.25);
+  --theme-subtle: rgba(255, 106, 0, 0.12);
   --theme-border: #FF6A00;
   --accent-orange: #FF6A00;
-  --accent-orange-glow: rgba(255, 106, 0, 0.20);
+  --accent-orange-glow: rgba(255, 106, 0, 0.35);
   --accent: var(--theme-color);
   --accent-hover: var(--theme-light);
   --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -36,8 +35,8 @@
 }
 
 body {
-  background-color: #FFFFFF;
-  color: #111111;
+  background-color: #080A0D;
+  color: #F5F5F5;
   font-family: var(--apple-font);
   min-height: 100vh;
   overflow-x: hidden;
@@ -46,7 +45,7 @@ body {
   letter-spacing: -0.012em;
 }
 
-/* Apple Smooth Minimalist Scrollbars */
+/* Smooth Minimalist Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -57,84 +56,86 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.30);
+  background: rgba(255, 106, 0, 0.40);
 }
 
-/* ── ORANGE ATLAS & WHITE CARTOGRAPHIC DESIGN SYSTEM ── */
+/* ── DARK COMMAND CENTER & ORANGE SKEUOMORPHIC DESIGN SYSTEM ── */
 
-/* Clean White Cartographic Chassis / Panel */
+/* Dark Hardware Chassis / Panel */
 .skeuo-panel {
-  background: #FFFFFF !important;
-  border: 1px solid #D8D8D8 !important;
-  border-top: 1px solid #EFEFEF !important;
+  background: #0B0E12 !important;
+  border: 1px solid #2A3036 !important;
+  border-top: 1px solid #363E46 !important;
   box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.05),
-    0 1px 3px rgba(0, 0, 0, 0.03) !important;
-  color: #111111 !important;
+    0 12px 36px rgba(0, 0, 0, 0.75),
+    0 1px 3px rgba(0, 0, 0, 0.5) !important;
+  color: #F5F5F5 !important;
 }
 
-/* Recessed Inset Tray (Light Cartographic Gray) */
+/* Recessed Inset Tray (Dark Machine Finish) */
 .skeuo-inset {
-  background: #F5F5F3 !important;
-  border: 1px solid #E2E2E2 !important;
+  background: #080A0D !important;
+  border: 1px solid #20252B !important;
   box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.03) !important;
-  color: #111111 !important;
+    inset 0 2px 5px rgba(0, 0, 0, 0.8) !important;
+  color: #F5F5F5 !important;
 }
 
-/* Modern Clean Tactile Button (White / Chrome Accent) */
+/* Tactile Secondary Button (Dark Graphite) */
 .skeuo-button {
-  background: #FFFFFF !important;
-  color: #111111 !important;
-  border: 1px solid #D8D8D8 !important;
+  background: #15191E !important;
+  color: #E5E7E9 !important;
+  border: 1px solid #343A41 !important;
+  border-top: 1px solid #444C56 !important;
   box-shadow: 
-    0 2px 4px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 #FFFFFF !important;
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
   font-weight: 700 !important;
-  transition: all 0.15s ease !important;
+  transition: all 0.12s ease !important;
 }
 
 .skeuo-button:hover {
-  background: #FFF0E6 !important;
+  background: #1C2229 !important;
   border-color: #FF6A00 !important;
   color: #FF6A00 !important;
   box-shadow: 
-    0 4px 10px rgba(255, 106, 0, 0.12),
-    inset 0 1px 0 #FFFFFF !important;
+    0 4px 12px rgba(255, 106, 0, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
 }
 
 .skeuo-button:active {
   transform: translateY(1px) !important;
-  background: #FFE0CC !important;
+  background: #0E1217 !important;
   box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+    inset 0 2px 4px rgba(0, 0, 0, 0.7) !important;
 }
 
-/* Primary Modern Orange Action Button */
+/* Primary Electric Orange Action Button */
 .skeuo-button-primary,
 .skeuo-button-orange {
   background: linear-gradient(180deg, #FF7A00 0%, #FF6A00 100%) !important;
   color: #FFFFFF !important;
-  border: 1px solid #D94F00 !important;
+  border: 1px solid #FF6A00 !important;
+  border-top: 1px solid #FFA366 !important;
   box-shadow: 
-    0 4px 12px rgba(255, 106, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+    0 4px 16px rgba(255, 106, 0, 0.40),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
   font-weight: 800 !important;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) !important;
-  transition: all 0.15s ease !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+  transition: all 0.12s ease !important;
 }
 
 .skeuo-button-primary:hover,
 .skeuo-button-orange:hover {
   background: linear-gradient(180deg, #FF8A22 0%, #FF7A00 100%) !important;
   box-shadow: 
-    0 6px 16px rgba(255, 106, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.40) !important;
+    0 6px 22px rgba(255, 106, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
 }
 
 .skeuo-button-primary:active,
@@ -142,40 +143,41 @@ body {
   transform: translateY(1.5px) !important;
   background: #D94F00 !important;
   box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.25) !important;
+    inset 0 2px 6px rgba(0, 0, 0, 0.6) !important;
 }
 
 .skeuo-button-white {
-  background: #FFFFFF !important;
-  color: #111111 !important;
-  border: 1px solid #D8D8D8 !important;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
+  background: #15191E !important;
+  color: #F5F5F5 !important;
+  border: 1px solid #343A41 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
   font-weight: 700 !important;
-  transition: all 0.15s ease !important;
+  transition: all 0.12s ease !important;
 }
 
 .skeuo-button-white:hover {
-  background: #FFF0E6 !important;
+  background: #1C2229 !important;
   border-color: #FF6A00 !important;
   color: #FF6A00 !important;
 }
 
-/* Precision Glass LED Status Indicator (Vibrant Orange) */
+/* Precision Glass LED Status Indicator (Electric Orange) */
 .skeuo-led-orange,
 .skeuo-led-green,
 .skeuo-led-white {
   background: radial-gradient(circle at 35% 35%, #FFA04D 0%, #FF6A00 60%, #D94F00 100%) !important;
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(0, 0, 0, 0.8) !important;
   box-shadow: 
-    0 0 8px rgba(255, 106, 0, 0.60),
-    inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
+    0 0 10px rgba(255, 106, 0, 0.85),
+    0 0 18px rgba(255, 106, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
 }
 
 .skeuo-led-off {
-  background: radial-gradient(circle at 35% 35%, #E5E7EB 0%, #D1D5DB 60%, #9CA3AF 100%) !important;
-  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  background: radial-gradient(circle at 35% 35%, #343A41 0%, #20252B 60%, #15191E 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.9) !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
+    inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
 }
 
 /* ── APPLE LIQUID GLASS DESIGN SYSTEM ── */
