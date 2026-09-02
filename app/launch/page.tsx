@@ -277,8 +277,8 @@ export default function LaunchPage() {
 
       if (launchRes.ok && launchJson?.success) {
         deployedTokenCa = launchJson.tokenAddress
-      } else if (launchRes.status === 404 || launchJson?.error?.includes('Server wallet not found')) {
-        // Fallback to connected external wallet (WalletConnect / MetaMask)
+      } else {
+        // Fallback to connected wallet (MetaMask / Rabby / WalletConnect / Privy embedded)
         const activeWallet = wallets?.find(w => w.address?.toLowerCase() === address?.toLowerCase()) || wallets?.[0] || embeddedWallet
         let provider: any
         if (activeWallet) {
@@ -421,8 +421,6 @@ export default function LaunchPage() {
             }
           }
         }
-      } else {
-        throw new Error(launchJson?.error || 'Failed to launch token')
       }
 
       if (deployedTokenCa) {

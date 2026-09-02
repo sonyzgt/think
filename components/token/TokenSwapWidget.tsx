@@ -308,11 +308,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
         return
       }
 
-      if (srvJson?.error && srvSwapRes.status !== 404) {
-        throw new Error(srvJson.error)
-      }
-
-      // 2. Fallback to connected external wallet (WalletConnect / MetaMask / browser wallet)
+      // 2. Fallback to connected wallet (WalletConnect / MetaMask / Rabby / Privy embedded)
       const activeWallet = wallets?.find(w => w.address?.toLowerCase() === address?.toLowerCase()) || wallets?.[0] || embeddedWallet
 
       let provider: any
@@ -324,7 +320,7 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
       } else if (typeof window !== 'undefined' && (window as any).ethereum) {
         provider = (window as any).ethereum
       } else {
-        throw new Error(srvJson?.error || 'Swap transaction failed')
+        throw new Error(srvJson?.error || 'No connected wallet found. Please connect your wallet.')
       }
 
       const { createWalletClient, custom } = await import('viem')

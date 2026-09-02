@@ -266,7 +266,7 @@ export default function SwapModal({ open, onClose, initialCa }: SwapModalProps) 
     return UNIVERSAL_ROUTER
   }, [tokenInfo])
 
-  // â”€â”€ Check Allowance â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Check Allowance ────────────────────────────────────────────────────────────────
   const checkAllowance = useCallback(async () => {
     if (isBuy || !address || !tokenInfo?.address) {
       setNeedsApproval(false)
@@ -301,20 +301,31 @@ export default function SwapModal({ open, onClose, initialCa }: SwapModalProps) 
 
   // â”€â”€ Helper: Get Viem Wallet Client â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   async function getViemWalletClient() {
-    if (!embeddedWallet) throw new Error('Embedded wallet not available. Please ensure you are logged in.')
-    await embeddedWallet.switchChain(activeChain.id)
-    const provider = await embeddedWallet.getEthereumProvider()
+    let provider: any
+    if (embeddedWallet) {
+      try {
+        await embeddedWallet.switchChain(activeChain.id)
+      } catch { /* continue */ }
+      provider = await embeddedWallet.getEthereumProvider()
+    } else if (typeof window !== 'undefined' && (window as any).ethereum) {
+      provider = (window as any).ethereum
+    }
+
+    if (!provider) {
+      throw new Error('No connected wallet found. Please ensure your wallet is connected.')
+    }
+
     const client = createWalletClient({
       chain: activeChain,
       transport: custom(provider),
     })
     const [account] = await client.getAddresses()
-    return { client, account }
+    return { client, account: account || (address as `0x${string}`) }
   }
 
-  // â”€â”€ Approve Token Execution â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Approve Token Execution ──────────────────────────────────────────────────
   async function handleApprove() {
-    if (!tokenInfo?.address || !address || !embeddedWallet) return
+    if (!tokenInfo?.address || !address) return
     setApproving(true)
     try {
       const { client, account } = await getViemWalletClient()
@@ -349,9 +360,9 @@ export default function SwapModal({ open, onClose, initialCa }: SwapModalProps) 
     }
   }
 
-  // â”€â”€ Swap Execution â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Swap Execution ─────────────────────────────────────────────────────────────
   async function handleSwap() {
-    if (!canSwap || !tokenInfo || !embeddedWallet || !address) return
+    if (!canSwap || !tokenInfo || !address) return
 
     const tokenAddr = getAddress(tokenInfo.address)
     const userAddr  = getAddress(address)

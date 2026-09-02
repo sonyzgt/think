@@ -57,10 +57,23 @@ export default function SendModal({ open, onClose }: SendModalProps) {
         }
       }
 
-      // 2. Fallback to client embedded wallet if available
+      // 2. Fallback to connected wallet (MetaMask / Rabby / Privy Embedded)
+      const { wallets } = await import('@privy-io/react-auth').then(() => ({ wallets: undefined })).catch(() => ({ wallets: undefined }))
+      const activeWalletInstance =
+        embeddedWallet ||
+        (typeof window !== 'undefined' && (window as any).ethereum ? { getEthereumProvider: async () => (window as any).ethereum, switchChain: async () => {} } : null)
+
+      let provider: any
       if (embeddedWallet) {
-        await embeddedWallet.switchChain(activeChain.id)
-        const provider = await embeddedWallet.getEthereumProvider()
+        try {
+          await embeddedWallet.switchChain(activeChain.id)
+        } catch { /* continue */ }
+        provider = await embeddedWallet.getEthereumProvider()
+      } else if (typeof window !== 'undefined' && (window as any).ethereum) {
+        provider = (window as any).ethereum
+      }
+
+      if (provider) {
         const walletClient = createWalletClient({
           chain: activeChain,
           transport: custom(provider),
@@ -71,7 +84,7 @@ export default function SendModal({ open, onClose }: SendModalProps) {
         const valueInWei = parseEther(amount.trim())
 
         await walletClient.sendTransaction({
-          account,
+          account: account || (address as `0x${string}`),
           to: targetAddress,
           value: valueInWei,
         })

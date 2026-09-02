@@ -95,22 +95,35 @@ export function useWallet() {
     }
   }, [address, refetchBalance])
 
+  // Resolved active wallet instance (MetaMask / Rabby / WalletConnect / Privy Embedded)
+  const activeWallet =
+    wallets?.find((w) => w.address?.toLowerCase() === address?.toLowerCase()) ??
+    externalWallet ??
+    embeddedWallet ??
+    wallets?.[0]
+
   /**
    * Kirim ETH ke alamat tujuan (to) dengan jumlah `amount`.
-   * Menggunakan viem walletClient langsung — bypass popup UI Privy sepenuhnya.
+   * Mendukung External Wallet (MetaMask, Rabby) maupun Privy Embedded Wallet.
    */
   async function sendEth(to: string, amount: string): Promise<Hash> {
-    if (!embeddedWallet) throw new Error('No embedded wallet found')
     setSending(true)
     setError(null)
     setTxHash(null)
 
     try {
-      // Paksa switch ke Robinhood Chain Mainnet
-      await embeddedWallet.switchChain(activeChain.id)
-      const provider = await embeddedWallet.getEthereumProvider()
+      let provider: any
+      if (activeWallet) {
+        try {
+          await activeWallet.switchChain(activeChain.id)
+        } catch { /* continue */ }
+        provider = await activeWallet.getEthereumProvider()
+      } else if (typeof window !== 'undefined' && (window as any).ethereum) {
+        provider = (window as any).ethereum
+      } else {
+        throw new Error('No connected wallet provider found. Please connect your wallet.')
+      }
 
-      // Gunakan viem walletClient langsung — bypass semua popup Privy
       const client = createWalletClient({
         chain: activeChain,
         transport: custom(provider),
@@ -118,14 +131,13 @@ export function useWallet() {
 
       const [account] = await client.getAddresses()
       const hash = await client.sendTransaction({
-        account,
+        account: account || (address as `0x${string}`),
         to: to as `0x${string}`,
         value: parseEther(amount),
         gas: BigInt(50_000),
       })
 
       setTxHash(hash)
-      // Refresh balance setelah transaksi
       setTimeout(() => refetchBalance(), 3000)
       return hash
     } catch (err: unknown) {
@@ -159,5 +171,6 @@ export function useWallet() {
     refetchBalance,
     user,
     embeddedWallet,
+    activeWallet,
   }
 }
