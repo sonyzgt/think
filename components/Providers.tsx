@@ -16,9 +16,6 @@ const wagmiConfig = createConfig({
 })
 
 import { ThemeProvider } from '@/context/ThemeContext'
-import { SidebarProvider } from '@/context/SidebarContext'
-import AppShell from '@/components/AppShell'
-import AiFloatingButton from '@/components/chat/AiFloatingButton'
 
 export default function Providers({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())
@@ -31,10 +28,7 @@ export default function Providers({ children }: { children: ReactNode }) {
           <p className="text-red-400 font-semibold text-lg mb-2">Configuration Required</p>
           <p className="text-zinc-400 text-sm">
             Please set <code className="bg-zinc-900 px-1 rounded text-red-400 font-mono">NEXT_PUBLIC_PRIVY_APP_ID</code> in{' '}
-            <code className="bg-zinc-900 px-1 rounded text-red-400 font-mono">.env.local</code> with your App ID from{' '}
-            <a href="https://dashboard.privy.io" className="text-red-400 underline" target="_blank" rel="noopener noreferrer">
-              dashboard.privy.io
-            </a>
+            <code className="bg-zinc-900 px-1 rounded text-red-400 font-mono">.env.local</code>.
           </p>
         </div>
       </div>
@@ -70,12 +64,9 @@ export default function Providers({ children }: { children: ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <WagmiProvider config={wagmiConfig}>
           <ThemeProvider>
-            <SidebarProvider>
-              <AppShell>
-                {children}
-              </AppShell>
-              <AiFloatingButton />
-            </SidebarProvider>
+            <div className="min-h-screen w-full flex flex-col bg-[#050506] text-[#F5F5F7] antialiased">
+              {children}
+            </div>
             <Toaster
               position="top-center"
               toastOptions={{

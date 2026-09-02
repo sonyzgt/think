@@ -335,8 +335,7 @@ export default function LaunchpadExplorer({
         <div className="w-full flex flex-col gap-3">
           <WorldFlagMap
             tokens={tokens}
-            searchQuery={searchQuery}
-            onSelectCountry={handleCountryClick}
+            onTokenRefresh={() => fetchTokens(true)}
           />
         </div>
       ) : (
