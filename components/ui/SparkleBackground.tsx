@@ -121,9 +121,9 @@ export default function SparkleBackground() {
   }, [])
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#08090a]">
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#000000]">
       {/* Dark Brutalist Base */}
-      <div className="absolute inset-0 bg-[#08090a]" />
+      <div className="absolute inset-0 bg-[#000000]" />
 
       {/* Interactive Blueprint Canvas */}
       <canvas

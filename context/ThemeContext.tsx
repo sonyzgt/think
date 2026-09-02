@@ -16,7 +16,7 @@ const ThemeContext = createContext<ThemeContextType>({
 })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [themeId, setThemeIdState] = useState<string>('white')
+  const [themeId, setThemeIdState] = useState<string>('chrome')
 
   useEffect(() => {
     try {

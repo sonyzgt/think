@@ -1,21 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #08090a;
-  --foreground: #f4f4f5;
-  --theme-color: #10b981;
-  --theme-light: #34d399;
-  --theme-dark: #059669;
-  --theme-glow: rgba(16, 185, 129, 0.45);
-  --theme-subtle: rgba(16, 185, 129, 0.12);
-  --theme-border: #10b981;
+  --background: #000000;
+  --foreground: #f8fafc;
+  --theme-color: #e2e8f0;
+  --theme-light: #ffffff;
+  --theme-dark: #94a3b8;
+  --theme-glow: rgba(255, 255, 255, 0.55);
+  --theme-subtle: rgba(226, 232, 240, 0.15);
+  --theme-border: #cbd5e1;
   --accent: var(--theme-color);
   --accent-hover: var(--theme-dark);
-  --surface: #0e1114;
+  --surface: #07080a;
   --surface-border: #27272a;
   --brutal-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
   --brutal-shadow-theme: 4px 4px 0px 0px var(--theme-color);
   --brutal-shadow-white: 4px 4px 0px 0px #ffffff;
+  --chrome-gradient: linear-gradient(135deg, #ffffff 0%, #cbd5e1 45%, #94a3b8 75%, #e2e8f0 100%);
+  --silver-gradient: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
 }
 
 @theme inline {
@@ -27,14 +29,14 @@
 }
 
 body {
-  background-color: #08090a;
-  color: #f4f4f5;
+  background-color: #000000;
+  color: #f8fafc;
   font-family: var(--font-sans);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Custom scrollbars - Minimalist Brutalist */
+/* Custom scrollbars - Minimalist Brutalist Chrome */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -42,39 +44,59 @@ body {
 
 ::-webkit-scrollbar-track {
   background: #000000;
-  border-left: 1px solid #27272a;
+  border-left: 1px solid #1f242d;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46;
+  background: #475569;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--theme-color);
+  background: #e2e8f0;
 }
 
-/* ── Modern Brutalism & Minimalist Brutalism Design System ── */
+/* ── BLACK + CHROME + SILVER DESIGN SYSTEM ── */
+
+/* Chrome Metallic Gradient Text */
+.chrome-text {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 40%, #94a3b8 70%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Silver Shimmer Effect */
+.silver-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.03) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
 
 /* Brutalist Main Card / Container */
 .brutal-card,
 .liquid-glass {
-  background-color: #0d0f12;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  border-radius: 14px;
-  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(0,0,0,0.5);
+  background-color: #07090c;
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.05);
   position: relative;
   transition: all 0.15s ease-in-out;
 }
 
 .brutal-card-highlight,
 .liquid-glass:hover {
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 /* Brutalist Interactive Card (Token Grid / Items) */
 .brutal-card-interactive,
 .liquid-glass-card {
-  background-color: #0f1216;
+  background-color: #0a0d12;
   border: 2px solid #27272a;
   border-radius: 12px;
   box-shadow: 3px 3px 0px 0px #000000;
@@ -85,20 +107,20 @@ body {
 .brutal-card-interactive:hover,
 .liquid-glass-card:hover {
   transform: translate(-2px, -2px);
-  border-color: var(--theme-color);
-  box-shadow: 5px 5px 0px 0px var(--theme-color);
+  border-color: #ffffff;
+  box-shadow: 4px 4px 0px 0px #ffffff;
 }
 
 .brutal-card-interactive:active,
 .liquid-glass-card:active {
   transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px 0px var(--theme-color);
+  box-shadow: 1px 1px 0px 0px #ffffff;
 }
 
 /* Brutalist Pill / Tab / Filter Badge */
 .brutal-pill,
 .liquid-pill {
-  background-color: #121519;
+  background-color: #0c0f14;
   border: 1.5px solid #27272a;
   border-radius: 8px;
   box-shadow: 2px 2px 0px 0px #000000;
@@ -107,7 +129,7 @@ body {
 
 .brutal-pill:hover,
 .liquid-pill:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translate(-1px, -1px);
   box-shadow: 3px 3px 0px 0px #000000;
 }
@@ -129,11 +151,11 @@ body {
 /* Brutalist Buttons (Tactile 3D Hard Shadow) */
 .brutal-btn-primary,
 .liquid-btn-primary {
-  background-color: var(--theme-color) !important;
+  background: var(--chrome-gradient) !important;
   color: #000000 !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
   border: 2px solid #ffffff !important;
-  border-radius: 10px !important;
+  border-radius: 8px !important;
   box-shadow: 3px 3px 0px 0px #ffffff !important;
   transition: transform 0.1s ease-out, box-shadow 0.1s ease-out !important;
 }
@@ -150,27 +172,26 @@ body {
   box-shadow: 0px 0px 0px 0px transparent !important;
 }
 
-/* White Theme Button Override */
-[data-theme="white"] .brutal-btn-primary,
-[data-theme="white"] .liquid-btn-primary {
-  background-color: #ffffff !important;
+/* Chrome Theme Override */
+[data-theme="chrome"] .brutal-btn-primary,
+[data-theme="chrome"] .liquid-btn-primary,
+[data-theme="silver"] .brutal-btn-primary,
+[data-theme="silver"] .liquid-btn-primary,
+[data-theme="platinum"] .brutal-btn-primary,
+[data-theme="platinum"] .liquid-btn-primary {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%) !important;
   color: #000000 !important;
   border: 2px solid #ffffff !important;
-  box-shadow: 3px 3px 0px 0px #71717a !important;
-}
-
-[data-theme="white"] .brutal-btn-primary:hover,
-[data-theme="white"] .liquid-btn-primary:hover {
-  box-shadow: 5px 5px 0px 0px #a1a1aa !important;
+  box-shadow: 3px 3px 0px 0px #ffffff !important;
 }
 
 .brutal-btn-secondary,
 .liquid-btn-secondary {
-  background-color: #181b20 !important;
-  color: #f4f4f5 !important;
+  background-color: #0e1217 !important;
+  color: #f1f5f9 !important;
   font-weight: 700 !important;
-  border: 2px solid #3f3f46 !important;
-  border-radius: 10px !important;
+  border: 2px solid #334155 !important;
+  border-radius: 8px !important;
   box-shadow: 3px 3px 0px 0px #000000 !important;
   transition: transform 0.1s ease-out, box-shadow 0.1s ease-out, border-color 0.1s ease-out !important;
 }
@@ -179,7 +200,7 @@ body {
 .liquid-btn-secondary:hover {
   border-color: #ffffff !important;
   transform: translate(-2px, -2px) !important;
-  box-shadow: 5px 5px 0px 0px #000000 !important;
+  box-shadow: 4px 4px 0px 0px #ffffff !important;
 }
 
 .brutal-btn-secondary:active,
@@ -194,7 +215,7 @@ body {
   color: #ffffff !important;
   font-weight: 800 !important;
   border: 2px solid #fda4af !important;
-  border-radius: 10px !important;
+  border-radius: 8px !important;
   box-shadow: 3px 3px 0px 0px #000000 !important;
   transition: transform 0.1s ease-out, box-shadow 0.1s ease-out !important;
 }
@@ -205,113 +226,53 @@ body {
   box-shadow: 5px 5px 0px 0px #000000 !important;
 }
 
-.brutal-btn-danger:active,
-.liquid-btn-danger:active {
-  transform: translate(2px, 2px) !important;
-  box-shadow: 0px 0px 0px 0px transparent !important;
-}
-
 /* Brutalist Inputs */
 .brutal-input {
-  background-color: #0b0d10 !important;
-  border: 2px solid #27272a !important;
-  border-radius: 8px !important;
-  box-shadow: 2px 2px 0px 0px #000000 !important;
-  color: #ffffff !important;
-  transition: border-color 0.12s ease-out, box-shadow 0.12s ease-out !important;
+  background-color: #05070a;
+  border: 2px solid #27272a;
+  border-radius: 8px;
+  color: #ffffff;
+  box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.8);
+  transition: border-color 0.12s ease-out, box-shadow 0.12s ease-out;
 }
 
 .brutal-input:focus {
-  border-color: var(--theme-color) !important;
-  box-shadow: 3px 3px 0px 0px var(--theme-color) !important;
-  outline: none !important;
+  outline: none;
+  border-color: #ffffff;
+  box-shadow: 0 0 0 1px #ffffff, inset 2px 2px 0px 0px rgba(0, 0, 0, 0.8);
 }
 
-/* Brutalist Stamp Badges */
-.brutal-stamp {
-  font-family: var(--font-mono);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 2px 8px;
-  border-radius: 4px;
-  border: 1.5px solid currentColor;
-  box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.8);
-}
-
-/* Minimalist technical grid background */
-.brutalist-grid-bg {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
-
-.brutalist-dot-bg {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px);
-  background-size: 24px 24px;
-}
-
-/* Text glow / theme tokens */
-.text-theme {
-  color: var(--theme-color) !important;
-}
-
-.text-theme-light {
-  color: var(--theme-light) !important;
-}
-
-.border-theme {
-  border-color: var(--theme-color) !important;
-}
-
-.border-theme-light {
-  border-color: var(--theme-light) !important;
-}
-
-/* Animations */
-@keyframes ticker {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-ticker {
-  display: flex;
-  width: max-content;
-  animation: ticker 40s linear infinite;
-}
-
-.animate-ticker:hover {
-  animation-play-state: paused;
-}
-
+/* ── Animation Helpers ── */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
-  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.18s ease-out forwards;
 }
 
-/* Hide scrollbar for clean horizontal containers */
-.no-scrollbar::-webkit-scrollbar {
-  display: none !important;
-  height: 0px !important;
-  width: 0px !important;
+/* ── Marquee / Ticker ── */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }
 
-.no-scrollbar {
-  -ms-overflow-style: none !important;
-  scrollbar-width: none !important;
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ── Subtle Technical Glow ── */
+.theme-glow {
+  box-shadow: 0 0 25px -4px var(--theme-glow);
+}
+
+.chrome-glow {
+  box-shadow: 0 0 30px -4px rgba(255, 255, 255, 0.25);
 }
