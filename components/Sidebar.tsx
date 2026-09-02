@@ -111,7 +111,7 @@ export default function Sidebar() {
       ),
     },
     {
-      label: 'Explore Tokens',
+      label: 'World Nations',
       href: '/coin',
       code: '02',
       icon: (

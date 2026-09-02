@@ -36,6 +36,8 @@ interface CreateTokenModalProps {
   onTokenCreated?: (tokenAddress?: string) => void
   initialSymbol?: string
   initialName?: string
+  initialLogo?: string
+  initialDescription?: string
 }
 
 export default function CreateTokenModal({
@@ -44,6 +46,8 @@ export default function CreateTokenModal({
   onTokenCreated,
   initialSymbol,
   initialName,
+  initialLogo,
+  initialDescription,
 }: CreateTokenModalProps) {
   const { user, authenticated, login } = usePrivy()
   const { wallets } = useWallets()
@@ -97,9 +101,14 @@ export default function CreateTokenModal({
     if (open) {
       if (initialSymbol) setSymbol(initialSymbol.replace('$', '').toUpperCase())
       if (initialName) setName(initialName)
+      if (initialLogo) {
+        setLogo(initialLogo)
+        setPreviewLogo(initialLogo)
+      }
+      if (initialDescription) setDescription(initialDescription)
       fetchFee()
     }
-  }, [open, initialSymbol, initialName, fetchFee])
+  }, [open, initialSymbol, initialName, initialLogo, initialDescription, fetchFee])
 
   // Upload image to server and get short URL (< 200 chars for smart contract)
   async function uploadImageToServer(dataUrl: string): Promise<string> {

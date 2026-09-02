@@ -10,7 +10,7 @@ export default function Navbar() {
 
   // Get Page Title for Breadcrumb
   const getPageTitle = () => {
-    if (pathname.startsWith('/coin')) return 'Explore Tokens'
+    if (pathname.startsWith('/coin')) return 'World Nations'
     if (pathname.startsWith('/launch')) return 'Launch Token'
     if (pathname.startsWith('/wallet')) return 'Wallet & Assets'
     if (pathname.startsWith('/chat')) return 'AI Trading Assistant'

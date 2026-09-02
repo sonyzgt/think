@@ -3,12 +3,14 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useWallet } from '@/hooks/useWallet'
 import { PonsV2TokenInfo, getPonsTokenInfo } from '@/lib/pons-v2'
-import Button from '@/components/ui/Button'
+import { WORLD_COUNTRIES, CountryData, matchTokenWithCountry } from '@/lib/countries'
+import CreateTokenModal from '@/components/launchpad/CreateTokenModal'
+import QuickSwapModal from '@/components/token/QuickSwapModal'
 import Spinner from '@/components/ui/Spinner'
 import { isAddress } from 'viem'
 import toast from 'react-hot-toast'
 import SparkleIcon from '@/components/ui/SparkleIcon'
-import TokenImage from '@/components/ui/TokenImage'
+import Link from 'next/link'
 
 interface LaunchpadExplorerProps {
   onOpenCreateToken: () => void
@@ -17,7 +19,8 @@ interface LaunchpadExplorerProps {
   onSelectTokenDetail: (token: PonsV2TokenInfo) => void
 }
 
-type TabType = 'all' | 'new' | 'graduated' | 'mine'
+type StatusFilter = 'all' | 'active' | 'inactive'
+type RegionFilter = 'All' | 'Americas' | 'Europe' | 'Asia' | 'Africa' | 'Oceania' | 'Middle East'
 
 export default function LaunchpadExplorer({
   onOpenCreateToken,
@@ -29,9 +32,14 @@ export default function LaunchpadExplorer({
   const [tokens, setTokens] = useState<PonsV2TokenInfo[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
-  const [activeTab, setActiveTab] = useState<TabType>('all')
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
+  const [regionFilter, setRegionFilter] = useState<RegionFilter>('All')
   const [customCaInput, setCustomCaInput] = useState('')
   const [lookingUpCa, setLookingUpCa] = useState(false)
+
+  // Interactive Modal States for Country Launch & Swap
+  const [selectedCountryToLaunch, setSelectedCountryToLaunch] = useState<CountryData | null>(null)
+  const [selectedTokenToSwap, setSelectedTokenToSwap] = useState<PonsV2TokenInfo | null>(null)
 
   useEffect(() => {
     try {
@@ -103,82 +111,123 @@ export default function LaunchpadExplorer({
     toast.success('Contract address copied!')
   }
 
-  const filteredTokens = useMemo(() => {
-    const list = tokens.filter((t) => {
-      if (activeTab === 'new' && t.graduated) return false
-      if (activeTab === 'graduated' && !t.graduated) return false
-      if (activeTab === 'mine') {
-        if (!address) return false
-        if (t.creatorAddress.toLowerCase() !== address.toLowerCase()) return false
-      }
+  // Map each country in WORLD_COUNTRIES with its on-chain token status
+  const countryItems = useMemo(() => {
+    return WORLD_COUNTRIES.map((country) => {
+      const matchedToken = tokens.find((t) => {
+        const tSym = (t.symbol || '').toUpperCase().trim()
+        const tName = (t.name || '').toLowerCase().trim()
+        return (
+          tSym === country.symbol.toUpperCase() ||
+          tSym === country.code.toUpperCase() ||
+          tName === country.name.toLowerCase()
+        )
+      })
 
+      return {
+        country,
+        isActive: !!matchedToken,
+        token: matchedToken || null,
+      }
+    })
+  }, [tokens])
+
+  // Compute live stats
+  const activeCount = useMemo(() => countryItems.filter((c) => c.isActive).length, [countryItems])
+  const inactiveCount = useMemo(() => countryItems.filter((c) => !c.isActive).length, [countryItems])
+  const totalCount = WORLD_COUNTRIES.length
+
+  // Filter countries by status, region, and search query
+  const filteredCountries = useMemo(() => {
+    return countryItems.filter(({ country, isActive, token }) => {
+      // 1. Status Filter
+      if (statusFilter === 'active' && !isActive) return false
+      if (statusFilter === 'inactive' && isActive) return false
+
+      // 2. Region Filter
+      if (regionFilter !== 'All' && country.region !== regionFilter) return false
+
+      // 3. Search Query
       if (searchQuery.trim()) {
         const q = searchQuery.trim().toLowerCase()
-        const matchName = t.name.toLowerCase().includes(q)
-        const matchSymbol = t.symbol.toLowerCase().includes(q)
-        const matchAddr = t.tokenAddress.toLowerCase().includes(q)
-        if (!matchName && !matchSymbol && !matchAddr) return false
+        const matchName = country.name.toLowerCase().includes(q)
+        const matchSym = country.symbol.toLowerCase().includes(q)
+        const matchCode = country.code.toLowerCase().includes(q)
+        const matchRegion = country.region.toLowerCase().includes(q)
+        const matchAddr = token?.tokenAddress?.toLowerCase().includes(q)
+
+        if (!matchName && !matchSym && !matchCode && !matchRegion && !matchAddr) {
+          return false
+        }
       }
 
       return true
     })
+  }, [countryItems, statusFilter, regionFilter, searchQuery])
 
-    if (activeTab === 'graduated') {
-      list.sort((a, b) => {
-        const mcapA = (a.priceUsd || (a.priceNative * 2500) || 0) * 1000000000 + a.progress * 10000
-        const mcapB = (b.priceUsd || (b.priceNative * 2500) || 0) * 1000000000 + b.progress * 10000
-        return mcapB - mcapA
-      })
+  // Handle Country Click: Inactive -> Launch Modal | Active -> Quick Swap Modal
+  const handleCountryClick = (item: { country: CountryData; isActive: boolean; token: PonsV2TokenInfo | null }) => {
+    if (item.isActive && item.token) {
+      // ACTIVE COUNTRY -> Open Quick Swap Pop-up
+      setSelectedTokenToSwap(item.token)
+    } else {
+      // INACTIVE COUNTRY -> Open Pre-filled Launch Token Pop-up
+      setSelectedCountryToLaunch(item.country)
     }
+  }
 
-    return list
-  }, [tokens, activeTab, searchQuery, address])
-
-  const newCount = tokens.filter((t) => !t.graduated).length
-  const graduatedCount = tokens.filter((t) => t.graduated).length
-  const myCount = address ? tokens.filter((t) => t.creatorAddress.toLowerCase() === address.toLowerCase()).length : 0
-
-  const topMcapTokens = useMemo(() => {
-    if (tokens.length === 0) return []
-    return [...tokens].sort((a, b) => {
-      const mcapA = (a.priceUsd || (a.priceNative * 2500) || 0) * 1000000000 + a.progress * 10000
-      const mcapB = (b.priceUsd || (b.priceNative * 2500) || 0) * 1000000000 + b.progress * 10000
-      return mcapB - mcapA
-    })
-  }, [tokens])
-
-  const [deckOffset, setDeckOffset] = useState(0)
-
-  useEffect(() => {
-    if (topMcapTokens.length <= 1) return
-    const interval = setInterval(() => {
-      setDeckOffset((prev) => (prev + 1) % topMcapTokens.length)
-    }, 3500)
-    return () => clearInterval(interval)
-  }, [topMcapTokens.length])
+  const regionsList: RegionFilter[] = ['All', 'Americas', 'Europe', 'Asia', 'Africa', 'Oceania', 'Middle East']
 
   return (
     <div className="flex flex-col gap-6 w-full animate-fadeIn">
-      {/* Top Header Row: Left Box + Right Featured Card */}
-      <div className="flex flex-col lg:flex-row gap-4 items-stretch w-full">
-        {/* Left Box: Title, Search & Filter Tabs */}
-        <div className="flex-1 w-full apple-glass p-5 sm:p-6 flex flex-col justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2.5 flex-wrap">
-              <div className="w-8 h-8 rounded-full bg-white/[0.08] border border-white/[0.12] flex items-center justify-center">
-                <SparkleIcon size={18} className="text-[#0A84FF]" />
-              </div>
-              <h1 className="text-lg sm:text-xl font-bold text-[#F5F5F7] tracking-tight">
-                Explore Tokens
-              </h1>
+      {/* 1. Top Header Banner: World Countries Ecosystem */}
+      <div className="apple-glass p-5 sm:p-7 flex flex-col gap-5 w-full relative overflow-hidden">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 z-10">
+          <div className="flex items-start gap-3.5">
+            <div className="w-10 h-10 rounded-2xl bg-white/[0.08] border border-white/[0.12] flex items-center justify-center flex-shrink-0 shadow-sm">
+              <SparkleIcon size={22} className="text-white" />
             </div>
-            <p className="text-xs sm:text-sm text-[#A1A1A6] mt-1.5 leading-relaxed">
-              Fair-launch tokens with automated anti-snipe bonding curves and Uniswap v4 locked liquidity.
-            </p>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-xl sm:text-2xl font-bold text-[#F5F5F7] tracking-tight">
+                  World Nations DeFi
+                </h1>
+                <span className="text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-full">
+                  {activeCount} / {totalCount} Active
+                </span>
+              </div>
+              <p className="text-xs sm:text-sm text-[#A1A1A6] mt-1 leading-relaxed max-w-2xl">
+                Tap any country to activate its fair-launch bonding curve token, or instantly trade active nation assets on Robinhood Chain.
+              </p>
+            </div>
           </div>
 
-          {/* Search Bar */}
-          <div className="relative w-full">
+          {/* Action Buttons */}
+          <div className="flex items-center gap-2.5 flex-wrap self-stretch sm:self-auto">
+            <button
+              type="button"
+              onClick={onOpenCreateToken}
+              className="apple-btn-primary px-4 py-2 text-xs font-semibold shadow-sm flex items-center gap-1.5 cursor-pointer"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>Custom Token</span>
+            </button>
+            <button
+              type="button"
+              onClick={onOpenClaimFees}
+              className="apple-btn-secondary px-3.5 py-2 text-xs font-semibold shadow-sm cursor-pointer"
+            >
+              Claim Royalties
+            </button>
+          </div>
+        </div>
+
+        {/* Search & Status Filters */}
+        <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between pt-2 border-t border-white/[0.06] z-10">
+          {/* Search Input */}
+          <div className="relative flex-1 max-w-md">
             <svg
               className="w-4 h-4 text-[#A1A1A6] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
               fill="none"
@@ -191,342 +240,252 @@ export default function LaunchpadExplorer({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search token name, symbol, or 0x address..."
-              className="w-full apple-input pl-10 pr-4 py-2.5 text-xs sm:text-sm text-[#F5F5F7] placeholder-[#6E6E73] rounded-full"
+              placeholder="Search country (e.g. Brazil, Japan, USA)..."
+              className="w-full apple-input pl-10 pr-4 py-2 text-xs sm:text-sm text-[#F5F5F7] placeholder-[#6E6E73] rounded-full"
             />
           </div>
 
-          {/* Filter Tabs */}
-          <div className="flex items-center gap-2 flex-wrap">
+          {/* Status Tabs (All / Active / Inactive) */}
+          <div className="flex items-center gap-1.5 bg-white/[0.04] p-1 rounded-full border border-white/[0.08]">
             <button
-              onClick={() => setActiveTab('all')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                activeTab === 'all'
-                  ? 'bg-[#0A84FF] text-white font-semibold shadow-[0_2px_10px_rgba(10,132,255,0.4)]'
-                  : 'bg-white/[0.06] text-[#A1A1A6] hover:text-[#F5F5F7] hover:bg-white/[0.10] border border-white/[0.08]'
+              type="button"
+              onClick={() => setStatusFilter('all')}
+              className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
+                statusFilter === 'all'
+                  ? 'bg-white text-black font-semibold shadow-sm'
+                  : 'text-[#A1A1A6] hover:text-white'
               }`}
             >
-              All ({tokens.length})
+              All ({totalCount})
             </button>
             <button
-              onClick={() => setActiveTab('new')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                activeTab === 'new'
-                  ? 'bg-[#0A84FF] text-white font-semibold shadow-[0_2px_10px_rgba(10,132,255,0.4)]'
-                  : 'bg-white/[0.06] text-[#A1A1A6] hover:text-[#F5F5F7] hover:bg-white/[0.10] border border-white/[0.08]'
+              type="button"
+              onClick={() => setStatusFilter('active')}
+              className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
+                statusFilter === 'active'
+                  ? 'bg-emerald-500 text-black font-semibold shadow-sm'
+                  : 'text-emerald-400 hover:text-emerald-300'
               }`}
             >
-              Active Curve ({newCount})
+              🟢 Active ({activeCount})
             </button>
             <button
-              onClick={() => setActiveTab('graduated')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                activeTab === 'graduated'
-                  ? 'bg-[#0A84FF] text-white font-semibold shadow-[0_2px_10px_rgba(10,132,255,0.4)]'
-                  : 'bg-white/[0.06] text-[#A1A1A6] hover:text-[#F5F5F7] hover:bg-white/[0.10] border border-white/[0.08]'
+              type="button"
+              onClick={() => setStatusFilter('inactive')}
+              className={`px-3 py-1 text-xs font-medium rounded-full transition-all cursor-pointer ${
+                statusFilter === 'inactive'
+                  ? 'bg-white text-black font-semibold shadow-sm'
+                  : 'text-[#A1A1A6] hover:text-white'
               }`}
             >
-              Graduated ({graduatedCount})
-            </button>
-            <button
-              onClick={() => setActiveTab('mine')}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                activeTab === 'mine'
-                  ? 'bg-[#0A84FF] text-white font-semibold shadow-[0_2px_10px_rgba(10,132,255,0.4)]'
-                  : 'bg-white/[0.06] text-[#A1A1A6] hover:text-[#F5F5F7] hover:bg-white/[0.10] border border-white/[0.08]'
-              }`}
-            >
-              My Tokens {myCount > 0 ? `(${myCount})` : ''}
+              ⚪ Inactive ({inactiveCount})
             </button>
           </div>
         </div>
 
-        {/* Right: Featured Token Spotlight Widget */}
-        <div className="w-full lg:w-[320px] xl:w-[360px] apple-glass p-4 sm:p-5 flex flex-col justify-between select-none relative group flex-shrink-0">
-          {/* Top Label */}
-          <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] text-xs">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#30D158] shadow-[0_0_8px_rgba(48,209,88,0.7)] animate-pulse" />
-              <span className="font-semibold text-[#F5F5F7]">Top Volume</span>
-            </div>
-            <span className="text-[11px] font-medium bg-white/[0.06] border border-white/[0.08] px-2 py-0.5 rounded-full text-[#A1A1A6]">
-              Robinhood L2
-            </span>
-          </div>
+        {/* Region Filter Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none z-10">
+          <span className="text-[11px] text-[#6E6E73] font-medium mr-1 uppercase tracking-wider flex-shrink-0">
+            Region:
+          </span>
+          {regionsList.map((reg) => (
+            <button
+              key={reg}
+              type="button"
+              onClick={() => setRegionFilter(reg)}
+              className={`px-2.5 py-1 text-[11px] font-medium rounded-full transition-all flex-shrink-0 cursor-pointer ${
+                regionFilter === reg
+                  ? 'bg-white/[0.14] text-white border border-white/20'
+                  : 'text-[#A1A1A6] hover:text-white bg-white/[0.03] hover:bg-white/[0.06] border border-transparent'
+              }`}
+            >
+              {reg}
+            </button>
+          ))}
+        </div>
+      </div>
 
-          {/* Featured Token Face */}
-          {topMcapTokens.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-4 text-center gap-2 min-h-[120px]">
-              <SparkleIcon size={24} className="text-[#0A84FF]" />
-              <span className="text-xs text-[#A1A1A6]">Syncing Top Tokens...</span>
-            </div>
-          ) : (() => {
-            const featuredToken = topMcapTokens[deckOffset % topMcapTokens.length]
-            const mcapUsd = featuredToken.priceUsd * 1000000000
-            const mcapStr =
-              mcapUsd >= 1000000
-                ? `$${(mcapUsd / 1000000).toFixed(2)}M`
-                : mcapUsd >= 1000
-                ? `$${(mcapUsd / 1000).toFixed(1)}k`
-                : `$${mcapUsd.toFixed(2)}`
-            const progressPct = (featuredToken.progress * 100).toFixed(1)
+      {/* 2. Interactive Countries Grid */}
+      {loading && tokens.length === 0 ? (
+        <div className="apple-glass p-12 flex flex-col items-center justify-center gap-3">
+          <Spinner />
+          <span className="text-xs text-[#A1A1A6] font-medium">Scanning Robinhood Chain nation registries...</span>
+        </div>
+      ) : filteredCountries.length === 0 ? (
+        <div className="apple-glass p-12 text-center flex flex-col items-center justify-center gap-3">
+          <span className="text-3xl">🌍</span>
+          <p className="text-sm font-semibold text-[#F5F5F7]">No matching countries found</p>
+          <p className="text-xs text-[#A1A1A6]">Try adjusting your search query or region filter.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredCountries.map((item) => {
+            const { country, isActive, token } = item
 
             return (
               <div
-                key={featuredToken.tokenAddress}
-                onClick={() => onSelectTokenDetail(featuredToken)}
-                className="py-3 flex flex-col justify-between gap-3 cursor-pointer relative animate-fadeIn flex-1"
+                key={country.code}
+                onClick={() => handleCountryClick(item)}
+                className={`apple-card-interactive p-4 sm:p-5 flex flex-col justify-between gap-4 cursor-pointer relative overflow-hidden group transition-all ${
+                  isActive
+                    ? 'border-emerald-500/20 hover:border-emerald-500/40 bg-gradient-to-b from-emerald-500/[0.03] to-transparent'
+                    : 'border-white/[0.08] hover:border-white/[0.18]'
+                }`}
               >
-                {/* Main Spotlight Presentation */}
-                <div className="flex items-center gap-3">
-                  <div className="w-14 h-14 rounded-2xl bg-black/40 border border-white/[0.12] overflow-hidden shadow-md flex-shrink-0 relative group-hover:scale-105 transition-transform">
-                    <TokenImage
-                      src={featuredToken.logo}
-                      alt={featuredToken.symbol}
-                      size={56}
-                      sparkleSize={28}
-                      className="w-full h-full object-cover"
-                    />
+                {/* Top Section: Flag, Country Name & Status Pill */}
+                <div className="flex items-start justify-between gap-2.5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center flex-shrink-0 shadow-sm">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={country.flagUrl}
+                        alt={country.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLElement).style.display = 'none'
+                        }}
+                      />
+                    </div>
+                    <div className="flex flex-col overflow-hidden">
+                      <span className="text-sm font-bold text-[#F5F5F7] group-hover:text-white transition-colors truncate">
+                        {country.name}
+                      </span>
+                      <span className="text-xs font-semibold text-[#A1A1A6]">
+                        ${country.symbol}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-0.5">
-                      <span className="text-xs font-semibold text-[#F5F5F7]">
-                        ${featuredToken.symbol}
-                      </span>
-                      <span className="text-[10px] font-medium text-[#30D158] bg-[#30D158]/10 px-2 py-0.5 rounded-full border border-[#30D158]/20">
-                        {mcapStr}
+                  {/* Status Badge */}
+                  {isActive ? (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex-shrink-0 shadow-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      Active
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-medium bg-white/[0.05] text-[#A1A1A6] border border-white/[0.08] flex-shrink-0">
+                      Inactive
+                    </span>
+                  )}
+                </div>
+
+                {/* Middle Metrics / Description */}
+                {isActive && token ? (
+                  <div className="flex flex-col gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#A1A1A6]">Price</span>
+                      <span className="text-white font-mono font-medium">
+                        {token.priceNative ? `${token.priceNative.toFixed(6)} ETH` : '~$0.0001'}
                       </span>
                     </div>
 
-                    <h3 className="text-xs sm:text-sm font-medium text-[#A1A1A6] truncate">
-                      {featuredToken.name}
-                    </h3>
-
-                    {/* Progress indicator */}
-                    <div className="mt-2 flex flex-col gap-1">
-                      <div className="flex justify-between text-[11px] text-[#A1A1A6]">
+                    {/* Bonding curve meter */}
+                    <div className="flex flex-col gap-1">
+                      <div className="flex justify-between items-center text-[11px] text-[#A1A1A6]">
                         <span>Curve Progress</span>
-                        <span className="text-[#F5F5F7] font-semibold">{progressPct}%</span>
+                        <span className="text-white font-medium">{token.progress || 0}%</span>
                       </div>
-                      <div className="w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
+                      <div className="w-full h-1.5 bg-black/40 rounded-full overflow-hidden border border-white/5">
                         <div
-                          className="h-full bg-gradient-to-r from-[#0A84FF] to-[#30D158] rounded-full transition-all duration-500"
-                          style={{ width: `${Math.min(100, Math.max(2, parseFloat(progressPct)))}%` }}
+                          className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500"
+                          style={{ width: `${Math.min(100, Math.max(0, token.progress || 0))}%` }}
                         />
                       </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.04] text-xs text-[#A1A1A6] leading-relaxed line-clamp-2">
+                    {country.description}
+                  </div>
+                )}
 
-                {/* Bottom Action Stripe */}
-                <div className="flex items-center justify-between pt-2 border-t border-white/[0.08] text-xs">
-                  <span className="text-[#6E6E73]">
-                    Instant execution
+                {/* Bottom Action CTA */}
+                <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between gap-2">
+                  <span className="text-[11px] text-[#6E6E73] font-medium">
+                    {country.region}
                   </span>
-                  <span className="font-semibold text-white hover:text-white bg-[#0A84FF] hover:bg-[#2492FF] px-3 py-1 rounded-full transition-colors shadow-sm text-xs">
-                    Trade Now ↗
-                  </span>
+
+                  {isActive ? (
+                    <button
+                      type="button"
+                      className="px-3 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer flex items-center gap-1"
+                    >
+                      <span>Swap</span>
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="px-3 py-1.5 rounded-full bg-white/[0.08] hover:bg-white text-[#F5F5F7] hover:text-black text-xs font-semibold transition-all border border-white/[0.10] active:scale-95 cursor-pointer flex items-center gap-1"
+                    >
+                      <span>Tap to Launch</span>
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </button>
+                  )}
                 </div>
               </div>
             )
-          })()}
+          })}
         </div>
-      </div>
+      )}
 
-      {/* Main Token Grid Box */}
-      <div className="flex flex-col apple-glass overflow-hidden h-[640px] sm:h-[680px] w-full flex-shrink-0">
-        {/* Frame Header */}
-        <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-white/[0.08] bg-white/[0.03] flex-shrink-0">
-          <div className="flex items-center gap-2">
-            <h2 className="text-sm font-semibold text-[#F5F5F7] flex items-center gap-2">
-              <span>Tokens on Robinhood Chain</span>
-              <span className="text-xs font-normal text-[#A1A1A6]">
-                ({filteredTokens.length})
-              </span>
-            </h2>
-          </div>
+      {/* 3. Direct Contract Address Importer Drawer */}
+      <div className="apple-glass p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex items-center gap-2 text-xs text-[#A1A1A6]">
+          <span className="text-white font-medium">Direct Contract Address Lookup:</span>
+          <span>Find any deployed token on Robinhood Chain</span>
+        </div>
 
+        <form onSubmit={handleLookupCustomCa} className="flex items-center gap-2 w-full sm:w-auto">
+          <input
+            type="text"
+            value={customCaInput}
+            onChange={(e) => setCustomCaInput(e.target.value)}
+            placeholder="0x... contract address"
+            className="apple-input px-3.5 py-1.5 text-xs text-white placeholder-zinc-500 rounded-full w-full sm:w-64"
+          />
           <button
-            onClick={() => fetchTokens(true)}
-            className="text-xs text-[#A1A1A6] hover:text-[#F5F5F7] bg-white/[0.06] hover:bg-white/[0.12] transition-all font-medium cursor-pointer flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.08] shadow-sm active:scale-95"
+            type="submit"
+            disabled={lookingUpCa || !customCaInput.trim()}
+            className="apple-btn-secondary px-3.5 py-1.5 text-xs font-semibold rounded-full flex-shrink-0"
           >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            <span>Refresh</span>
+            {lookingUpCa ? <Spinner size="sm" /> : 'Inspect'}
           </button>
-        </div>
-
-        {/* Token Grid Content */}
-        <div className="flex-1 min-h-0 p-4 sm:p-6 overflow-y-auto custom-scrollbar">
-          {loading && tokens.length === 0 ? (
-            <div className="flex flex-col items-center justify-center min-h-[360px] gap-3">
-              <Spinner size="lg" />
-              <p className="text-xs text-[#A1A1A6] font-medium">Syncing launchpad tokens...</p>
-            </div>
-          ) : filteredTokens.length === 0 ? (
-            <div className="flex flex-col items-center justify-center min-h-[360px] p-6 text-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-white/[0.06] border border-white/[0.12] flex items-center justify-center">
-                <SparkleIcon size={24} className="text-[#0A84FF]" />
-              </div>
-              <div className="max-w-md">
-                <p className="text-base font-bold text-[#F5F5F7]">
-                  {activeTab === 'mine'
-                    ? 'No Created Tokens Found'
-                    : 'No Matching Tokens'}
-                </p>
-                <p className="text-xs sm:text-sm text-[#A1A1A6] mt-1.5 leading-relaxed">
-                  {activeTab === 'mine'
-                    ? 'Deploy your first token to the bonding curve with 100% fair launch and automated graduation.'
-                    : 'Be the first creator to deploy a token on Robinhood Chain using PONSTHINK!'}
-                </p>
-              </div>
-              <Button
-                size="sm"
-                onClick={onOpenCreateToken}
-                variant="primary"
-                className="gap-2 px-5 py-2.5 text-xs font-semibold rounded-full"
-              >
-                + Launch Token
-              </Button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {filteredTokens.map((token) => {
-                const progressPct = (token.progress * 100).toFixed(1)
-                const isMyToken = !!address && token.creatorAddress.toLowerCase() === address.toLowerCase()
-                const marketCapUsd = token.priceUsd * 1000000000
-                const marketCapFormatted =
-                  marketCapUsd >= 1000000
-                    ? `${(marketCapUsd / 1000000).toFixed(2)}M`
-                    : marketCapUsd >= 1000
-                    ? `${(marketCapUsd / 1000).toFixed(1)}k`
-                    : marketCapUsd.toFixed(2)
-
-                return (
-                  <div
-                    key={token.tokenAddress}
-                    onClick={() => onSelectTokenDetail(token)}
-                    className="flex flex-row gap-3.5 p-4 rounded-2xl apple-card-interactive cursor-pointer group relative overflow-hidden"
-                  >
-                    {/* Left: Square Token Thumbnail */}
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-black/40 border border-white/[0.12] overflow-hidden relative flex-shrink-0 flex items-center justify-center shadow-sm group-hover:border-white/30 transition-colors">
-                      <TokenImage
-                        src={token.logo}
-                        alt={token.symbol}
-                        size={72}
-                        sparkleSize={48}
-                        className="w-full h-full object-cover"
-                      />
-
-                      {/* Creator badge */}
-                      {isMyToken && (
-                        <span className="absolute top-1.5 left-1.5 text-[9px] font-semibold text-black bg-[#FFD60A] px-2 py-0.5 rounded-full shadow-sm">
-                          You
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Right: Info Column */}
-                    <div className="flex-1 min-w-0 flex flex-col justify-between gap-1.5">
-                      {/* Top row: Creator & Badge */}
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-1 text-[11px] text-[#A1A1A6] truncate">
-                          <span className="text-[#6E6E73]">By</span>
-                          <span className="text-[#F5F5F7] font-mono">
-                            {token.creatorAddress.slice(0, 4)}...{token.creatorAddress.slice(-4)}
-                          </span>
-                        </div>
-
-                        <span
-                          className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
-                            token.graduated
-                              ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                              : 'bg-white/[0.06] text-[#A1A1A6] border border-white/[0.08]'
-                          }`}
-                        >
-                          {token.phase === 2 ? 'Uniswap V4' : 'Curve'}
-                        </span>
-                      </div>
-
-                      {/* Name & Ticker */}
-                      <div>
-                        <div className="flex items-baseline gap-1.5 flex-wrap">
-                          <span className="text-sm font-semibold text-[#F5F5F7] group-hover:text-white transition-colors truncate">
-                            {token.name}
-                          </span>
-                          <span className="text-xs font-semibold text-[#0A84FF]">
-                            ${token.symbol}
-                          </span>
-                        </div>
-
-                        {token.description && (
-                          <p className="text-[11px] text-[#A1A1A6] line-clamp-1 leading-tight mt-0.5">
-                            {token.description}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Market Cap & Progress */}
-                      <div className="flex flex-col gap-1 text-xs pt-1">
-                        <div className="flex items-center justify-between">
-                          <span className="font-semibold text-xs text-[#F5F5F7]">
-                            ${marketCapFormatted} <span className="text-[10px] text-[#A1A1A6] font-normal">MCap</span>
-                          </span>
-                          <span className="text-[#30D158] font-semibold text-[11px]">
-                            {progressPct}%
-                          </span>
-                        </div>
-
-                        {/* Apple Liquid Progress Bar */}
-                        <div className="w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full transition-all duration-300 bg-gradient-to-r from-[#0A84FF] to-[#30D158]"
-                            style={{
-                              width: `${Math.max(2, parseFloat(progressPct))}%`,
-                            }}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Card Footer: CA & Quick Swap Action */}
-                      <div className="flex items-center justify-between pt-1.5 border-t border-white/[0.08] text-xs">
-                        <div className="flex items-center gap-1 text-[#6E6E73]">
-                          <span className="font-mono text-[11px]">{token.tokenAddress.slice(0, 4)}...{token.tokenAddress.slice(-4)}</span>
-                          <button
-                            onClick={(e) => copyToClipboard(token.tokenAddress, e)}
-                            className="hover:text-[#F5F5F7] p-0.5 transition-colors cursor-pointer"
-                            title="Copy Contract Address"
-                          >
-                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                            </svg>
-                          </button>
-                        </div>
-
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            onOpenSwap(token.tokenAddress)
-                          }}
-                          className="px-3 py-1 rounded-full bg-white/[0.08] hover:bg-[#0A84FF] text-[#F5F5F7] hover:text-white border border-white/[0.10] text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer active:scale-95 shadow-sm"
-                        >
-                          <span>Swap</span>
-                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          )}
-        </div>
+        </form>
       </div>
+
+      {/* 4. Pre-filled Country Launch Modal (When Inactive Country is Clicked) */}
+      {selectedCountryToLaunch && (
+        <CreateTokenModal
+          open={!!selectedCountryToLaunch}
+          onClose={() => setSelectedCountryToLaunch(null)}
+          initialName={selectedCountryToLaunch.name}
+          initialSymbol={selectedCountryToLaunch.symbol}
+          initialLogo={selectedCountryToLaunch.flagUrl}
+          initialDescription={`Official decentralized nation token for ${selectedCountryToLaunch.name} on Robinhood Chain.`}
+          onTokenCreated={(tokenAddr) => {
+            setSelectedCountryToLaunch(null)
+            fetchTokens(true)
+            toast.success(`${selectedCountryToLaunch.name} nation token launched successfully!`)
+          }}
+        />
+      )}
+
+      {/* 5. Quick Swap Modal (When Active Country is Clicked) */}
+      {selectedTokenToSwap && (
+        <QuickSwapModal
+          open={!!selectedTokenToSwap}
+          token={selectedTokenToSwap}
+          onClose={() => setSelectedTokenToSwap(null)}
+          onSwapSuccess={() => {
+            fetchTokens(false)
+          }}
+        />
+      )}
     </div>
   )
 }
