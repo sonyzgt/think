@@ -6,7 +6,7 @@ import { useSidebar } from '@/context/SidebarContext'
 
 export default function Navbar() {
   const pathname = usePathname()
-  const { toggleOpen, toggleCollapsed, isCollapsed } = useSidebar()
+  const { toggleSidebar, isOpen } = useSidebar()
 
   // Get Page Title for Breadcrumb
   const getPageTitle = () => {
@@ -21,36 +21,24 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b-2 border-zinc-800 bg-[#08090a]/95 backdrop-blur-md select-none font-mono">
+    <header className="sticky top-0 z-30 w-full border-b-2 border-zinc-800 bg-[#08090a]/95 backdrop-blur-md select-none font-mono">
       <div className="w-full max-w-[1720px] mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4">
-        {/* Left: Mobile Drawer Trigger & Desktop Sidebar Toggle & Breadcrumb */}
+        {/* Left: Universal Sidebar Toggle Button & Breadcrumb */}
         <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-          {/* Mobile Hamburger Button */}
+          {/* Sidebar Toggle Button (ChatGPT style toggle) */}
           <button
             type="button"
-            onClick={toggleOpen}
-            title="Open Sidebar"
-            className="md:hidden flex items-center justify-center p-2 rounded-md bg-[#12161d] border-2 border-zinc-700 hover:border-white text-zinc-200 cursor-pointer shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-
-          {/* Desktop Toggle Collapse Button */}
-          <button
-            type="button"
-            onClick={toggleCollapsed}
-            title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-            className="hidden md:flex items-center justify-center p-2 rounded-md bg-[#12161d] border-2 border-zinc-700 hover:border-white text-zinc-300 hover:text-white cursor-pointer shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+            onClick={toggleSidebar}
+            title={isOpen ? 'Close sidebar' : 'Open sidebar'}
+            className="flex items-center justify-center p-2 rounded-md bg-[#12161d] border-2 border-zinc-700 hover:border-white text-zinc-200 hover:text-white cursor-pointer shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
           >
             <svg
-              className={`w-4 h-4 transition-transform duration-200 ${isCollapsed ? 'rotate-180' : ''}`}
+              className="w-4 h-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
 
