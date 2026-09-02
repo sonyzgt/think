@@ -153,58 +153,6 @@ function buildV4SwapCalldata({
   })
 }
 
-async function checkAndAwardTradePoints({
-  twitterHandle,
-  walletAddress,
-  tokenAddress,
-  tokenSymbol,
-  txHash,
-  isBuy,
-  amountInEthOrTokens,
-  tokenPriceUsd,
-  tokenPriceNative,
-}: {
-  twitterHandle?: string
-  walletAddress?: string
-  tokenAddress: string
-  tokenSymbol: string
-  txHash: string
-  isBuy: boolean
-  amountInEthOrTokens: number
-  tokenPriceUsd?: number
-  tokenPriceNative?: number
-}): Promise<number> {
-  const ethPriceUsd = (tokenPriceUsd && tokenPriceNative && tokenPriceNative > 0) ? (tokenPriceUsd / tokenPriceNative) : 2500
-  let tradeUsdValue = 0
-
-  if (isBuy) {
-    tradeUsdValue = amountInEthOrTokens * ethPriceUsd
-  } else {
-    tradeUsdValue = amountInEthOrTokens * (tokenPriceUsd || (tokenPriceNative ? tokenPriceNative * ethPriceUsd : 0))
-  }
-
-  if (tradeUsdValue >= 100 && (twitterHandle || walletAddress)) {
-    try {
-      const { awardPoints } = await import('@/lib/points-system')
-      const targetHandle = twitterHandle || walletAddress || 'trader'
-      const ptRes = await awardPoints({
-        twitterHandle: targetHandle,
-        walletAddress,
-        points: 10,
-        type: 'SWAP_TRADE',
-        description: `${isBuy ? 'Bought' : 'Sold'} >$100 in $${tokenSymbol} (~$${Math.round(tradeUsdValue)})`,
-        tokenAddress,
-        tokenSymbol,
-        txHash,
-      })
-      return ptRes.pointsAwarded
-    } catch (e) {
-      console.error('[Swap API] Error awarding trade points:', e)
-    }
-  }
-  return 0
-}
-
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
@@ -312,24 +260,11 @@ export async function POST(req: NextRequest) {
 
         await publicClient.waitForTransactionReceipt({ hash: txHash })
 
-        const ptsAwarded = await checkAndAwardTradePoints({
-          twitterHandle,
-          walletAddress: senderAddress,
-          tokenAddress: tokenCa,
-          tokenSymbol: tokenInfo.symbol,
-          txHash,
-          isBuy: true,
-          amountInEthOrTokens: parseFloat(String(amount)),
-          tokenPriceUsd: tokenInfo.priceUsd,
-          tokenPriceNative: tokenInfo.priceNative,
-        })
-
         return NextResponse.json({
           success: true,
           txHash,
           isBuy: true,
-          pointsAwarded: ptsAwarded,
-          message: `Successfully bought $${tokenInfo.symbol} on Uniswap v4 for ${amount} ETH!${ptsAwarded > 0 ? ` +${ptsAwarded} Points earned (Trade >$100).` : ''}`,
+          message: `Successfully bought $${tokenInfo.symbol} on Uniswap v4 for ${amount} ETH!`,
         })
       } else {
         const tokenBal = await publicClient.readContract({
@@ -429,10 +364,10 @@ export async function POST(req: NextRequest) {
             },
           })
 
-          const txP2 = await publicClient.sendRawTransaction({
+          const p2Tx = await publicClient.sendRawTransaction({
             serializedTransaction: signP2.signedTransaction as `0x${string}`,
           })
-          await publicClient.waitForTransactionReceipt({ hash: txP2 })
+          await publicClient.waitForTransactionReceipt({ hash: p2Tx })
           nonce += 1
         }
 
@@ -470,24 +405,11 @@ export async function POST(req: NextRequest) {
 
         await publicClient.waitForTransactionReceipt({ hash: txHash })
 
-        const ptsAwarded = await checkAndAwardTradePoints({
-          twitterHandle,
-          walletAddress: senderAddress,
-          tokenAddress: tokenCa,
-          tokenSymbol: tokenInfo.symbol,
-          txHash,
-          isBuy: false,
-          amountInEthOrTokens: Number(tokensIn) / 1e18,
-          tokenPriceUsd: tokenInfo.priceUsd,
-          tokenPriceNative: tokenInfo.priceNative,
-        })
-
         return NextResponse.json({
           success: true,
           txHash,
           isBuy: false,
-          pointsAwarded: ptsAwarded,
-          message: `Successfully sold ${amount} $${tokenInfo.symbol} on Uniswap v4 for ETH!${ptsAwarded > 0 ? ` +${ptsAwarded} Points earned (Trade >$100).` : ''}`,
+          message: `Successfully sold ${amount} $${tokenInfo.symbol} on Uniswap v4 for ETH!`,
         })
       }
     } else {
@@ -551,24 +473,11 @@ export async function POST(req: NextRequest) {
 
         await publicClient.waitForTransactionReceipt({ hash: txHash })
 
-        const ptsAwarded = await checkAndAwardTradePoints({
-          twitterHandle,
-          walletAddress: senderAddress,
-          tokenAddress: tokenCa,
-          tokenSymbol: tokenInfo.symbol,
-          txHash,
-          isBuy: true,
-          amountInEthOrTokens: parseFloat(String(amount)),
-          tokenPriceUsd: tokenInfo.priceUsd,
-          tokenPriceNative: tokenInfo.priceNative,
-        })
-
         return NextResponse.json({
           success: true,
           txHash,
           isBuy: true,
-          pointsAwarded: ptsAwarded,
-          message: `Successfully bought $${tokenInfo.symbol} for ${amount} ETH!${ptsAwarded > 0 ? ` +${ptsAwarded} Points earned (Trade >$100).` : ''}`,
+          message: `Successfully bought $${tokenInfo.symbol} for ${amount} ETH!`,
         })
       } else {
         // ── SELL ACTION ──
@@ -680,24 +589,11 @@ export async function POST(req: NextRequest) {
 
         await publicClient.waitForTransactionReceipt({ hash: txHash })
 
-        const ptsAwarded = await checkAndAwardTradePoints({
-          twitterHandle,
-          walletAddress: senderAddress,
-          tokenAddress: tokenCa,
-          tokenSymbol: tokenInfo.symbol,
-          txHash,
-          isBuy: false,
-          amountInEthOrTokens: Number(tokensIn) / 1e18,
-          tokenPriceUsd: tokenInfo.priceUsd,
-          tokenPriceNative: tokenInfo.priceNative,
-        })
-
         return NextResponse.json({
           success: true,
           txHash,
           isBuy: false,
-          pointsAwarded: ptsAwarded,
-          message: `Successfully sold ${amount} $${tokenInfo.symbol} for ETH!${ptsAwarded > 0 ? ` +${ptsAwarded} Points earned (Trade >$100).` : ''}`,
+          message: `Successfully sold ${amount} $${tokenInfo.symbol} for ETH!`,
         })
       }
     }

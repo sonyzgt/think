@@ -7,7 +7,6 @@ export type ChatIntentType =
   | 'SELL'
   | 'LAUNCH'
   | 'WALLET_QUERY'
-  | 'POINTS_QUERY'
   | 'TOKEN_INFO'
   | 'GENERAL'
 
@@ -81,16 +80,7 @@ export function parseTradingCommandDeterministic(text: string): ParsedActionData
       clean
     )
 
-  // 7. Check for POINTS / LEADERBOARD
-  const isPointsIntent = /\b(point|points|poin|leaderboard|my points|check points|peringkat)\b/i.test(clean)
-  if (isPointsIntent && !isBuyIntent && !isSellIntent && !isLaunchIntent) {
-    return {
-      intent: 'POINTS_QUERY',
-      confidence: 1.0,
-    }
-  }
-
-  // 8. Check for WALLET / BALANCE QUERY
+  // 7. Check for WALLET / BALANCE QUERY
   const isWalletQuery =
     /\b(wallet|balance|saldo|address|deposit|my wallet|check balance|my address|dompet)\b/i.test(
       clean

@@ -12,7 +12,6 @@ export default function Navbar() {
   const getPageTitle = () => {
     if (pathname.startsWith('/coin')) return 'COINS EXPLORER'
     if (pathname.startsWith('/launch')) return 'LAUNCH TOKEN'
-    if (pathname.startsWith('/dashboard')) return 'POINTS & DASHBOARD'
     if (pathname.startsWith('/wallet')) return 'WALLET & HOLDINGS'
     if (pathname.startsWith('/chat')) return 'AI AGENT CHAT'
     if (pathname.startsWith('/token')) return 'TOKEN DETAILS'

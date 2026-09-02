@@ -485,11 +485,10 @@ export async function processTweetLaunch(payload: TweetPayload): Promise<{
 
       const actionText = isBuy ? `Bought $${tokenSymbol} with ${swapAmount} ETH` : `Sold ${swapAmount} $${tokenSymbol} to ETH`
       const phaseText = swapJson.route === 'UNISWAP_V4' ? 'Uniswap V4 (Migrated)' : 'Bonding Curve'
-      const pointsText = swapJson.pointsAwarded > 0 ? `\nPoints: +${swapJson.pointsAwarded} PTS (Trade >$100) (https://ponscore.app/dashboard)` : ''
 
       return {
         success: true,
-        message: `@${payload.authorHandle} ${actionText} on ${phaseText}.${pointsText}\n\nTX: https://robinhoodchain.blockscout.com/tx/${swapJson.txHash}`,
+        message: `@${payload.authorHandle} ${actionText} on ${phaseText}.\n\nTX: https://robinhoodchain.blockscout.com/tx/${swapJson.txHash}`,
         txHash: swapJson.txHash,
       }
     } catch (err: unknown) {
@@ -771,29 +770,10 @@ export async function processTweetLaunch(payload: TweetPayload): Promise<{
     }
   }
 
-  let pointsAwarded = 0
-  try {
-    const { awardPoints } = await import('@/lib/points-system')
-    const ptRes = await awardPoints({
-      twitterHandle: payload.authorHandle,
-      walletAddress: activeWallet,
-      points: 10,
-      type: 'TOKEN_DEPLOY',
-      description: `Deployed token $${tokenSymbol}`,
-      tokenAddress: deployedTokenCa,
-      tokenSymbol,
-      txHash,
-    })
-    pointsAwarded = ptRes.pointsAwarded
-  } catch (ptErr) {
-    console.error('[Twitter Bot] Error awarding points:', ptErr)
-  }
-
   await markTweetProcessed(payload.tweetId)
 
-  const pointsText = pointsAwarded > 0 ? `\nPoints: +${pointsAwarded} PTS (https://ponscore.app/dashboard)` : ''
   const responseMsg = deployedTokenCa
-    ? `$${tokenSymbol} is live on Robinhood Chain.\n\nCreator: @${payload.authorHandle}${pointsText}\nTrade: https://ponscore.app/token/${deployedTokenCa}\nExplorer: https://robinhoodchain.blockscout.com/tx/${txHash}`
+    ? `$${tokenSymbol} is live on Robinhood Chain.\n\nCreator: @${payload.authorHandle}\nTrade: https://ponscore.app/token/${deployedTokenCa}\nExplorer: https://robinhoodchain.blockscout.com/tx/${txHash}`
     : `$${tokenSymbol} launch submitted on Robinhood Chain.\n\nTX: https://robinhoodchain.blockscout.com/tx/${txHash}`
 
   return {

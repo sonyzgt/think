@@ -142,22 +142,7 @@ export async function POST(req: NextRequest) {
       }
 
       // B. If user asked to SELL / SELL ALL without specifying a contract address
-      // Handle POINTS_QUERY
-    if (action?.intent === 'POINTS_QUERY') {
-      try {
-        const { getUserPoints } = await import('@/lib/points-system')
-        const handle = userTwitter || activeUserAddress || ''
-        const ptData = handle ? await getUserPoints(handle) : null
-        const total = ptData?.totalPoints || 0
-        const historyCount = ptData?.history?.length || 0
 
-        replyText = userTwitter
-          ? `You have ${total.toLocaleString()} PONS Points across ${historyCount} recorded activities. Earn +10 Points for deploying tokens and +10 Points for every Buy/Sell trade above $100. View your full history and global rank at https://ponscore.app/dashboard`
-          : `Connect your Twitter account on PONSCORE to track your PONS Points. You earn +10 Points for deploying tokens and +10 Points for every trade above $100 on Robinhood Chain. Visit https://ponscore.app/dashboard for the live leaderboard.`
-      } catch {
-        replyText = `PONS Points Program: Earn +10 Points for every token launched or trade above $100 on Robinhood Chain. View leaderboard at https://ponscore.app/dashboard`
-      }
-    }
 
       if (action && action.intent === 'SELL' && !action.tokenAddress) {
         if (action.tokenSymbol) {
