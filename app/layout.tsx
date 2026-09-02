@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import ClientProviders from '@/components/ClientProviders'
 import SparkleBackground from '@/components/ui/SparkleBackground'
+import EarthCursor from '@/components/ui/EarthCursor'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -46,6 +47,9 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         className="min-h-full flex flex-col bg-[#050506] text-[#F5F5F7] antialiased selection:bg-[#0A84FF]/25 selection:text-white relative overflow-x-hidden"
         suppressHydrationWarning
       >
+        {/* Desktop Custom Earth Globe Cursor */}
+        <EarthCursor />
+
         {/* Ambient Apple Vision Liquid Glass Ambient Backdrop */}
         <SparkleBackground />
 
