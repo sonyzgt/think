@@ -247,7 +247,7 @@ export default function WorldFlagMap({
                     </div>
 
                     {isActive ? (
-                      <span className="text-[9px] font-bold font-mono text-orange-400 bg-orange-950/60 border border-orange-500/40 px-2 py-0.5 rounded">
+                      <span className="text-[9px] font-bold font-mono text-black bg-white px-2 py-0.5 rounded shadow-sm">
                         ● ACTIVE
                       </span>
                     ) : (
@@ -265,10 +265,10 @@ export default function WorldFlagMap({
         {/* Minimal Floating Map Legend */}
         <div className="hidden sm:flex items-center gap-3 skeuo-panel px-3.5 py-1.5 rounded-xl text-xs shadow-xl pointer-events-auto">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full skeuo-led-orange flex-shrink-0" />
+            <span className="w-2.5 h-2.5 rounded-full skeuo-led-white flex-shrink-0" />
             <span className="text-white font-mono font-bold text-[11px]">{activeCount} ACTIVE</span>
           </div>
-          <span className="text-white/15">|</span>
+          <span className="text-white/20">|</span>
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full skeuo-led-off flex-shrink-0" />
             <span className="text-zinc-400 font-mono text-[11px]">{availableCount} AVAILABLE</span>
@@ -289,7 +289,7 @@ export default function WorldFlagMap({
           type="button"
           onClick={(e) => { e.stopPropagation(); handleZoom(1.3) }}
           title="Zoom In"
-          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-white font-black text-sm cursor-pointer"
+          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-black font-black text-sm cursor-pointer"
         >
           +
         </button>
@@ -297,7 +297,7 @@ export default function WorldFlagMap({
           type="button"
           onClick={(e) => { e.stopPropagation(); handleZoom(0.75) }}
           title="Zoom Out"
-          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-white font-black text-sm cursor-pointer"
+          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-black font-black text-sm cursor-pointer"
         >
           −
         </button>
@@ -305,7 +305,7 @@ export default function WorldFlagMap({
           type="button"
           onClick={(e) => { e.stopPropagation(); handleResetView() }}
           title="Reset Map View"
-          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-white text-xs font-bold cursor-pointer"
+          className="w-8 h-8 flex items-center justify-center rounded-lg skeuo-button text-black text-xs font-bold cursor-pointer"
         >
           ⟲
         </button>
@@ -427,14 +427,14 @@ export default function WorldFlagMap({
                       isHighlighted
                         ? '#38BDF8'
                         : isActive
-                        ? '#FF7A00'
+                        ? '#FFFFFF'
                         : 'rgba(255, 255, 255, 0.35)'
                     }
                     strokeWidth={
                       isHighlighted
                         ? 2.5
                         : isActive
-                        ? 1.8
+                        ? 2.0
                         : 0.65
                     }
                     className="hover:stroke-white hover:stroke-[2px] hover:opacity-100 transition-all duration-100 filter hover:brightness-125"
@@ -446,13 +446,13 @@ export default function WorldFlagMap({
                     <g transform={`translate(${item.center.x}, ${item.center.y})`}>
                       <circle
                         r="5"
-                        fill="#FF7A00"
-                        className="animate-ping opacity-75"
+                        fill="#FFFFFF"
+                        className="animate-ping opacity-80"
                       />
                       <circle
                         r="3.5"
-                        fill="#FF7A00"
-                        stroke="#ffffff"
+                        fill="#FFFFFF"
+                        stroke="#000000"
                         strokeWidth="1"
                       />
                     </g>
@@ -485,7 +485,7 @@ export default function WorldFlagMap({
               {hoveredCountry.country.name}
             </span>
             {hoveredCountry.isActive ? (
-              <span className="text-[10px] font-bold text-orange-400">
+              <span className="text-[10px] font-black text-white">
                 ● ACTIVE
               </span>
             ) : (

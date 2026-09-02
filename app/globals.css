@@ -1,22 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050506;
-  --foreground: #F5F5F7;
-  --text-secondary: #A1A1A6;
-  --text-muted: #6E6E73;
-  --surface: #0B0B0D;
-  --surface-elevated: rgba(255, 255, 255, 0.06);
-  --surface-border: rgba(255, 255, 255, 0.10);
-  --surface-border-subtle: rgba(255, 255, 255, 0.06);
-  --theme-color: #FF6B00;
-  --theme-light: #FF8A3D;
-  --theme-dark: #C2410C;
-  --theme-glow: rgba(255, 107, 0, 0.45);
-  --theme-subtle: rgba(255, 107, 0, 0.15);
-  --theme-border: rgba(255, 107, 0, 0.45);
-  --accent-orange: #FF6B00;
-  --accent-orange-glow: rgba(255, 107, 0, 0.45);
+  --background: #05070a;
+  --foreground: #FFFFFF;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --surface: #0B0F15;
+  --surface-elevated: rgba(255, 255, 255, 0.08);
+  --surface-border: rgba(255, 255, 255, 0.20);
+  --surface-border-subtle: rgba(255, 255, 255, 0.10);
+  --theme-color: #FFFFFF;
+  --theme-light: #F8FAFC;
+  --theme-dark: #94A3B8;
+  --theme-glow: rgba(255, 255, 255, 0.6);
+  --theme-subtle: rgba(255, 255, 255, 0.18);
+  --theme-border: rgba(255, 255, 255, 0.45);
+  --accent-white: #FFFFFF;
+  --accent-white-glow: rgba(255, 255, 255, 0.6);
   --accent: var(--theme-color);
   --accent-hover: var(--theme-light);
   --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -32,8 +32,8 @@
 }
 
 body {
-  background-color: #050506;
-  color: #F5F5F7;
+  background-color: #05070a;
+  color: #FFFFFF;
   font-family: var(--apple-font);
   min-height: 100vh;
   overflow-x: hidden;
@@ -53,147 +53,142 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.25);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.45);
 }
 
-/* ── SKEUOMORPHIC DESIGN SYSTEM ── */
+/* ── SKEUOMORPHIC DESIGN SYSTEM (PURE WHITE & PLATINUM) ── */
 
-/* Skeuomorphic Machined Bright Orange Chassis / Panel */
+/* Skeuomorphic Machined Platinum / White Chassis / Panel */
 .skeuo-panel {
-  background: linear-gradient(180deg, #1f1207 0%, #140b04 50%, #0c0602 100%) !important;
-  border-top: 2px solid #ffa94d !important;
-  border-bottom: 2px solid #b83200 !important;
-  border-left: 2px solid #ff7a00 !important;
-  border-right: 2px solid #ff7a00 !important;
+  background: linear-gradient(180deg, #121822 0%, #0b0f16 50%, #06090e 100%) !important;
+  border-top: 2px solid #ffffff !important;
+  border-bottom: 2px solid #334155 !important;
+  border-left: 1.5px solid rgba(255, 255, 255, 0.40) !important;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.40) !important;
   box-shadow: 
-    inset 0 1px 2px rgba(255, 200, 120, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8),
     inset 0 -1px 3px rgba(0, 0, 0, 0.9),
-    0 0 30px rgba(255, 122, 0, 0.45),
+    0 0 30px rgba(255, 255, 255, 0.22),
     0 16px 36px rgba(0, 0, 0, 0.9) !important;
 }
 
 /* Skeuomorphic Debossed Inset Screen / Tray */
 .skeuo-inset {
-  background: linear-gradient(180deg, #0f0803 0%, #1a0d05 100%) !important;
+  background: linear-gradient(180deg, #05070a 0%, #0a0e14 100%) !important;
   border-top: 1.5px solid rgba(0, 0, 0, 0.95) !important;
-  border-bottom: 1px solid rgba(255, 122, 0, 0.45) !important;
-  border-left: 1px solid rgba(255, 122, 0, 0.3) !important;
-  border-right: 1px solid rgba(255, 122, 0, 0.3) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
   box-shadow: 
     inset 0 3px 8px rgba(0, 0, 0, 0.95),
-    0 1px 0 rgba(255, 122, 0, 0.3) !important;
+    0 1px 0 rgba(255, 255, 255, 0.20) !important;
 }
 
-/* Skeuomorphic 3D Push Button (Bright Tactile Orange) */
+/* Skeuomorphic 3D Push Button (Platinum Finish) */
 .skeuo-button {
-  background: linear-gradient(180deg, #ff922b 0%, #ff6b00 48%, #d9480f 100%) !important;
-  color: #ffffff !important;
-  border-top: 1.5px solid #ffc078 !important;
-  border-bottom: 2px solid #992e00 !important;
-  border-left: 1px solid #ff6b00 !important;
-  border-right: 1px solid #ff6b00 !important;
+  background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 48%, #cbd5e1 100%) !important;
+  color: #05070a !important;
+  border-top: 1.5px solid #ffffff !important;
+  border-bottom: 2.5px solid #64748b !important;
+  border-left: 1px solid #e2e8f0 !important;
+  border-right: 1px solid #e2e8f0 !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.8),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.4),
-    0 4px 12px rgba(255, 107, 0, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 1),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.60),
     0 1px 2px rgba(0, 0, 0, 0.8) !important;
-  font-weight: 700 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+  font-weight: 800 !important;
   transition: all 0.12s ease !important;
 }
 
 .skeuo-button:hover {
-  background: linear-gradient(180deg, #ffa94d 0%, #ff7a1a 48%, #e8590c 100%) !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 48%, #e2e8f0 100%) !important;
   box-shadow: 
     inset 0 1px 2px rgba(255, 255, 255, 1),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
-    0 6px 18px rgba(255, 122, 0, 0.7),
-    0 0 15px rgba(255, 122, 0, 0.5) !important;
+    inset 0 -2px 3px rgba(0, 0, 0, 0.20),
+    0 6px 18px rgba(255, 255, 255, 0.5),
+    0 0 15px rgba(255, 255, 255, 0.4) !important;
 }
 
 .skeuo-button:active {
   transform: translateY(1.5px) !important;
-  background: linear-gradient(180deg, #d9480f 0%, #ff6b00 100%) !important;
+  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%) !important;
   box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.7),
+    inset 0 3px 6px rgba(0, 0, 0, 0.5),
     0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Skeuomorphic Primary 3D Switch (Super Bright Radiant Orange) */
+/* Skeuomorphic Primary 3D Switch (Super Bright Radiant White) */
 .skeuo-button-primary {
-  background: linear-gradient(180deg, #ffa94d 0%, #ff7a00 45%, #e8590c 100%) !important;
-  color: #ffffff !important;
-  border-top: 2px solid #ffe8cc !important;
-  border-bottom: 3px solid #992e00 !important;
-  border-left: 1.5px solid #ff922b !important;
-  border-right: 1.5px solid #ff922b !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 45%, #e2e8f0 100%) !important;
+  color: #000000 !important;
+  border-top: 2px solid #ffffff !important;
+  border-bottom: 3px solid #475569 !important;
+  border-left: 1.5px solid #ffffff !important;
+  border-right: 1.5px solid #ffffff !important;
   box-shadow: 
-    inset 0 1px 2px rgba(255, 255, 255, 0.9),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
-    0 0 25px rgba(255, 122, 0, 0.7),
-    0 6px 16px rgba(0, 0, 0, 0.8) !important;
+    inset 0 1px 2px #ffffff,
+    0 0 25px rgba(255, 255, 255, 0.85),
+    0 6px 16px rgba(0, 0, 0, 0.9) !important;
   font-weight: 900 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
   transition: all 0.12s ease !important;
 }
 
 .skeuo-button-primary:hover {
-  background: linear-gradient(180deg, #ffc078 0%, #ff922b 45%, #f76707 100%) !important;
+  background: linear-gradient(180deg, #ffffff 0%, #ffffff 45%, #f1f5f9 100%) !important;
   box-shadow: 
-    inset 0 1px 2px rgba(255, 255, 255, 1),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
-    0 0 35px rgba(255, 122, 0, 0.9),
-    0 8px 22px rgba(0, 0, 0, 0.8) !important;
+    inset 0 1px 2px #ffffff,
+    0 0 35px rgba(255, 255, 255, 1),
+    0 8px 22px rgba(0, 0, 0, 0.9) !important;
 }
 
 .skeuo-button-primary:active {
   transform: translateY(2px) !important;
-  background: linear-gradient(180deg, #d9480f 0%, #c2410c 100%) !important;
+  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%) !important;
   box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.6),
+    inset 0 3px 6px rgba(0, 0, 0, 0.5),
     0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Skeuomorphic Orange Accent Button */
-.skeuo-button-orange {
-  background: linear-gradient(180deg, #ffa94d 0%, #ff7a00 48%, #d9480f 100%) !important;
-  color: #ffffff !important;
-  border-top: 1.5px solid #ffe8cc !important;
-  border-bottom: 2px solid #992e00 !important;
-  border-left: 1px solid #ff7a00 !important;
-  border-right: 1px solid #ff7a00 !important;
+/* Skeuomorphic White Accent Button */
+.skeuo-button-white {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 48%, #e2e8f0 100%) !important;
+  color: #000000 !important;
+  border-top: 1.5px solid #ffffff !important;
+  border-bottom: 2px solid #64748b !important;
+  border-left: 1px solid #ffffff !important;
+  border-right: 1px solid #ffffff !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.8),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
-    0 6px 16px rgba(255, 122, 0, 0.6),
+    inset 0 1px 1px #ffffff,
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 6px 16px rgba(255, 255, 255, 0.5),
     0 2px 4px rgba(0, 0, 0, 0.9) !important;
   font-weight: 800 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
   transition: all 0.12s ease !important;
 }
 
-.skeuo-button-orange:active {
+.skeuo-button-white:active {
   transform: translateY(2px) !important;
-  background: linear-gradient(180deg, #d9480f 0%, #c2410c 100%) !important;
+  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%) !important;
   box-shadow: 
     inset 0 3px 6px rgba(0, 0, 0, 0.6),
     0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Skeuomorphic Glass LED Status Indicator */
-.skeuo-led-orange {
-  background: radial-gradient(circle at 35% 35%, #fff4e6 0%, #ff922b 40%, #f76707 70%, #d9480f 100%) !important;
+/* Skeuomorphic Glass LED Status Indicator (Pure White Diamond) */
+.skeuo-led-white {
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f1f5f9 40%, #cbd5e1 70%, #94a3b8 100%) !important;
   border: 1px solid rgba(0, 0, 0, 0.8) !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 1px 1px #ffffff,
     inset 0 -1px 2px rgba(0, 0, 0, 0.6),
-    0 0 12px #ff922b,
-    0 0 22px rgba(255, 122, 0, 0.9) !important;
+    0 0 12px #ffffff,
+    0 0 22px rgba(255, 255, 255, 0.95) !important;
 }
 
 .skeuo-led-green {
