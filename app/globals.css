@@ -63,120 +63,97 @@ body {
 
 /* ── SKEUOMORPHIC DESIGN SYSTEM ── */
 
-/* Skeuomorphic Machined Copper / Orange Chassis / Panel */
+/* Skeuomorphic Machined Bright Orange Chassis / Panel */
 .skeuo-panel {
-  background: linear-gradient(180deg, #24140a 0%, #170b04 50%, #0d0602 100%) !important;
-  border-top: 1px solid rgba(255, 160, 60, 0.45) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.95) !important;
-  border-left: 1px solid rgba(255, 107, 0, 0.30) !important;
-  border-right: 1px solid rgba(255, 107, 0, 0.30) !important;
+  background: linear-gradient(180deg, #1f1207 0%, #140b04 50%, #0c0602 100%) !important;
+  border-top: 2px solid #ffa94d !important;
+  border-bottom: 2px solid #b83200 !important;
+  border-left: 2px solid #ff7a00 !important;
+  border-right: 2px solid #ff7a00 !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 180, 100, 0.45),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.9),
-    0 20px 45px rgba(0, 0, 0, 0.9),
-    0 0 25px rgba(255, 107, 0, 0.18) !important;
+    inset 0 1px 2px rgba(255, 200, 120, 0.6),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.9),
+    0 0 30px rgba(255, 122, 0, 0.45),
+    0 16px 36px rgba(0, 0, 0, 0.9) !important;
 }
 
 /* Skeuomorphic Debossed Inset Screen / Tray */
 .skeuo-inset {
-  background: linear-gradient(180deg, #0d0602 0%, #140903 100%) !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.95) !important;
-  border-bottom: 1px solid rgba(255, 107, 0, 0.25) !important;
-  border-left: 1px solid rgba(0, 0, 0, 0.9) !important;
-  border-right: 1px solid rgba(0, 0, 0, 0.9) !important;
+  background: linear-gradient(180deg, #0f0803 0%, #1a0d05 100%) !important;
+  border-top: 1.5px solid rgba(0, 0, 0, 0.95) !important;
+  border-bottom: 1px solid rgba(255, 122, 0, 0.45) !important;
+  border-left: 1px solid rgba(255, 122, 0, 0.3) !important;
+  border-right: 1px solid rgba(255, 122, 0, 0.3) !important;
   box-shadow: 
     inset 0 3px 8px rgba(0, 0, 0, 0.95),
-    inset 0 -1px 1px rgba(255, 107, 0, 0.10),
-    0 1px 0 rgba(255, 107, 0, 0.12) !important;
+    0 1px 0 rgba(255, 122, 0, 0.3) !important;
 }
 
-/* Skeuomorphic 3D Push Button (Warm Bronze / Copper Sheen) */
+/* Skeuomorphic 3D Push Button (Bright Tactile Orange) */
 .skeuo-button {
-  background: linear-gradient(180deg, #381d0c 0%, #241105 48%, #160802 100%) !important;
-  border-top: 1px solid rgba(255, 160, 70, 0.50) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.95) !important;
-  border-left: 1px solid rgba(255, 107, 0, 0.30) !important;
-  border-right: 1px solid rgba(255, 107, 0, 0.30) !important;
-  box-shadow: 
-    inset 0 1px 1px rgba(255, 180, 100, 0.50),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.80),
-    0 4px 10px rgba(0, 0, 0, 0.70),
-    0 0 10px rgba(255, 107, 0, 0.15) !important;
-  transition: all 0.12s ease !important;
-}
-
-.skeuo-button:hover {
-  background: linear-gradient(180deg, #4d260f 0%, #331707 48%, #220b02 100%) !important;
-  box-shadow: 
-    inset 0 1px 2px rgba(255, 200, 120, 0.6),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.85),
-    0 6px 14px rgba(0, 0, 0, 0.8),
-    0 0 16px rgba(255, 107, 0, 0.3) !important;
-}
-
-.skeuo-button:active {
-  transform: translateY(1.5px) !important;
-  background: linear-gradient(180deg, #180a03 0%, #291206 100%) !important;
-  box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.95),
-    0 1px 2px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Skeuomorphic Primary 3D Switch (Vibrant Electric Orange) */
-.skeuo-button-primary {
-  background: linear-gradient(180deg, #ff8a3d 0%, #ff6b00 48%, #c2410c 100%) !important;
+  background: linear-gradient(180deg, #ff922b 0%, #ff6b00 48%, #d9480f 100%) !important;
   color: #ffffff !important;
-  border-top: 1px solid #ffba88 !important;
-  border-bottom: 2px solid #7c2d12 !important;
-  border-left: 1px solid #ea580c !important;
-  border-right: 1px solid #ea580c !important;
+  border-top: 1.5px solid #ffc078 !important;
+  border-bottom: 2px solid #992e00 !important;
+  border-left: 1px solid #ff6b00 !important;
+  border-right: 1px solid #ff6b00 !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.85),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.45),
-    0 6px 20px rgba(255, 107, 0, 0.55),
-    0 2px 4px rgba(0, 0, 0, 0.9) !important;
-  font-weight: 800 !important;
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.4),
+    0 4px 12px rgba(255, 107, 0, 0.45),
+    0 1px 2px rgba(0, 0, 0, 0.8) !important;
+  font-weight: 700 !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
   transition: all 0.12s ease !important;
 }
 
-.skeuo-button-primary:hover {
-  background: linear-gradient(180deg, #ff9b57 0%, #ff7a1a 48%, #d94800 100%) !important;
+.skeuo-button:hover {
+  background: linear-gradient(180deg, #ffa94d 0%, #ff7a1a 48%, #e8590c 100%) !important;
   box-shadow: 
     inset 0 1px 2px rgba(255, 255, 255, 1),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.35),
-    0 8px 24px rgba(255, 107, 0, 0.7),
-    0 3px 6px rgba(0, 0, 0, 0.8) !important;
+    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
+    0 6px 18px rgba(255, 122, 0, 0.7),
+    0 0 15px rgba(255, 122, 0, 0.5) !important;
+}
+
+.skeuo-button:active {
+  transform: translateY(1.5px) !important;
+  background: linear-gradient(180deg, #d9480f 0%, #ff6b00 100%) !important;
+  box-shadow: 
+    inset 0 3px 6px rgba(0, 0, 0, 0.7),
+    0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Skeuomorphic Primary 3D Switch (Super Bright Radiant Orange) */
+.skeuo-button-primary {
+  background: linear-gradient(180deg, #ffa94d 0%, #ff7a00 45%, #e8590c 100%) !important;
+  color: #ffffff !important;
+  border-top: 2px solid #ffe8cc !important;
+  border-bottom: 3px solid #992e00 !important;
+  border-left: 1.5px solid #ff922b !important;
+  border-right: 1.5px solid #ff922b !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+    0 0 25px rgba(255, 122, 0, 0.7),
+    0 6px 16px rgba(0, 0, 0, 0.8) !important;
+  font-weight: 900 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+  transition: all 0.12s ease !important;
+}
+
+.skeuo-button-primary:hover {
+  background: linear-gradient(180deg, #ffc078 0%, #ff922b 45%, #f76707 100%) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 1),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 0 35px rgba(255, 122, 0, 0.9),
+    0 8px 22px rgba(0, 0, 0, 0.8) !important;
 }
 
 .skeuo-button-primary:active {
   transform: translateY(2px) !important;
-  background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%) !important;
-  box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.6),
-    0 1px 2px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Skeuomorphic Green Accent Button */
-.skeuo-button-green {
-  background: linear-gradient(180deg, #34d399 0%, #10b981 48%, #059669 100%) !important;
-  color: #022c16 !important;
-  border-top: 1px solid #6ee7b7 !important;
-  border-bottom: 2px solid #047857 !important;
-  border-left: 1px solid #10b981 !important;
-  border-right: 1px solid #10b981 !important;
-  box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.7),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.4),
-    0 6px 16px rgba(16, 185, 129, 0.35),
-    0 2px 4px rgba(0, 0, 0, 0.9) !important;
-  font-weight: 800 !important;
-  transition: all 0.12s ease !important;
-}
-
-.skeuo-button-green:active {
-  transform: translateY(2px) !important;
-  background: linear-gradient(180deg, #059669 0%, #047857 100%) !important;
+  background: linear-gradient(180deg, #d9480f 0%, #c2410c 100%) !important;
   box-shadow: 
     inset 0 3px 6px rgba(0, 0, 0, 0.6),
     0 1px 2px rgba(0, 0, 0, 0.5) !important;
@@ -184,24 +161,25 @@ body {
 
 /* Skeuomorphic Orange Accent Button */
 .skeuo-button-orange {
-  background: linear-gradient(180deg, #ff8a3d 0%, #ff6b00 48%, #c2410c 100%) !important;
+  background: linear-gradient(180deg, #ffa94d 0%, #ff7a00 48%, #d9480f 100%) !important;
   color: #ffffff !important;
-  border-top: 1px solid #ffba88 !important;
-  border-bottom: 2px solid #9a3412 !important;
-  border-left: 1px solid #ea580c !important;
-  border-right: 1px solid #ea580c !important;
+  border-top: 1.5px solid #ffe8cc !important;
+  border-bottom: 2px solid #992e00 !important;
+  border-left: 1px solid #ff7a00 !important;
+  border-right: 1px solid #ff7a00 !important;
   box-shadow: 
     inset 0 1px 1px rgba(255, 255, 255, 0.8),
     inset 0 -2px 4px rgba(0, 0, 0, 0.4),
-    0 6px 16px rgba(255, 107, 0, 0.45),
+    0 6px 16px rgba(255, 122, 0, 0.6),
     0 2px 4px rgba(0, 0, 0, 0.9) !important;
   font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
   transition: all 0.12s ease !important;
 }
 
 .skeuo-button-orange:active {
   transform: translateY(2px) !important;
-  background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%) !important;
+  background: linear-gradient(180deg, #d9480f 0%, #c2410c 100%) !important;
   box-shadow: 
     inset 0 3px 6px rgba(0, 0, 0, 0.6),
     0 1px 2px rgba(0, 0, 0, 0.5) !important;
@@ -209,13 +187,13 @@ body {
 
 /* Skeuomorphic Glass LED Status Indicator */
 .skeuo-led-orange {
-  background: radial-gradient(circle at 35% 35%, #fed7aa 0%, #f97316 50%, #c2410c 100%) !important;
+  background: radial-gradient(circle at 35% 35%, #fff4e6 0%, #ff922b 40%, #f76707 70%, #d9480f 100%) !important;
   border: 1px solid rgba(0, 0, 0, 0.8) !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
     inset 0 -1px 2px rgba(0, 0, 0, 0.6),
-    0 0 10px #f97316,
-    0 0 18px rgba(249, 115, 22, 0.6) !important;
+    0 0 12px #ff922b,
+    0 0 22px rgba(255, 122, 0, 0.9) !important;
 }
 
 .skeuo-led-green {
