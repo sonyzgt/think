@@ -10,45 +10,110 @@ interface SparkleIconProps {
 
 export default function SparkleIcon({ size = 40, className = '', accentColor }: SparkleIconProps) {
   const { theme } = useTheme()
-  const screenColor = accentColor || theme?.color || 'var(--theme-color)'
+  const primaryColor = accentColor || theme?.color || 'currentColor'
 
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 128 128"
+      viewBox="0 0 512 512"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      {/* Top face */}
-      <polygon
-        points="28,38 61,20 100,41 66,60"
-        fill="#2a2e36"
-      />
+      <g fill={primaryColor === 'currentColor' ? 'currentColor' : primaryColor}>
+        {/* LEFT */}
+        <path d="
+          M256 106
+          C242 87 219 76 196 79
+          C167 82 146 106 147 135
+          C119 137 98 159 98 187
+          C98 199 102 210 109 219
+          C87 229 74 250 76 274
+          C78 300 96 320 120 326
+          C113 353 128 380 153 390
+          C174 398 197 391 210 374
+          C219 395 236 409 256 412
+          V106Z
+        " />
 
-      {/* Left side face */}
-      <polygon
-        points="28,38 66,60 66,101 28,79"
-        fill="#16191f"
-      />
+        {/* RIGHT */}
+        <path d="
+          M256 106
+          C270 87 293 76 316 79
+          C345 82 366 106 365 135
+          C393 137 414 159 414 187
+          C414 199 410 210 403 219
+          C425 229 438 250 436 274
+          C434 300 416 320 392 326
+          C399 353 384 380 359 390
+          C338 398 315 391 302 374
+          C293 395 276 409 256 412
+          V106Z
+        " />
 
-      {/* Right side / screen bezel */}
-      <polygon
-        points="66,60 100,41 100,82 66,101"
-        fill="#1e222a"
-      />
+        {/* LEFT INNER CUTS */}
+        <path
+          d="
+            M173 132
+            C192 126 211 138 212 157
+            C213 174 202 184 187 188
+            C171 192 163 204 168 218
+            C172 230 183 236 196 235
 
-      {/* Screen - Dynamically reacts to active theme color */}
-      <polygon
-        points="70,62 94,48 94,76 70,89"
-        fill={screenColor}
-      />
+            M108 253
+            C128 244 151 251 157 270
+            C162 286 151 300 135 302
 
-      {/* Screen detail */}
-      <polygon
-        points="75,66 89,58 89,70 75,78"
-        fill="#0b0d11"
-      />
+            M190 272
+            C207 270 220 282 220 298
+            C220 313 210 323 195 326
+
+            M160 345
+            C178 341 195 350 200 367
+          "
+          fill="none"
+          stroke="#050506"
+          strokeWidth="14"
+          strokeLinecap="round"
+        />
+
+        {/* RIGHT INNER CUTS */}
+        <path
+          d="
+            M339 132
+            C320 126 301 138 300 157
+            C299 174 310 184 325 188
+            C341 192 349 204 344 218
+            C340 230 329 236 316 235
+
+            M404 253
+            C384 244 361 251 355 270
+            C350 286 361 300 377 302
+
+            M322 272
+            C305 270 292 282 292 298
+            C292 313 302 323 317 326
+
+            M352 345
+            C334 341 317 350 312 367
+          "
+          fill="none"
+          stroke="#050506"
+          strokeWidth="14"
+          strokeLinecap="round"
+        />
+
+        {/* CENTRAL SEPARATION */}
+        <rect
+          x="248"
+          y="108"
+          width="16"
+          height="304"
+          rx="8"
+          fill="#050506"
+        />
+      </g>
     </svg>
   )
 }

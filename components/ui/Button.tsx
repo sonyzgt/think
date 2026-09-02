@@ -19,25 +19,25 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base =
-    'inline-flex items-center justify-center font-mono font-bold tracking-tight rounded-lg uppercase select-none transition-all duration-100 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none cursor-pointer'
+    'inline-flex items-center justify-center font-medium tracking-tight rounded-full select-none transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none cursor-pointer active:scale-[0.98]'
 
   const variants = {
     primary:
-      'bg-[var(--theme-color)] text-black border-2 border-white shadow-[3px_3px_0px_0px_#ffffff] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#ffffff] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none',
+      'bg-[#0A84FF] hover:bg-[#2492FF] text-white shadow-[0_2px_12px_rgba(10,132,255,0.4)] border border-[#0A84FF]/40',
     secondary:
-      'bg-[#181b20] text-zinc-100 border-2 border-zinc-700 shadow-[3px_3px_0px_0px_#000000] hover:border-white hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none',
+      'bg-white/[0.06] hover:bg-white/[0.12] text-[#F5F5F7] border border-white/[0.10] shadow-sm',
     ghost:
-      'bg-transparent hover:bg-white/[0.08] text-zinc-300 hover:text-white border-2 border-transparent hover:border-zinc-700 transition-colors',
+      'bg-transparent hover:bg-white/[0.08] text-[#A1A1A6] hover:text-[#F5F5F7] border border-transparent transition-colors',
     danger:
-      'bg-rose-600 text-white border-2 border-rose-300 shadow-[3px_3px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none',
+      'bg-rose-500 hover:bg-rose-600 text-white shadow-[0_2px_12px_rgba(244,63,94,0.4)] border border-rose-500/40',
     accent:
-      'bg-[var(--theme-color)] text-black border-2 border-white shadow-[3px_3px_0px_0px_#000000] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none',
+      'bg-[#30D158] hover:bg-[#3be065] text-black shadow-[0_2px_12px_rgba(48,209,88,0.4)] border border-[#30D158]/40 font-semibold',
   }
 
   const sizes = {
-    sm: 'px-3 py-1.5 text-xs',
-    md: 'px-4 py-2 text-xs sm:text-sm',
-    lg: 'px-6 py-3 text-sm sm:text-base',
+    sm: 'px-3.5 py-1.5 text-xs',
+    md: 'px-5 py-2.5 text-xs sm:text-sm',
+    lg: 'px-7 py-3.5 text-sm sm:text-base',
   }
 
   return (

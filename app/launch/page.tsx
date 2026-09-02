@@ -461,52 +461,42 @@ export default function LaunchPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-transparent text-zinc-100 animate-fadeIn">
+    <div className="flex flex-col min-h-screen bg-transparent text-[#F5F5F7] animate-fadeIn">
       {/* Navigation */}
       <Navbar />
 
-      <main className="flex-1 w-full max-w-[1720px] mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 font-mono">
+      <main className="flex-1 w-full max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="max-w-6xl mx-auto flex flex-col gap-6 sm:gap-8">
           {/* Header Banner */}
-          <div
-            style={{
-              boxShadow: `5px 5px 0px 0px ${theme.color}`,
-            }}
-            className="bg-[#0e1115] border-2 border-white p-6 sm:p-8 rounded-xl relative overflow-hidden"
-          >
-            <div className="flex items-center gap-2 mb-2 flex-wrap">
-              <span className="px-2.5 py-0.5 text-xs font-black bg-[var(--theme-color)] text-black border border-black uppercase">
-                PONS V2 BONDING CURVE
+          <div className="apple-glass p-6 sm:p-8 relative overflow-hidden">
+            <div className="flex items-center gap-2.5 mb-2 flex-wrap">
+              <span className="px-3 py-1 text-xs font-semibold bg-[#0A84FF]/15 text-[#0A84FF] border border-[#0A84FF]/30 rounded-full">
+                Bonding Curve V2
               </span>
-              <span className="px-2.5 py-0.5 text-xs font-black bg-zinc-800 border border-zinc-700 text-zinc-200 uppercase">
-                100% FAIR LAUNCH
+              <span className="px-3 py-1 text-xs font-semibold bg-[#30D158]/15 text-[#30D158] border border-[#30D158]/30 rounded-full">
+                100% Fair Launch
               </span>
             </div>
-            <h1 className="text-xl sm:text-3xl font-black text-white uppercase tracking-tight">
-              // LAUNCH TOKEN ON ROBINHOOD CHAIN
+            <h1 className="text-xl sm:text-2xl font-bold text-[#F5F5F7] tracking-tight">
+              Launch Token on Robinhood Chain
             </h1>
-            <p className="text-zinc-300 text-xs sm:text-sm mt-2 max-w-2xl font-sans leading-relaxed">
-              Mint 1,000,000,000 fixed supply straight to the bonding curve. No dev pre-allocation, built-in anti-snipe tax shield, and automated graduation to permanently locked Uniswap v4 liquidity.
+            <p className="text-[#A1A1A6] text-xs sm:text-sm mt-2 max-w-2xl leading-relaxed">
+              Mint 1,000,000,000 fixed supply straight to the bonding curve. Zero dev pre-allocation, built-in anti-snipe tax shield, and automated graduation to Uniswap v4 locked liquidity.
             </p>
           </div>
 
           {/* Main 2-Column Split: Form (Left) & Interactive Preview (Right) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
             {/* Left Column: Form */}
-            <div
-              style={{
-                boxShadow: `4px 4px 0px 0px #000000`,
-              }}
-              className="lg:col-span-7 flex flex-col gap-5 bg-[#0e1115] border-2 border-white p-5 sm:p-7 rounded-xl"
-            >
-              <h2 className="text-sm font-black uppercase text-white flex items-center gap-2 pb-2 border-b-2 border-zinc-800">
-                <span>// TOKEN_PARAMETERS</span>
+            <div className="lg:col-span-7 flex flex-col gap-5 apple-glass p-6 sm:p-7">
+              <h2 className="text-sm font-semibold text-[#F5F5F7] pb-3 border-b border-white/[0.08]">
+                Token Parameters
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-black uppercase text-zinc-300 mb-1.5 block">
-                    TOKEN NAME <span style={{ color: theme.color }}>*</span>
+                  <label className="text-xs font-medium text-[#A1A1A6] mb-1.5 block">
+                    Token Name <span className="text-[#0A84FF]">*</span>
                   </label>
                   <input
                     type="text"
@@ -514,13 +504,13 @@ export default function LaunchPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Cyber Frog"
-                    className="w-full bg-[#121519] border-2 border-zinc-700 focus:border-white px-3.5 py-2 text-xs sm:text-sm text-white placeholder-zinc-500 rounded-lg shadow-[2px_2px_0px_0px_#000000] focus:shadow-[3px_3px_0px_0px_#ffffff] focus:outline-none transition-all font-sans"
+                    className="w-full apple-input px-3.5 py-2.5 text-xs sm:text-sm text-[#F5F5F7] placeholder-[#6E6E73] rounded-xl"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-black uppercase text-zinc-300 mb-1.5 block">
-                    SYMBOL / TICKER <span style={{ color: theme.color }}>*</span>
+                  <label className="text-xs font-medium text-[#A1A1A6] mb-1.5 block">
+                    Symbol / Ticker <span className="text-[#0A84FF]">*</span>
                   </label>
                   <input
                     type="text"
@@ -529,15 +519,15 @@ export default function LaunchPage() {
                     value={symbol}
                     onChange={(e) => setSymbol(e.target.value.toUpperCase())}
                     placeholder="e.g. FROG"
-                    className="w-full bg-[#121519] border-2 border-zinc-700 focus:border-white px-3.5 py-2 text-xs sm:text-sm text-white placeholder-zinc-500 rounded-lg shadow-[2px_2px_0px_0px_#000000] focus:shadow-[3px_3px_0px_0px_#ffffff] focus:outline-none transition-all uppercase font-mono font-bold"
+                    className="w-full apple-input px-3.5 py-2.5 text-xs sm:text-sm text-[#F5F5F7] placeholder-[#6E6E73] rounded-xl uppercase font-mono font-semibold"
                   />
                 </div>
               </div>
 
               {/* Direct Image File Upload */}
               <div>
-                <label className="text-xs font-black uppercase text-zinc-300 mb-1.5 block">
-                  TOKEN LOGO IMAGE
+                <label className="text-xs font-medium text-[#A1A1A6] mb-1.5 block">
+                  Token Logo Image
                 </label>
                 <input
                   type="file"
@@ -548,9 +538,9 @@ export default function LaunchPage() {
                 />
 
                 {previewLogo || logo ? (
-                  <div className="flex items-center justify-between p-3 bg-[#121519] border-2 border-zinc-700 rounded-lg shadow-[2px_2px_0px_0px_#000000]">
+                  <div className="flex items-center justify-between p-3 bg-white/[0.04] border border-white/[0.10] rounded-2xl">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-md bg-black border-2 border-white overflow-hidden relative flex-shrink-0 flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-xl bg-black/40 border border-white/[0.12] overflow-hidden relative flex-shrink-0 flex items-center justify-center">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={previewLogo || logo}
@@ -559,17 +549,17 @@ export default function LaunchPage() {
                         />
                       </div>
                       <div>
-                        <p className="text-xs font-black text-white uppercase">LOGO READY</p>
-                        <p className="text-[10px] text-theme-light font-mono">Verified for deployment</p>
+                        <p className="text-xs font-semibold text-[#F5F5F7]">Logo Ready</p>
+                        <p className="text-[11px] text-[#30D158] font-medium">Verified for deployment</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
-                        className="text-xs px-2.5 py-1 rounded bg-[#181b20] hover:bg-white text-zinc-200 hover:text-black border border-zinc-600 hover:border-white transition-all cursor-pointer font-bold"
+                        className="text-xs px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-[#F5F5F7] border border-white/[0.08] transition-all cursor-pointer font-medium"
                       >
-                        CHANGE
+                        Change
                       </button>
                       <button
                         type="button"
@@ -578,9 +568,9 @@ export default function LaunchPage() {
                           setPreviewLogo('')
                           committedLogoRef.current = ''
                         }}
-                        className="text-xs px-2.5 py-1 rounded bg-rose-600 hover:bg-rose-500 text-white border border-black transition-all cursor-pointer font-bold"
+                        className="text-xs px-3 py-1.5 rounded-full bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 transition-all cursor-pointer font-medium"
                       >
-                        REMOVE
+                        Remove
                       </button>
                     </div>
                   </div>
@@ -592,17 +582,17 @@ export default function LaunchPage() {
                     }}
                     onDrop={handleDrop}
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex flex-col items-center justify-center p-5 bg-[#121519] hover:bg-white/[0.04] border-2 border-dashed border-zinc-700 hover:border-white rounded-lg cursor-pointer transition-all text-center group shadow-[2px_2px_0px_0px_#000000]"
+                    className="flex flex-col items-center justify-center p-6 bg-white/[0.03] hover:bg-white/[0.06] border border-dashed border-white/[0.15] hover:border-white/[0.3] rounded-2xl cursor-pointer transition-all text-center group"
                   >
-                    <div className="w-8 h-8 rounded-md bg-black border border-zinc-600 group-hover:border-white flex items-center justify-center text-zinc-400 mb-1.5 shadow-sm">
+                    <div className="w-9 h-9 rounded-full bg-white/[0.06] border border-white/[0.10] group-hover:border-white/20 flex items-center justify-center text-[#A1A1A6] mb-2 shadow-sm">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <p className="text-xs font-black uppercase text-white group-hover:text-theme-light transition-colors">
-                      CHOOSE IMAGE FILE FROM DEVICE
+                    <p className="text-xs font-semibold text-[#F5F5F7] group-hover:text-white transition-colors">
+                      Choose image file from device
                     </p>
-                    <p className="text-[10px] text-zinc-500 mt-0.5 font-sans">
+                    <p className="text-[11px] text-[#6E6E73] mt-0.5">
                       PNG, JPG, WEBP, SVG, GIF (Or drag & drop)
                     </p>
                   </div>
@@ -610,62 +600,62 @@ export default function LaunchPage() {
               </div>
 
               <div>
-                <label className="text-xs font-black uppercase text-zinc-300 mb-1.5 block">DESCRIPTION</label>
+                <label className="text-xs font-medium text-[#A1A1A6] mb-1.5 block">Description</label>
                 <textarea
                   rows={3}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Describe your vision and tokenomics..."
-                  className="w-full bg-[#121519] border-2 border-zinc-700 focus:border-white rounded-lg px-3.5 py-2 text-xs text-white placeholder-zinc-500 shadow-[2px_2px_0px_0px_#000000] focus:shadow-[3px_3px_0px_0px_#ffffff] focus:outline-none resize-none font-sans"
+                  className="w-full apple-input px-3.5 py-2.5 text-xs text-[#F5F5F7] placeholder-[#6E6E73] rounded-xl resize-none"
                 />
               </div>
 
               {/* Social Links */}
-              <div className="bg-[#121519] border-2 border-zinc-800 rounded-lg p-3.5 flex flex-col gap-2.5">
-                <span className="text-xs font-black uppercase text-zinc-300">// SOCIAL_LINKS (OPTIONAL)</span>
+              <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex flex-col gap-3">
+                <span className="text-xs font-semibold text-[#F5F5F7]">Social Links (Optional)</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <input
                     type="text"
                     value={twitter}
                     onChange={(e) => setTwitter(e.target.value)}
                     placeholder="Twitter / X (@handle)"
-                    className="w-full bg-[#0b0d10] border border-zinc-700 focus:border-white rounded px-3 py-1.5 text-xs text-white placeholder-zinc-600 focus:outline-none"
+                    className="w-full apple-input px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] rounded-xl"
                   />
                   <input
                     type="text"
                     value={telegram}
                     onChange={(e) => setTelegram(e.target.value)}
                     placeholder="Telegram (t.me/...)"
-                    className="w-full bg-[#0b0d10] border border-zinc-700 focus:border-white rounded px-3 py-1.5 text-xs text-white placeholder-zinc-600 focus:outline-none"
+                    className="w-full apple-input px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] rounded-xl"
                   />
                   <input
                     type="text"
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                     placeholder="Website (https://...)"
-                    className="w-full bg-[#0b0d10] border border-zinc-700 focus:border-white rounded px-3 py-1.5 text-xs text-white placeholder-zinc-600 focus:outline-none"
+                    className="w-full apple-input px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] rounded-xl"
                   />
                   <input
                     type="text"
                     value={discord}
                     onChange={(e) => setDiscord(e.target.value)}
                     placeholder="Discord invite URL"
-                    className="w-full bg-[#0b0d10] border border-zinc-700 focus:border-white rounded px-3 py-1.5 text-xs text-white placeholder-zinc-600 focus:outline-none"
+                    className="w-full apple-input px-3 py-2 text-xs text-[#F5F5F7] placeholder-[#6E6E73] rounded-xl"
                   />
                 </div>
               </div>
 
               {/* 1-Click Launch & Buy */}
-              <div className="bg-[#121519] border-2 border-zinc-800 rounded-lg p-3.5 flex flex-col gap-2 shadow-sm">
+              <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex flex-col gap-2 shadow-sm">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-black uppercase text-theme-light flex items-center gap-1.5">
-                    <span>FIRST BUY IN SAME TRANSACTION</span>
-                    <span className="text-[9px] px-1.5 py-0.2 bg-[var(--theme-color)] text-black border border-black font-black">
-                      ANTI-SNIPER
+                  <label className="text-xs font-semibold text-[#F5F5F7] flex items-center gap-1.5">
+                    <span>First Buy in Same Transaction</span>
+                    <span className="text-[10px] px-2 py-0.5 bg-[#30D158]/15 text-[#30D158] border border-[#30D158]/30 rounded-full font-medium">
+                      Anti-Sniper Shield
                     </span>
                   </label>
                 </div>
-                <p className="text-[11px] text-zinc-400 font-sans">
+                <p className="text-[11px] text-[#A1A1A6]">
                   Buy tokens atomically during launch so front-running bots cannot snipe ahead of you.
                 </p>
                 <div className="flex items-center gap-2 mt-1">
@@ -676,9 +666,9 @@ export default function LaunchPage() {
                     value={initialBuyEth}
                     onChange={(e) => setInitialBuyEth(e.target.value)}
                     placeholder="0.0 (Optional ETH amount)"
-                    className="flex-1 bg-[#0b0d10] border-2 border-zinc-700 focus:border-white rounded px-3 py-1.5 text-xs font-mono text-white placeholder-zinc-600 focus:outline-none"
+                    className="flex-1 apple-input px-3.5 py-2 text-xs font-mono text-[#F5F5F7] placeholder-[#6E6E73] rounded-xl"
                   />
-                  <span className="text-xs font-black font-mono text-black bg-[var(--theme-color)] px-3 py-1.5 rounded border border-black">
+                  <span className="text-xs font-semibold font-mono text-[#F5F5F7] bg-white/[0.08] px-3.5 py-2 rounded-xl border border-white/[0.10]">
                     ETH
                   </span>
                 </div>
@@ -688,19 +678,19 @@ export default function LaunchPage() {
               <button
                 type="button"
                 onClick={() => setShowAdvanced((p) => !p)}
-                className="text-xs text-zinc-400 hover:text-white flex items-center gap-1 font-mono transition-colors self-start cursor-pointer font-bold uppercase"
+                className="text-xs text-[#A1A1A6] hover:text-[#F5F5F7] flex items-center gap-1 transition-colors self-start cursor-pointer font-medium"
               >
-                <span>{showAdvanced ? '▼ [HIDE ADVANCED]' : '▶ [ADVANCED TOKEN ECONOMICS]'}</span>
+                <span>{showAdvanced ? '▾ Hide Advanced' : '▸ Advanced Token Economics'}</span>
               </button>
 
               {showAdvanced && (
-                <div className="bg-[#121519] border-2 border-zinc-800 rounded-lg p-3.5 flex flex-col gap-3 animate-fadeIn">
+                <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex flex-col gap-3 animate-fadeIn">
                   <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <label className="text-xs font-bold text-zinc-300">
-                        Creator Tax: <span className="font-mono text-theme-light">{(creatorTaxBps / 100).toFixed(1)}%</span>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <label className="text-xs font-medium text-[#A1A1A6]">
+                        Creator Tax: <span className="font-mono text-[#F5F5F7] font-semibold">{(creatorTaxBps / 100).toFixed(1)}%</span>
                       </label>
-                      <span className="text-[10px] text-zinc-500 font-mono">Min 1.0% • Max 5.0%</span>
+                      <span className="text-[11px] text-[#6E6E73]">Min 1.0% • Max 5.0%</span>
                     </div>
                     <input
                       type="range"
@@ -709,7 +699,7 @@ export default function LaunchPage() {
                       step="10"
                       value={creatorTaxBps}
                       onChange={(e) => setCreatorTaxBps(Number(e.target.value))}
-                      style={{ accentColor: theme.color }}
+                      style={{ accentColor: '#0A84FF' }}
                       className="w-full cursor-pointer"
                     />
                   </div>
@@ -719,20 +709,15 @@ export default function LaunchPage() {
 
             {/* Right Column: Live Card Preview & Launch CTA */}
             <div className="lg:col-span-5 flex flex-col gap-5 lg:sticky lg:top-24">
-              <div
-                style={{
-                  boxShadow: `4px 4px 0px 0px #000000`,
-                }}
-                className="bg-[#0e1115] border-2 border-white p-5 sm:p-6 rounded-xl flex flex-col gap-4"
-              >
-                <span className="text-xs font-black text-zinc-400 uppercase tracking-wider">
-                  // LIVE_CARD_PREVIEW
+              <div className="apple-glass p-5 sm:p-6 flex flex-col gap-4">
+                <span className="text-xs font-semibold text-[#A1A1A6]">
+                  Live Token Preview
                 </span>
 
                 {/* Token Preview Card */}
-                <div className="bg-[#111419] border-2 border-zinc-700 rounded-lg p-4 flex flex-col gap-3 shadow-[3px_3px_0px_0px_#000000]">
+                <div className="bg-white/[0.04] border border-white/[0.10] rounded-2xl p-4 flex flex-col gap-3 shadow-md">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-md bg-black border-2 border-white overflow-hidden relative flex-shrink-0 flex items-center justify-center shadow-md">
+                    <div className="w-12 h-12 rounded-xl bg-black/40 border border-white/[0.12] overflow-hidden relative flex-shrink-0 flex items-center justify-center shadow-sm">
                       {previewLogo || logo ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
@@ -741,69 +726,69 @@ export default function LaunchPage() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <svg className="w-5 h-5 text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-5 h-5 text-[#6E6E73]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                       )}
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-base font-black text-white">
+                        <span className="text-sm sm:text-base font-semibold text-[#F5F5F7]">
                           {name || 'Token Name'}
                         </span>
-                        <span className="text-xs font-black text-theme-light">
+                        <span className="text-xs font-semibold text-[#0A84FF]">
                           ${symbol || 'TICKER'}
                         </span>
                       </div>
-                      <span className="text-[10px] text-zinc-400">
-                        1,000,000,000 SUPPLY (100% CURVE)
+                      <span className="text-[11px] text-[#A1A1A6]">
+                        1,000,000,000 Supply (100% Curve)
                       </span>
                     </div>
                   </div>
 
                   {description && (
-                    <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed font-sans">
+                    <p className="text-xs text-[#A1A1A6] line-clamp-2 leading-relaxed">
                       {description}
                     </p>
                   )}
 
-                  <div className="bg-black border border-zinc-800 p-2.5 rounded flex flex-col gap-1.5 text-xs">
-                    <div className="flex justify-between text-zinc-400">
-                      <span>GRADUATION TARGET</span>
-                      <span className="font-black text-white">5.0 ETH</span>
+                  <div className="bg-white/[0.03] border border-white/[0.08] p-3 rounded-xl flex flex-col gap-1.5 text-xs">
+                    <div className="flex justify-between text-[#A1A1A6]">
+                      <span>Graduation Target</span>
+                      <span className="font-semibold text-[#F5F5F7]">5.0 ETH</span>
                     </div>
-                    <div className="w-full h-2 bg-zinc-900 rounded-none overflow-hidden border border-zinc-700">
+                    <div className="w-full h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
                       <div
-                        className="h-full rounded-none"
-                        style={{ backgroundColor: theme.color }}
+                        className="h-full rounded-full bg-gradient-to-r from-[#0A84FF] to-[#30D158]"
+                        style={{ width: '4%' }}
                       />
                     </div>
-                    <div className="flex justify-between text-[10px] text-zinc-500">
-                      <span>0.0 ETH RAISED</span>
-                      <span>PHASE: BONDING CURVE</span>
+                    <div className="flex justify-between text-[11px] text-[#6E6E73]">
+                      <span>0.0 ETH Raised</span>
+                      <span>Phase: Bonding Curve</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Connected Wallet Status Card */}
-                <div className="bg-[#121519] border-2 border-zinc-800 rounded-lg p-3.5 flex flex-col gap-2.5">
+                <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex flex-col gap-2.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-black uppercase text-zinc-300">DEPLOYMENT ACCOUNT</span>
+                    <span className="text-xs font-semibold text-[#F5F5F7]">Deployment Account</span>
                     {address ? (
-                      <span className="text-[9px] font-black bg-[var(--theme-color)] text-black px-1.5 py-0.2 border border-black">
-                        CONNECTED
+                      <span className="text-[10px] font-medium bg-[#30D158]/15 text-[#30D158] px-2 py-0.5 rounded-full border border-[#30D158]/30">
+                        Connected
                       </span>
                     ) : (
-                      <span className="text-[10px] text-zinc-500">NOT CONNECTED</span>
+                      <span className="text-[11px] text-[#6E6E73]">Not Connected</span>
                     )}
                   </div>
 
                   {address ? (
                     <div className="flex flex-col gap-1.5 text-xs">
-                      <div className="flex items-center justify-between bg-black px-2.5 py-1.5 rounded border border-zinc-800">
-                        <span className="text-zinc-400">Wallet:</span>
+                      <div className="flex items-center justify-between bg-white/[0.03] px-3 py-2 rounded-xl border border-white/[0.06]">
+                        <span className="text-[#A1A1A6]">Wallet:</span>
                         <div className="flex items-center gap-1.5">
-                          <code className="text-theme-light font-bold">
+                          <code className="text-[#0A84FF] font-medium">
                             {address.slice(0, 6)}...{address.slice(-4)}
                           </code>
                           <button
@@ -812,7 +797,7 @@ export default function LaunchPage() {
                               navigator.clipboard.writeText(address)
                               toast.success('Address copied!')
                             }}
-                            className="text-zinc-400 hover:text-white cursor-pointer p-0.5"
+                            className="text-[#A1A1A6] hover:text-[#F5F5F7] cursor-pointer p-0.5"
                             title="Copy Address"
                           >
                             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -822,9 +807,9 @@ export default function LaunchPage() {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between bg-black px-2.5 py-1.5 rounded border border-zinc-800">
-                        <span className="text-zinc-400">Your Balance:</span>
-                        <span className="font-black text-white">
+                      <div className="flex items-center justify-between bg-white/[0.03] px-3 py-2 rounded-xl border border-white/[0.06]">
+                        <span className="text-[#A1A1A6]">Balance:</span>
+                        <span className="font-semibold text-[#F5F5F7]">
                           {ethBalance < 0.001 && ethBalance > 0
                             ? ethBalance.toFixed(6)
                             : ethBalance.toFixed(4)}{' '}
@@ -833,36 +818,36 @@ export default function LaunchPage() {
                       </div>
 
                       {!hasSufficientEth && (
-                        <div className="p-2.5 bg-amber-950/40 border-2 border-amber-500 rounded text-[11px] text-amber-300 flex flex-col gap-1 mt-1">
-                          <span className="font-black text-amber-200 uppercase">// BALANCE SHORTFALL</span>
-                          <p className="text-zinc-300 font-sans text-[11px]">
+                        <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-300 flex flex-col gap-1 mt-1">
+                          <span className="font-semibold text-amber-200">Balance Shortfall</span>
+                          <p className="text-[#A1A1A6] text-xs">
                             Required: <strong className="font-mono text-white">{totalEthRequired.toFixed(4)} ETH</strong>. You have <strong className="font-mono text-amber-300">{ethBalance.toFixed(6)} ETH</strong>.
                           </p>
                         </div>
                       )}
                     </div>
                   ) : (
-                    <p className="text-xs text-zinc-500 font-sans">
+                    <p className="text-xs text-[#A1A1A6]">
                       Connect your wallet to deploy on Robinhood Chain.
                     </p>
                   )}
                 </div>
 
                 {/* Pricing Summary */}
-                <div className="bg-black border-2 border-zinc-800 rounded-lg p-3.5 flex flex-col gap-1.5 text-xs text-zinc-400">
+                <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-4 flex flex-col gap-2 text-xs text-[#A1A1A6]">
                   <div className="flex justify-between">
-                    <span>PROTOCOL FEE</span>
-                    <span className="text-white font-bold">{launchFeeEth > 0 ? `${launchFeeEth} ETH` : '0 ETH'}</span>
+                    <span>Protocol Fee</span>
+                    <span className="text-[#F5F5F7] font-medium">{launchFeeEth > 0 ? `${launchFeeEth} ETH` : '0 ETH'}</span>
                   </div>
                   {initialBuyNum > 0 && (
                     <div className="flex justify-between">
-                      <span>OPENING BUY</span>
-                      <span className="font-bold text-theme-light">+{initialBuyNum.toFixed(4)} ETH</span>
+                      <span>Opening Buy</span>
+                      <span className="font-medium text-[#0A84FF]">+{initialBuyNum.toFixed(4)} ETH</span>
                     </div>
                   )}
-                  <div className="flex justify-between pt-1.5 border-t border-zinc-800 text-white font-black text-sm">
-                    <span>TOTAL REQUIRED</span>
-                    <span className="text-theme-light">{totalEthRequired.toFixed(4)} ETH</span>
+                  <div className="flex justify-between pt-2 border-t border-white/[0.08] text-[#F5F5F7] font-semibold text-sm">
+                    <span>Total Required</span>
+                    <span className="text-[#30D158] font-bold">{totalEthRequired.toFixed(4)} ETH</span>
                   </div>
                 </div>
 
@@ -871,30 +856,30 @@ export default function LaunchPage() {
                   <Button
                     variant="primary"
                     onClick={() => login()}
-                    className="w-full py-3.5 text-xs font-black gap-2 shadow-[3px_3px_0px_0px_#000000]"
+                    className="w-full py-3.5 text-xs font-semibold rounded-full"
                   >
-                    <span>CONNECT WALLET TO DEPLOY</span>
+                    <span>Connect Wallet to Deploy</span>
                   </Button>
                 ) : !isFormValid ? (
                   <Button
                     variant="secondary"
                     disabled
-                    className="w-full py-3.5 text-xs font-black"
+                    className="w-full py-3.5 text-xs font-semibold rounded-full"
                   >
-                    ENTER NAME & SYMBOL
+                    Enter Name & Symbol
                   </Button>
                 ) : (
                   <Button
                     variant="primary"
                     onClick={handleLaunchToken}
                     loading={deploying || uploadingImage}
-                    className="w-full py-4 text-xs font-black shadow-[3px_3px_0px_0px_#000000]"
+                    className="w-full py-3.5 text-xs font-semibold rounded-full"
                   >
                     {uploadingImage
-                      ? 'UPLOADING LOGO...'
+                      ? 'Uploading Logo...'
                       : deploying
-                      ? 'DEPLOYING TO ROBINHOOD CHAIN...'
-                      : `DEPLOY $${symbol.toUpperCase() || 'TOKEN'} ON CURVE`}
+                      ? 'Deploying to Robinhood Chain...'
+                      : `Deploy $${symbol.toUpperCase() || 'TOKEN'} on Curve`}
                   </Button>
                 )}
               </div>

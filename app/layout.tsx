@@ -19,13 +19,13 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: '#000000',
+  themeColor: '#050506',
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sparklefamily.fun'),
-  title: 'PONSCORE — Robinhood Chain',
-  description: 'PONSCORE — High-speed token sniping, launchpad, portfolio management, and universal DEX routing on Robinhood Chain.',
+  metadataBase: new URL('https://ponscore.app'),
+  title: 'PONSTHINK — Intelligent Web3 Platform on Robinhood Chain',
+  description: 'PONSTHINK — Intelligent token exploration, fair launchpad, Apple-grade portfolio management, and universal AI trading on Robinhood Chain.',
   icons: {
     icon: [
       { url: '/sparkle-logo.svg', type: 'image/svg+xml' },
@@ -43,10 +43,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       suppressHydrationWarning
     >
       <body
-        className="min-h-full flex flex-col bg-[#050807] text-zinc-100 antialiased selection:bg-emerald-500/25 selection:text-emerald-200 relative overflow-x-hidden"
+        className="min-h-full flex flex-col bg-[#050506] text-[#F5F5F7] antialiased selection:bg-[#0A84FF]/25 selection:text-white relative overflow-x-hidden"
         suppressHydrationWarning
       >
-        {/* Ambient Apple Glass Emerald Gradient & Sparkling Particles Background */}
+        {/* Ambient Apple Vision Liquid Glass Ambient Backdrop */}
         <SparkleBackground />
 
         {/* App Content */}

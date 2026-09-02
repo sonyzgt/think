@@ -7,7 +7,6 @@ import Button from '@/components/ui/Button'
 import toast from 'react-hot-toast'
 import { createPublicClient, http, erc20Abi, formatEther, encodeFunctionData, getAddress } from 'viem'
 import { useSendTransaction, usePrivy, useWallets } from '@privy-io/react-auth'
-import { useTheme } from '@/context/ThemeContext'
 import SparkleIcon from '@/components/ui/SparkleIcon'
 
 interface WalletCardProps {
@@ -31,7 +30,6 @@ const WETH_ABI = [
 
 export default function WalletCard({ onSend, onReceive, onSwap, onClaimRoyalties }: WalletCardProps) {
   const { address, balance, creatingWallet, createWallet, refetchBalance, embeddedWallet } = useWallet()
-  const { theme } = useTheme()
   const { sendTransaction } = useSendTransaction()
   const { user, logout } = usePrivy()
   const { wallets } = useWallets()
@@ -41,8 +39,6 @@ export default function WalletCard({ onSend, onReceive, onSwap, onClaimRoyalties
   const [wethBalanceRaw, setWethBalanceRaw] = useState<bigint>(0n)
   const [wethBalanceFormatted, setWethBalanceFormatted] = useState<string>('0')
   const [unwrapping, setUnwrapping] = useState(false)
-
-
 
   const fetchWethBalance = useCallback(async () => {
     if (!address) return
@@ -117,47 +113,41 @@ export default function WalletCard({ onSend, onReceive, onSwap, onClaimRoyalties
   const explorerUrl = `${activeChain.blockExplorers.default.url}/address/${address}`
 
   return (
-    <div
-      style={{
-        boxShadow: `5px 5px 0px 0px ${theme.color}`,
-      }}
-      className="rounded-xl bg-[#0e1115] border-2 border-white p-5 sm:p-7 w-full relative overflow-hidden select-none font-mono"
-    >
+    <div className="apple-glass p-6 sm:p-8 w-full relative overflow-hidden select-none">
       {/* Header status */}
-      <div className="flex items-center justify-between mb-4 pb-3 border-b-2 border-zinc-800">
-        <div className="flex items-center gap-2">
-          <SparkleIcon size={24} className="flex-shrink-0" />
-          <span className="text-xs font-black uppercase text-white">
-            // WALLET_CORE
+      <div className="flex items-center justify-between mb-5 pb-4 border-b border-white/[0.08]">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-full bg-white/[0.08] border border-white/[0.12] flex items-center justify-center">
+            <SparkleIcon size={18} className="text-[#0A84FF]" />
+          </div>
+          <span className="text-sm font-semibold text-[#F5F5F7]">
+            Wallet & Assets
           </span>
         </div>
         <div className="flex items-center gap-2">
           {onClaimRoyalties && (
             <button
               onClick={onClaimRoyalties}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[var(--theme-color)] text-black border border-black shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none text-xs font-black uppercase cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-[#F5F5F7] border border-white/[0.10] text-xs font-medium cursor-pointer transition-all active:scale-95"
             >
-              <span>ROYALTIES</span>
+              <span>Creator Royalties</span>
             </button>
           )}
-          <span className="flex items-center gap-1.5 text-[10px] font-black px-2 py-0.5 bg-zinc-900 border border-zinc-700 text-theme-light rounded">
-            <span
-              className="w-1.5 h-1.5 rounded-none"
-              style={{ backgroundColor: theme.color }}
-            />
-            SYNCED
+          <span className="flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 bg-white/[0.05] border border-white/[0.08] text-[#30D158] rounded-full">
+            <span className="w-2 h-2 rounded-full bg-[#30D158] shadow-[0_0_8px_rgba(48,209,88,0.7)] animate-pulse" />
+            Robinhood L2
           </span>
         </div>
       </div>
 
       {/* WETH Auto-Unwrap Banner */}
       {wethBalanceRaw > 0n && (
-        <div className="mb-4 bg-[#14181f] border-2 border-amber-400 p-3 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 shadow-[3px_3px_0px_0px_#000000]">
+        <div className="mb-5 bg-amber-500/10 border border-amber-500/30 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
-            <p className="text-xs font-black text-amber-300 uppercase">
-              DETECTED {wethBalanceFormatted} WETH
+            <p className="text-xs font-semibold text-amber-300">
+              Detected {wethBalanceFormatted} WETH
             </p>
-            <p className="text-[10px] text-zinc-400 font-sans">
+            <p className="text-[11px] text-[#A1A1A6] mt-0.5">
               Unwrap to combine directly into your Native ETH balance
             </p>
           </div>
@@ -166,40 +156,40 @@ export default function WalletCard({ onSend, onReceive, onSwap, onClaimRoyalties
             variant="primary"
             loading={unwrapping}
             onClick={handleUnwrapWeth}
-            className="text-xs font-black py-1 px-3 w-full sm:w-auto flex-shrink-0"
+            className="text-xs font-semibold py-1.5 px-4 w-full sm:w-auto flex-shrink-0 rounded-full"
           >
-            UNWRAP
+            Unwrap
           </Button>
         </div>
       )}
 
       {/* Native ETH Balance */}
-      <div className="mb-5 bg-[#12151a] border-2 border-zinc-700 p-4 sm:p-5 rounded-lg shadow-[3px_3px_0px_0px_#000000] relative overflow-hidden">
-        <div className="flex items-center justify-between mb-1.5">
-          <span className="text-[10px] sm:text-xs text-zinc-400 uppercase font-black">
-            // NATIVE_ETH_BALANCE
+      <div className="mb-6 bg-white/[0.04] border border-white/[0.10] p-5 sm:p-6 rounded-2xl shadow-sm relative overflow-hidden">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs text-[#A1A1A6] font-medium">
+            Total Native Balance
           </span>
-          <span className="text-[9px] font-black uppercase bg-zinc-800 text-zinc-300 border border-zinc-700 px-1.5 py-0.5 rounded">
-            ROBINHOOD L2
+          <span className="text-[11px] font-medium bg-white/[0.06] text-[#A1A1A6] border border-white/[0.08] px-2.5 py-0.5 rounded-full">
+            ETH
           </span>
         </div>
-        <div className="flex items-baseline gap-2 mt-1 flex-wrap">
-          <span className="text-3xl sm:text-4xl font-black text-white tracking-tight break-all">
+        <div className="flex items-baseline gap-2.5 mt-1 flex-wrap">
+          <span className="text-3xl sm:text-5xl font-bold text-[#F5F5F7] tracking-tight break-all">
             {balance ? balance.formatted : '0.000000'}
           </span>
-          <span className="text-sm font-black text-theme-light">ETH</span>
+          <span className="text-base font-semibold text-[#0A84FF]">ETH</span>
         </div>
       </div>
 
       {/* Wallet Address */}
-      <div className="mb-5">
-        <p className="text-[10px] text-zinc-400 uppercase font-black mb-1.5">
-          ACCOUNT ADDRESS
+      <div className="mb-6">
+        <p className="text-xs text-[#A1A1A6] font-medium mb-2">
+          Account Address
         </p>
         {address ? (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2.5">
             <code
-              className="text-[11px] font-mono text-zinc-200 bg-[#12151a] border-2 border-zinc-700 px-3 py-2 w-full overflow-hidden text-ellipsis select-all rounded font-bold"
+              className="text-xs font-mono text-[#F5F5F7] bg-white/[0.04] border border-white/[0.08] px-3.5 py-2.5 w-full overflow-hidden text-ellipsis select-all rounded-xl"
               title={address}
             >
               {address}
@@ -208,18 +198,18 @@ export default function WalletCard({ onSend, onReceive, onSwap, onClaimRoyalties
               <button
                 onClick={copyAddress}
                 disabled={copying}
-                className="py-1.5 px-2 rounded bg-[#181b20] border-2 border-zinc-700 hover:border-white text-zinc-300 hover:text-white transition-all flex items-center justify-center gap-1.5 text-[10px] font-black shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer uppercase"
+                className="py-2 px-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] text-[#F5F5F7] transition-all flex items-center justify-center gap-1.5 text-xs font-medium cursor-pointer shadow-sm active:scale-98"
                 title="Copy Full Address"
               >
-                {copying ? 'COPIED' : 'COPY'}
+                {copying ? 'Copied!' : 'Copy Address'}
               </button>
               <a
                 href={explorerUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-1.5 px-2 rounded bg-[#181b20] border-2 border-zinc-700 hover:border-white text-zinc-300 hover:text-white transition-all flex items-center justify-center gap-1.5 text-[10px] font-black shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer uppercase"
+                className="py-2 px-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/[0.08] text-[#F5F5F7] transition-all flex items-center justify-center gap-1.5 text-xs font-medium cursor-pointer shadow-sm active:scale-98"
               >
-                EXPLORER
+                View Explorer ↗
               </a>
             </div>
             <button
@@ -240,10 +230,10 @@ export default function WalletCard({ onSend, onReceive, onSwap, onClaimRoyalties
                 }
               }}
               disabled={disconnecting}
-              className="py-1.5 px-2 w-full rounded bg-rose-950/40 border-2 border-rose-800 hover:border-white text-rose-300 hover:text-white transition-all flex items-center justify-center gap-1.5 text-[10px] font-black shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none cursor-pointer uppercase"
+              className="py-2 px-3 w-full rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 transition-all flex items-center justify-center gap-1.5 text-xs font-medium cursor-pointer active:scale-98"
               title="Disconnect Wallet"
             >
-              {disconnecting ? 'DISCONNECTING...' : 'DISCONNECT'}
+              {disconnecting ? 'Disconnecting...' : 'Disconnect Wallet'}
             </button>
           </div>
         ) : (
@@ -252,40 +242,38 @@ export default function WalletCard({ onSend, onReceive, onSwap, onClaimRoyalties
             loading={creatingWallet}
             onClick={() => createWallet()}
             variant="primary"
-            className="w-full font-black text-xs"
+            className="w-full font-semibold text-xs py-3 rounded-xl"
           >
-            {creatingWallet ? 'CREATING...' : 'CREATE EMBEDDED WALLET'}
+            {creatingWallet ? 'Creating...' : 'Create Embedded Wallet'}
           </Button>
         )}
       </div>
 
-
-
       {/* Action Buttons: Send, Receive, Swap */}
-      <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
+      <div className="grid grid-cols-3 gap-3">
         <Button
           onClick={onSend}
           variant="secondary"
-          className="w-full py-2.5 text-xs font-black"
+          className="w-full py-3 text-xs font-semibold rounded-xl"
           disabled={!address}
         >
-          SEND
+          Send
         </Button>
         <Button
           onClick={onReceive}
           variant="secondary"
-          className="w-full py-2.5 text-xs font-black"
+          className="w-full py-3 text-xs font-semibold rounded-xl"
           disabled={!address}
         >
-          RECEIVE
+          Receive
         </Button>
         <Button
           onClick={onSwap}
           variant="primary"
-          className="w-full py-2.5 text-xs font-black"
+          className="w-full py-3 text-xs font-semibold rounded-xl"
           disabled={!address}
         >
-          SWAP
+          Swap
         </Button>
       </div>
     </div>

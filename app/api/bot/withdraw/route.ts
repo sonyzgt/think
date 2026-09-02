@@ -14,14 +14,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Valid twitterHandle or address and destinationAddress required' }, { status: 400 })
     }
 
-    const { getOrCreateTwitterUserWallet } = await import('@/lib/privy-server')
-    const mapping = await getOrCreateTwitterUserWallet(
-      '',
-      twitterHandle ? twitterHandle.replace('@', '') : ''
+    const { getBotUsers } = await import('@/lib/bot-wallet')
+    const users = await getBotUsers()
+    const foundUser = users.find(
+      (u) =>
+        (address && u.walletAddress?.toLowerCase() === address.toLowerCase()) ||
+        (twitterHandle && u.twitterHandle?.toLowerCase() === twitterHandle.replace('@', '').toLowerCase())
     )
 
-    const senderAddress = mapping?.walletAddress || address
-    const senderWalletId = mapping?.walletId
+    let senderAddress = foundUser?.walletAddress || address
+    let senderWalletId = (foundUser as any)?.walletId
+
+    if (!senderWalletId && twitterHandle) {
+      const { getOrCreateTwitterUserWallet } = await import('@/lib/privy-server')
+      const mapping = await getOrCreateTwitterUserWallet(
+        '',
+        twitterHandle.replace('@', '')
+      )
+      if (mapping) {
+        senderAddress = mapping.walletAddress
+        senderWalletId = mapping.walletId
+      }
+    }
 
     if (!senderAddress || !senderWalletId) {
       return NextResponse.json({ error: 'Sender wallet not found or not a server wallet' }, { status: 404 })
@@ -35,7 +49,18 @@ export async function POST(req: NextRequest) {
     const balance = await publicClient.getBalance({ address: senderAddress })
     const rawGasPrice = await publicClient.getGasPrice()
     const gasPrice = (rawGasPrice * 125n) / 100n
-    const gasLimit = 21000n
+    
+    let gasLimit = 50000n
+    try {
+      const estimated = await publicClient.estimateGas({
+        account: senderAddress,
+        to: getAddress(destinationAddress),
+        value: amountEth ? parseEther(String(amountEth)) : 1000000000000n,
+      })
+      gasLimit = (estimated * 130n) / 100n
+    } catch {
+      gasLimit = 65000n
+    }
     const gasCost = gasPrice * gasLimit
 
     if (balance <= gasCost) {
@@ -65,7 +90,7 @@ export async function POST(req: NextRequest) {
         value: `0x${sendAmount.toString(16)}`,
         chainId: 4663,
         nonce,
-        gasLimit: '0x5208', // 21,000 gas
+        gasLimit: `0x${gasLimit.toString(16)}`,
         gasPrice: `0x${gasPrice.toString(16)}`,
         type: 0,
       }

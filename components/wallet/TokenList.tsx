@@ -6,7 +6,6 @@ import { activeChain } from '@/lib/chains'
 import Button from '@/components/ui/Button'
 import Modal from '@/components/ui/Modal'
 import toast from 'react-hot-toast'
-import { useTheme } from '@/context/ThemeContext'
 import SparkleIcon from '@/components/ui/SparkleIcon'
 
 interface TokenListProps {
@@ -15,7 +14,6 @@ interface TokenListProps {
 
 export default function TokenList({ onQuickSwap }: TokenListProps) {
   const { holdings, importToken, removeToken } = useTokens()
-  const { theme } = useTheme()
   const [importOpen, setImportOpen] = useState(false)
   const [caInput, setCaInput] = useState('')
 
@@ -35,27 +33,22 @@ export default function TokenList({ onQuickSwap }: TokenListProps) {
   const totalTokensValueUsd = holdings.reduce((sum, h) => sum + (h.valueUsd || 0), 0)
 
   return (
-    <div
-      style={{
-        boxShadow: `4px 4px 0px 0px #000000`,
-      }}
-      className="flex flex-col bg-[#0e1115] border-2 border-white rounded-xl overflow-hidden w-full h-[380px] sm:h-[460px] flex-shrink-0 font-mono select-none"
-    >
+    <div className="flex flex-col apple-glass overflow-hidden w-full h-[400px] sm:h-[480px] flex-shrink-0 select-none">
       {/* Box Header */}
-      <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3 border-b-2 border-zinc-800 bg-[#12151a] flex-shrink-0">
+      <div className="flex items-center justify-between gap-3 px-5 sm:px-6 py-4 border-b border-white/[0.08] bg-white/[0.03] flex-shrink-0">
         <div className="flex flex-col gap-0.5">
           <div className="flex items-center gap-2">
-            <h2 className="text-xs sm:text-sm font-black uppercase text-white flex items-center gap-2">
-              <span>// HOLDINGS</span>
-              <span className="text-[10px] font-black px-1.5 py-0.2 bg-zinc-800 border border-zinc-700 text-theme-light rounded">
-                [{holdings.length} TOKENS]
+            <h2 className="text-sm font-semibold text-[#F5F5F7] flex items-center gap-2">
+              <span>Holdings</span>
+              <span className="text-xs font-normal text-[#A1A1A6]">
+                ({holdings.length} tokens)
               </span>
             </h2>
           </div>
-          <p className="text-[11px] text-zinc-400">
-            EST. VALUE:{' '}
-            <span className="font-black text-xs text-white">
-              ${totalTokensValueUsd.toFixed(2)}
+          <p className="text-xs text-[#A1A1A6]">
+            Estimated Value:{' '}
+            <span className="font-semibold text-[#F5F5F7]">
+              ${totalTokensValueUsd.toFixed(2)} USD
             </span>
           </p>
         </div>
@@ -65,24 +58,26 @@ export default function TokenList({ onQuickSwap }: TokenListProps) {
             size="sm"
             variant="primary"
             onClick={() => setImportOpen(true)}
-            className="text-xs font-black py-1.5 px-3"
+            className="text-xs font-semibold py-1.5 px-4 rounded-full"
           >
-            + IMPORT
+            + Import Token
           </Button>
         </div>
       </div>
 
       {/* Box Body - Scrollable Viewport */}
-      <div className="flex-1 min-h-0 p-3 sm:p-4 flex flex-col gap-2.5 overflow-y-auto">
+      <div className="flex-1 min-h-0 p-4 sm:p-5 flex flex-col gap-2.5 overflow-y-auto custom-scrollbar">
         {holdings.length === 0 ? (
           <div className="flex flex-col items-center justify-center min-h-[220px] p-6 text-center gap-3">
-            <SparkleIcon size={32} className="flex-shrink-0" />
-            <p className="text-sm font-black uppercase text-white">NO HOLDINGS FOUND</p>
-            <p className="text-xs text-zinc-400 max-w-sm font-sans">
+            <div className="w-12 h-12 rounded-full bg-white/[0.06] border border-white/[0.12] flex items-center justify-center">
+              <SparkleIcon size={24} className="text-[#0A84FF]" />
+            </div>
+            <p className="text-sm font-semibold text-[#F5F5F7]">No Holdings Found</p>
+            <p className="text-xs text-[#A1A1A6] max-w-sm">
               Tokens with balance on Robinhood Chain automatically appear here.
             </p>
-            <Button size="sm" variant="secondary" onClick={() => setImportOpen(true)} className="mt-1 text-xs py-1.5 px-3.5">
-              + IMPORT CUSTOM TOKEN
+            <Button size="sm" variant="secondary" onClick={() => setImportOpen(true)} className="mt-2 text-xs py-2 px-4 rounded-full">
+              + Import Custom Token
             </Button>
           </div>
         ) : (
@@ -93,26 +88,28 @@ export default function TokenList({ onQuickSwap }: TokenListProps) {
             return (
               <div
                 key={h.address}
-                className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 rounded-lg bg-[#111419] border-2 border-zinc-800 hover:border-white shadow-[2px_2px_0px_0px_#000000] hover:shadow-[3px_3px_0px_0px_var(--theme-color)] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all"
+                className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-2xl apple-card-interactive"
               >
                 {/* Left: Token Info */}
                 <div className="flex items-center gap-3">
-                  <SparkleIcon size={28} className="flex-shrink-0" />
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.10] flex items-center justify-center flex-shrink-0">
+                    <SparkleIcon size={22} className="text-[#0A84FF]" />
+                  </div>
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <span className="text-sm font-black text-white">{h.symbol}</span>
+                      <span className="text-sm font-semibold text-[#F5F5F7]">${h.symbol}</span>
                       {hasBalance && (
-                        <span className="text-[9px] font-black bg-[var(--theme-color)] text-black px-1.5 py-0.2 border border-black">
-                          HELD
+                        <span className="text-[10px] font-medium bg-[#30D158]/15 text-[#30D158] px-2 py-0.5 rounded-full border border-[#30D158]/30">
+                          Held
                         </span>
                       )}
                     </div>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-[11px] text-zinc-400 truncate max-w-[130px] font-sans">{h.name}</span>
-                      <span className="text-zinc-600">/</span>
+                      <span className="text-xs text-[#A1A1A6] truncate max-w-[140px]">{h.name}</span>
+                      <span className="text-white/10">/</span>
                       <button
                         onClick={() => copyAddress(h.address)}
-                        className="text-[10px] text-zinc-500 hover:text-white transition-colors flex items-center gap-0.5 cursor-pointer"
+                        className="text-[11px] font-mono text-[#6E6E73] hover:text-[#F5F5F7] transition-colors flex items-center gap-0.5 cursor-pointer"
                         title="Copy Contract Address"
                       >
                         <span>{h.address.slice(0, 4)}...{h.address.slice(-4)}</span>
@@ -125,23 +122,23 @@ export default function TokenList({ onQuickSwap }: TokenListProps) {
                 </div>
 
                 {/* Right: Balance & Actions */}
-                <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-zinc-800">
+                <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-white/[0.06]">
                   <div className="text-left sm:text-right">
-                    <p className="text-sm font-black text-white">
-                      {h.balanceFormatted} <span className="text-xs text-theme-light">{h.symbol}</span>
+                    <p className="text-sm font-semibold text-[#F5F5F7]">
+                      {h.balanceFormatted} <span className="text-xs font-normal text-[#0A84FF]">${h.symbol}</span>
                     </p>
-                    <p className="text-[10px] text-zinc-400 mt-0.5">
+                    <p className="text-xs text-[#A1A1A6] mt-0.5">
                       {h.usdPrice > 0 ? (
                         <>
-                          <span className="font-bold text-white">
+                          <span className="font-medium text-[#F5F5F7]">
                             ${h.valueUsd < 0.01 && h.valueUsd > 0 ? h.valueUsd.toFixed(4) : h.valueUsd.toFixed(2)}
                           </span>
-                          <span className="text-zinc-500 ml-1">
+                          <span className="text-[#6E6E73] ml-1">
                             (@${h.usdPrice < 0.01 ? h.usdPrice.toFixed(6) : h.usdPrice.toFixed(2)})
                           </span>
                         </>
                       ) : (
-                        <span className="text-zinc-500">PRICE SYNC...</span>
+                        <span className="text-[#6E6E73]">Syncing price...</span>
                       )}
                     </p>
                   </div>
@@ -149,16 +146,16 @@ export default function TokenList({ onQuickSwap }: TokenListProps) {
                   <div className="flex items-center gap-1.5 flex-shrink-0">
                     <button
                       onClick={() => onQuickSwap(h.address)}
-                      className="px-2.5 py-1 rounded bg-[var(--theme-color)] text-black border border-black shadow-[1px_1px_0px_0px_#ffffff] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none text-xs font-black transition-all cursor-pointer"
+                      className="px-3.5 py-1 rounded-full bg-[#0A84FF] hover:bg-[#2492FF] text-white text-xs font-semibold transition-all cursor-pointer shadow-sm active:scale-95"
                       title={`Swap ${h.symbol}`}
                     >
-                      SWAP
+                      Swap
                     </button>
                     <a
                       href={explorerUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1.5 rounded bg-[#181b20] hover:bg-white text-zinc-300 hover:text-black border border-zinc-700 hover:border-white shadow-[1px_1px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all"
+                      className="p-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-[#A1A1A6] hover:text-[#F5F5F7] border border-white/[0.08] transition-all"
                       title="View on Explorer"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -168,11 +165,11 @@ export default function TokenList({ onQuickSwap }: TokenListProps) {
                     {h.symbol !== 'CHEF' && (
                       <button
                         onClick={() => removeToken(h.address)}
-                        className="p-1.5 rounded bg-[#181b20] hover:bg-rose-600 text-zinc-400 hover:text-white border border-zinc-700 hover:border-white shadow-[1px_1px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer"
+                        className="p-1.5 rounded-full bg-white/[0.06] hover:bg-rose-500/20 text-[#A1A1A6] hover:text-rose-300 border border-white/[0.08] transition-all cursor-pointer"
                         title="Remove from watch list"
                       >
                         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
                     )}
@@ -187,13 +184,13 @@ export default function TokenList({ onQuickSwap }: TokenListProps) {
       {/* Modal: Import Custom Token */}
       <Modal open={importOpen} onClose={() => setImportOpen(false)} title="Import Custom Token">
         <form onSubmit={handleImportSubmit} className="flex flex-col gap-4">
-          <p className="text-xs text-zinc-300 font-sans leading-relaxed">
+          <p className="text-xs text-[#A1A1A6] leading-relaxed">
             Enter the token contract address on Robinhood Chain to track balances and enable instant buy/sell swaps.
           </p>
 
           <div>
-            <label className="text-xs font-black uppercase text-white mb-1.5 block">
-              CONTRACT ADDRESS (0x...)
+            <label className="text-xs font-medium text-[#A1A1A6] mb-1.5 block">
+              Contract Address (0x...)
             </label>
             <input
               type="text"
@@ -201,16 +198,16 @@ export default function TokenList({ onQuickSwap }: TokenListProps) {
               value={caInput}
               onChange={(e) => setCaInput(e.target.value)}
               placeholder="0x..."
-              className="w-full bg-[#121519] border-2 border-zinc-700 focus:border-white rounded-lg px-3.5 py-2.5 text-xs font-mono text-white placeholder-zinc-500 shadow-[2px_2px_0px_0px_#000000] focus:shadow-[3px_3px_0px_0px_#ffffff] focus:outline-none transition-all"
+              className="w-full apple-input px-3.5 py-2.5 text-xs font-mono text-[#F5F5F7] placeholder-[#6E6E73] rounded-xl"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3 pt-2">
-            <Button variant="secondary" onClick={() => setImportOpen(false)}>
-              CANCEL
+            <Button variant="secondary" onClick={() => setImportOpen(false)} className="rounded-full">
+              Cancel
             </Button>
-            <Button variant="primary" type="submit">
-              IMPORT
+            <Button variant="primary" type="submit" className="rounded-full">
+              Import Token
             </Button>
           </div>
         </form>
