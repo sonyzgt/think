@@ -62,7 +62,7 @@ export default function TokenDetailPage({ params }: PageProps) {
             tokenAddress: cleanCa,
             name: p.name || 'Token',
             symbol: p.symbol || 'TOKEN',
-            logo: '/logo.svg',
+            logo: '/logo.png',
             description: `${p.name} token on Robinhood Chain`,
             socials: { twitter: '', telegram: '', discord: '', website: '', farcaster: '' },
             dexType: 'pons-v2',

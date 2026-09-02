@@ -200,7 +200,7 @@ export async function POST(req: NextRequest) {
           balanceNumber: balanceNum,
           usdPrice,
           valueUsd,
-          icon: '/logo.svg',
+          icon: '/logo.png',
         })
       } catch (e: unknown) {
         console.error(`Error fetching token ${tokenAddr}:`, e)

@@ -415,7 +415,7 @@ export async function getPonsTokenInfo(tokenAddress: string): Promise<PonsV2Toke
     // Static metadata cache (token name, symbol, logo, socials never change after deployment)
     let name = 'Pons Token'
     let symbol = 'TOKEN'
-    let logo = '/logo.svg'
+    let logo = '/logo.png'
     let description = ''
     let socials: SocialLinks = { twitter: '', telegram: '', discord: '', website: '', farcaster: '' }
 

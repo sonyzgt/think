@@ -55,7 +55,7 @@ export default function TokenImage({
   const cleanSrc = useMemo(() => {
     if (!src || hasError) return null
     const trimmed = src.trim()
-    if (!trimmed || trimmed === '/logo.svg' || trimmed === 'null' || trimmed === 'undefined') return null
+    if (!trimmed || trimmed === '/logo.png' || trimmed === '/logo.svg' || trimmed === 'null' || trimmed === 'undefined') return null
 
     // Base64 data URL
     if (trimmed.startsWith('data:image/')) {

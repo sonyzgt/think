@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
           tokenAddress: addr,
           name: 'Token',
           symbol: 'TOKEN',
-          logo: '/logo.svg',
+          logo: '/logo.png',
           priceUsd: 0,
           priceNative: 0,
           progress: 0,
