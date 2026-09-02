@@ -29,7 +29,7 @@ export default function Header() {
               ATLAS
             </span>
             <span className="text-[9px] text-[#FF6A00] font-mono tracking-wider uppercase font-bold">
-              // WORLD TOKEN MAP
+              WORLD TOKEN MAP
             </span>
           </div>
         </Link>

@@ -540,7 +540,7 @@ export default function CreateTokenModal({
   }
 
   return (
-    <Modal open={open} onClose={handleClose} title="// LAUNCH_TOKEN">
+    <Modal open={open} onClose={handleClose} title="LAUNCH TOKEN">
       <div className="flex flex-col gap-4 max-h-[80vh] overflow-y-auto pr-1 font-mono select-none">
         {/* Info Banner */}
         <div className="bg-[#121519] border-2 border-zinc-800 rounded-lg p-3 flex items-center justify-between gap-3 shadow-[2px_2px_0px_0px_#000000]">
@@ -587,23 +587,25 @@ export default function CreateTokenModal({
             </div>
           </div>
 
-          {/* Logo File Upload */}
+          {/* Logo File Upload (Locked for Official Country Flags) */}
           <div>
             <label className="text-xs font-black uppercase text-zinc-300 mb-1 block">
-              TOKEN LOGO
+              TOKEN LOGO {initialLogo && <span className="text-[#FF6A00] text-[10px] lowercase font-normal">(locked to official national flag)</span>}
             </label>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileInputChange}
-              accept="image/*"
-              className="hidden"
-            />
+            {!initialLogo && (
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileInputChange}
+                accept="image/*"
+                className="hidden"
+              />
+            )}
 
             {previewLogo || logo ? (
-              <div className="flex items-center justify-between p-3 bg-[#121519] border-2 border-zinc-700 rounded-lg shadow-[2px_2px_0px_0px_#000000]">
+              <div className="flex items-center justify-between p-3 bg-[#121519] border border-[#2A3036] rounded-xl shadow-inner">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-md bg-black border-2 border-white overflow-hidden relative flex-shrink-0 flex items-center justify-center shadow-sm">
+                  <div className="w-10 h-10 rounded-lg bg-black border border-[#FF6A00]/50 overflow-hidden relative flex-shrink-0 flex items-center justify-center shadow-sm">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={previewLogo || logo}
@@ -612,29 +614,36 @@ export default function CreateTokenModal({
                     />
                   </div>
                   <div>
-                    <p className="text-xs font-black text-white uppercase">LOGO READY</p>
-                    <p className="text-[10px] text-theme-light font-mono">Ready for deploy</p>
+                    <p className="text-xs font-black text-white uppercase">
+                      {initialLogo ? 'OFFICIAL NATIONAL FLAG' : 'LOGO READY'}
+                    </p>
+                    <p className="text-[10px] text-[#FF6A00] font-mono">
+                      {initialLogo ? 'Permanent Authentic Flag' : 'Ready for deploy'}
+                    </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="text-xs px-2 py-1 rounded bg-[#181b20] hover:bg-white text-zinc-200 hover:text-black border border-zinc-600 hover:border-white transition-all cursor-pointer font-bold"
-                  >
-                    CHANGE
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLogo('')
-                      setPreviewLogo('')
-                    }}
-                    className="text-xs px-2 py-1 rounded bg-rose-600 hover:bg-rose-500 text-white border border-black transition-all cursor-pointer font-bold"
-                  >
-                    REMOVE
-                  </button>
-                </div>
+
+                {!initialLogo && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="text-xs px-2 py-1 rounded bg-[#181b20] hover:bg-white text-zinc-200 hover:text-black border border-zinc-600 hover:border-white transition-all cursor-pointer font-bold"
+                    >
+                      CHANGE
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setLogo('')
+                        setPreviewLogo('')
+                      }}
+                      className="text-xs px-2 py-1 rounded bg-rose-600 hover:bg-rose-500 text-white border border-black transition-all cursor-pointer font-bold"
+                    >
+                      REMOVE
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <div

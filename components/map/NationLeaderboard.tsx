@@ -183,7 +183,7 @@ export default function NationLeaderboard({
         <div className="overflow-y-auto divide-y divide-[#20252B] p-1.5 flex-1 max-h-[460px] bg-[#0B0E12] m-1 rounded-xl">
           {filteredList.length === 0 ? (
             <div className="py-8 text-center text-xs text-[#5A626C] font-mono">
-              // NO MATCHING TOKENS
+              NO MATCHING TOKENS
             </div>
           ) : (
             filteredList.map((item, index) => {

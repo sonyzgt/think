@@ -31,7 +31,7 @@ export default function InactiveCountryModal({
       <Modal
         open={open && !showDeploymentForm}
         onClose={onClose}
-        title={`// ${country.code} — UNCLAIMED NATION`}
+        title={`${country.code} — UNCLAIMED NATION`}
       >
         <div className="flex flex-col items-center text-center p-2 sm:p-4 gap-4 select-none font-mono">
           {/* Physical Country Flag Medallion */}

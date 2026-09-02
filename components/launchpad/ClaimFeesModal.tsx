@@ -126,7 +126,7 @@ export default function ClaimFeesModal({ open, onClose }: ClaimFeesModalProps) {
   }
 
   return (
-    <Modal open={open} onClose={onClose} title="// CREATOR_FEE_ESCROW">
+    <Modal open={open} onClose={onClose} title="CREATOR FEE ESCROW">
       <div className="flex flex-col gap-4 font-mono select-none">
         <div className="bg-[#121519] border-2 border-zinc-800 rounded-lg p-3.5 flex items-start gap-3 shadow-[2px_2px_0px_0px_#000000]">
           <div
@@ -148,7 +148,7 @@ export default function ClaimFeesModal({ open, onClose }: ClaimFeesModalProps) {
         {/* Balance Card */}
         <div className="bg-[#121519] border-2 border-zinc-700 p-5 rounded-lg flex flex-col gap-1 text-center shadow-[3px_3px_0px_0px_#000000]">
           <span className="text-[10px] text-zinc-400 font-black uppercase tracking-wider">
-            // UNCLAIMED_ROYALTIES
+            UNCLAIMED ROYALTIES
           </span>
           <div className="flex items-baseline justify-center gap-2 mt-1">
             <span className="text-3xl sm:text-4xl font-black text-white">

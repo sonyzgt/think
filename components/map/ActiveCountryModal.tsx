@@ -62,7 +62,7 @@ export default function ActiveCountryModal({
     <Modal
       open={open}
       onClose={onClose}
-      title={`// ${displaySymbol} — ACTIVE NATION`}
+      title={`${displaySymbol} — ACTIVE NATION`}
     >
       <div className="flex flex-col gap-3 p-1 select-none font-mono text-[#F5F5F5]">
         {/* Inactivity Grace Period / Reset Alert Banner */}

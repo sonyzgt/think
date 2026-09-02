@@ -51,7 +51,7 @@ export default function LiveTicker() {
       <div className="flex items-center justify-start gap-2 w-full overflow-x-auto no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         <span className="text-[10px] font-black uppercase text-zinc-500 flex-shrink-0 flex items-center gap-1 mr-1">
           <span className="w-1.5 h-1.5 rounded-none bg-[var(--theme-color)]" />
-          FEED //
+          FEED
         </span>
 
         {tokens.map((tok) => {
