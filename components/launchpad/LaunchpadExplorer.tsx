@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useWallet } from '@/hooks/useWallet'
 import { PonsV2TokenInfo, getPonsTokenInfo } from '@/lib/pons-v2'
-import { WORLD_COUNTRIES, CountryData, matchTokenWithCountry } from '@/lib/countries'
+import { WORLD_COUNTRIES, CountryData } from '@/lib/countries'
+import WorldFlagMap from '@/components/map/WorldFlagMap'
 import CreateTokenModal from '@/components/launchpad/CreateTokenModal'
 import QuickSwapModal from '@/components/token/QuickSwapModal'
 import Spinner from '@/components/ui/Spinner'
@@ -19,6 +20,7 @@ interface LaunchpadExplorerProps {
   onSelectTokenDetail: (token: PonsV2TokenInfo) => void
 }
 
+type ViewMode = 'map' | 'grid'
 type StatusFilter = 'all' | 'active' | 'inactive'
 type RegionFilter = 'All' | 'Americas' | 'Europe' | 'Asia' | 'Africa' | 'Oceania' | 'Middle East'
 
@@ -32,6 +34,7 @@ export default function LaunchpadExplorer({
   const [tokens, setTokens] = useState<PonsV2TokenInfo[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
+  const [viewMode, setViewMode] = useState<ViewMode>('map')
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all')
   const [regionFilter, setRegionFilter] = useState<RegionFilter>('All')
   const [customCaInput, setCustomCaInput] = useState('')
@@ -105,12 +108,6 @@ export default function LaunchpadExplorer({
     }
   }
 
-  function copyToClipboard(text: string, e: React.MouseEvent) {
-    e.stopPropagation()
-    navigator.clipboard.writeText(text)
-    toast.success('Contract address copied!')
-  }
-
   // Map each country in WORLD_COUNTRIES with its on-chain token status
   const countryItems = useMemo(() => {
     return WORLD_COUNTRIES.map((country) => {
@@ -166,13 +163,13 @@ export default function LaunchpadExplorer({
   }, [countryItems, statusFilter, regionFilter, searchQuery])
 
   // Handle Country Click: Inactive -> Launch Modal | Active -> Quick Swap Modal
-  const handleCountryClick = (item: { country: CountryData; isActive: boolean; token: PonsV2TokenInfo | null }) => {
-    if (item.isActive && item.token) {
+  const handleCountryClick = (country: CountryData, isActive: boolean, token: PonsV2TokenInfo | null) => {
+    if (isActive && token) {
       // ACTIVE COUNTRY -> Open Quick Swap Pop-up
-      setSelectedTokenToSwap(item.token)
+      setSelectedTokenToSwap(token)
     } else {
       // INACTIVE COUNTRY -> Open Pre-filled Launch Token Pop-up
-      setSelectedCountryToLaunch(item.country)
+      setSelectedCountryToLaunch(country)
     }
   }
 
@@ -197,13 +194,41 @@ export default function LaunchpadExplorer({
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-[#A1A1A6] mt-1 leading-relaxed max-w-2xl">
-                Tap any country to activate its fair-launch bonding curve token, or instantly trade active nation assets on Robinhood Chain.
+                Interactive World Map with national flag territories. Click any country shape to activate its bonding curve token, or swap active nation assets.
               </p>
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* View Mode Switcher + Action Buttons */}
           <div className="flex items-center gap-2.5 flex-wrap self-stretch sm:self-auto">
+            {/* View Mode Toggle (Map vs Grid) */}
+            <div className="flex items-center bg-white/[0.06] p-1 rounded-full border border-white/[0.08] shadow-sm">
+              <button
+                type="button"
+                onClick={() => setViewMode('map')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                  viewMode === 'map'
+                    ? 'bg-white text-black shadow-sm'
+                    : 'text-[#A1A1A6] hover:text-white'
+                }`}
+              >
+                <span>🗺️</span>
+                <span>World Map</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('grid')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                  viewMode === 'grid'
+                    ? 'bg-white text-black shadow-sm'
+                    : 'text-[#A1A1A6] hover:text-white'
+                }`}
+              >
+                <span>📑</span>
+                <span>List Grid</span>
+              </button>
+            </div>
+
             <button
               type="button"
               onClick={onOpenCreateToken}
@@ -240,7 +265,7 @@ export default function LaunchpadExplorer({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search country (e.g. Brazil, Japan, USA)..."
+              placeholder="Search nation on map (e.g. Brazil, Japan, USA)..."
               className="w-full apple-input pl-10 pr-4 py-2 text-xs sm:text-sm text-[#F5F5F7] placeholder-[#6E6E73] rounded-full"
             />
           </div>
@@ -305,19 +330,17 @@ export default function LaunchpadExplorer({
         </div>
       </div>
 
-      {/* 2. Interactive Countries Grid */}
-      {loading && tokens.length === 0 ? (
-        <div className="apple-glass p-12 flex flex-col items-center justify-center gap-3">
-          <Spinner />
-          <span className="text-xs text-[#A1A1A6] font-medium">Scanning Robinhood Chain nation registries...</span>
-        </div>
-      ) : filteredCountries.length === 0 ? (
-        <div className="apple-glass p-12 text-center flex flex-col items-center justify-center gap-3">
-          <span className="text-3xl">🌍</span>
-          <p className="text-sm font-semibold text-[#F5F5F7]">No matching countries found</p>
-          <p className="text-xs text-[#A1A1A6]">Try adjusting your search query or region filter.</p>
+      {/* 2. PRIMARY VIEW: 100% Interactive World Flags Map */}
+      {viewMode === 'map' ? (
+        <div className="w-full flex flex-col gap-3">
+          <WorldFlagMap
+            tokens={tokens}
+            searchQuery={searchQuery}
+            onSelectCountry={handleCountryClick}
+          />
         </div>
       ) : (
+        /* Alternate Grid Cards View */
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredCountries.map((item) => {
             const { country, isActive, token } = item
@@ -325,7 +348,7 @@ export default function LaunchpadExplorer({
             return (
               <div
                 key={country.code}
-                onClick={() => handleCountryClick(item)}
+                onClick={() => handleCountryClick(country, isActive, token)}
                 className={`apple-card-interactive p-4 sm:p-5 flex flex-col justify-between gap-4 cursor-pointer relative overflow-hidden group transition-all ${
                   isActive
                     ? 'border-emerald-500/20 hover:border-emerald-500/40 bg-gradient-to-b from-emerald-500/[0.03] to-transparent'
@@ -341,9 +364,6 @@ export default function LaunchpadExplorer({
                         src={country.flagUrl}
                         alt={country.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLElement).style.display = 'none'
-                        }}
                       />
                     </div>
                     <div className="flex flex-col overflow-hidden">
