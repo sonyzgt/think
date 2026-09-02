@@ -9,7 +9,7 @@ import { getAddress, isAddress, formatEther } from 'viem'
 import { usePrivy } from '@privy-io/react-auth'
 import { useWallet } from '@/hooks/useWallet'
 import { getPonsTokenInfo, PonsV2TokenInfo } from '@/lib/pons-v2'
-import Navbar from '@/components/Navbar'
+import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import TokenPriceChart from '@/components/token/TokenPriceChart'
 import TokenSwapWidget from '@/components/token/TokenSwapWidget'
@@ -113,7 +113,7 @@ export default function TokenDetailPage({ params }: PageProps) {
   if (loading) {
     return (
       <div className="flex flex-col min-h-screen bg-transparent text-zinc-100 font-mono">
-        <Navbar />
+        <Header />
         <main className="flex-1 flex items-center justify-center min-h-[60vh]">
           <Spinner size="lg" />
         </main>
@@ -125,7 +125,7 @@ export default function TokenDetailPage({ params }: PageProps) {
   if (!cleanCa || !token) {
     return (
       <div className="flex flex-col min-h-screen bg-transparent text-zinc-100 font-mono">
-        <Navbar />
+        <Header />
         <main className="flex-1 max-w-4xl mx-auto px-4 py-16 text-center flex flex-col items-center justify-center gap-4">
           <div className="w-16 h-16 rounded-none bg-black border-2 border-white flex items-center justify-center text-zinc-400 shadow-[3px_3px_0px_0px_#ffffff]">
             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -137,10 +137,10 @@ export default function TokenDetailPage({ params }: PageProps) {
             The token address <code className="text-theme-light font-mono">{rawAddress}</code> was not found on Robinhood Chain.
           </p>
           <Link
-            href="/coin"
+            href="/"
             className="px-4 py-2 bg-[var(--theme-color)] text-black border-2 border-black font-black text-xs uppercase shadow-[3px_3px_0px_0px_#ffffff] active:translate-x-0.5 active:translate-y-0.5 transition-all"
           >
-            EXPLORE TOKENS
+            WORLD MAP
           </Link>
         </main>
         <Footer />
@@ -159,7 +159,7 @@ export default function TokenDetailPage({ params }: PageProps) {
   return (
     <div className="flex flex-col min-h-screen bg-transparent text-zinc-100 font-mono animate-fadeIn">
       {/* Navigation */}
-      <Navbar />
+      <Header />
 
       {/* Main Terminal Body */}
       <main className="flex-1 w-full max-w-[1720px] mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8">
@@ -167,13 +167,13 @@ export default function TokenDetailPage({ params }: PageProps) {
           {/* Breadcrumb & Quick Nav */}
           <div className="flex items-center justify-between gap-3 text-xs">
             <Link
-              href="/coin"
+              href="/"
               className="flex items-center gap-1.5 text-xs text-[#A1A1A6] hover:text-[#F5F5F7] transition-colors font-medium bg-white/[0.04] hover:bg-white/[0.08] px-3.5 py-1.5 rounded-full border border-white/[0.08]"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              <span>Explore Tokens</span>
+              <span>← Back to World Map</span>
             </Link>
 
             <span className="flex items-center gap-1.5 text-[#A1A1A6] bg-white/[0.04] border border-white/[0.08] px-3 py-1 rounded-full text-xs font-medium">

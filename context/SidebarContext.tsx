@@ -11,15 +11,23 @@ interface SidebarContextType {
   openSidebar: () => void
 }
 
-const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
+const defaultContext: SidebarContextType = {
+  isOpen: false,
+  setIsOpen: () => {},
+  toggleSidebar: () => {},
+  closeSidebar: () => {},
+  openSidebar: () => {},
+}
+
+const SidebarContext = createContext<SidebarContextType>(defaultContext)
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   
   // Default open on desktop, closed on mobile
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
-  // On initial mount check screen width: if mobile (< 768px), start closed
+  // On initial mount check screen width
   useEffect(() => {
     if (typeof window !== 'undefined' && window.innerWidth < 768) {
       setIsOpen(false)
@@ -54,8 +62,5 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
 
 export function useSidebar() {
   const context = useContext(SidebarContext)
-  if (!context) {
-    throw new Error('useSidebar must be used within a SidebarProvider')
-  }
-  return context
+  return context || defaultContext
 }
