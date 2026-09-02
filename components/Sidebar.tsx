@@ -15,12 +15,11 @@ export default function Sidebar() {
   const { user, authenticated, connectWallet, login, logout } = usePrivy()
   const { wallets } = useWallets()
   const { address } = useWallet()
-  const { theme, setThemeId, themes } = useTheme()
+  const { theme } = useTheme()
   const { isOpen, closeSidebar } = useSidebar()
 
   const [loggingIn, setLoggingIn] = useState(false)
   const [isDisconnecting, setIsDisconnecting] = useState(false)
-  const [themeMenuOpen, setThemeMenuOpen] = useState(false)
   const [loginMenuOpen, setLoginMenuOpen] = useState(false)
 
   const isConnected = authenticated && (!!address || !!user)
@@ -252,69 +251,8 @@ export default function Sidebar() {
           </div>
         </div>
 
-        {/* 4. Bottom Footer Section (User Profile + Theme Palette + Connect) */}
+        {/* 4. Bottom Footer Section (User Profile + Connect) */}
         <div className="p-3 border-t border-white/[0.08] bg-[#070709]/80 backdrop-blur-xl flex flex-col gap-2">
-          {/* Theme Selector Button */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setThemeMenuOpen((prev) => !prev)}
-              className="w-full flex items-center justify-between gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] hover:border-white/[0.2] px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white transition-all cursor-pointer shadow-sm"
-            >
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-3.5 h-3.5 rounded-full border border-white/20 shadow-sm flex-shrink-0"
-                  style={{ backgroundColor: theme.color }}
-                />
-                <span className="text-xs font-medium">{theme.name}</span>
-              </div>
-              <span className="text-[11px] text-zinc-400 font-medium">Theme ▾</span>
-            </button>
-
-            {/* Theme Selector Popover */}
-            {themeMenuOpen && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setThemeMenuOpen(false)} />
-                <div
-                  className="absolute bottom-full left-0 mb-2 w-52 bg-[#1c1c1e]/90 backdrop-blur-2xl border border-white/[0.15] rounded-2xl p-2 z-50 flex flex-col gap-1 shadow-2xl animate-fadeIn"
-                >
-                  <div className="px-2 py-1 flex items-center justify-between border-b border-white/[0.08] mb-1">
-                    <span className="text-[11px] font-semibold text-zinc-400">Accent Colors</span>
-                    <span className="text-[10px] text-zinc-500 font-mono">[{themes.length}]</span>
-                  </div>
-                  <div className="grid grid-cols-1 gap-1">
-                    {themes.map((t) => {
-                      const isSelected = t.id === theme.id
-                      return (
-                        <button
-                          key={t.id}
-                          type="button"
-                          onClick={() => {
-                            setThemeId(t.id)
-                            setThemeMenuOpen(false)
-                          }}
-                          className={`flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
-                            isSelected
-                              ? 'bg-[var(--theme-color)] text-black border border-white'
-                              : 'text-zinc-300 hover:text-white hover:bg-white/[0.08]'
-                          }`}
-                        >
-                          <div className="flex items-center gap-2">
-                            <span
-                              className="w-3 h-3 border border-black shadow-[1px_1px_0px_0px_#ffffff] flex-shrink-0"
-                              style={{ backgroundColor: t.color }}
-                            />
-                            <span>{t.name}</span>
-                          </div>
-                          {isSelected && <span className="text-[10px] font-black font-mono">✓</span>}
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
 
           {/* User Account / Connect Section */}
           {isConnected ? (

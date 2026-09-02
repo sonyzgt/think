@@ -16,18 +16,7 @@ const ThemeContext = createContext<ThemeContextType>({
 })
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [themeId, setThemeIdState] = useState<string>('apple_green')
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('pons_theme_color')
-      if (saved && THEMES.some((t) => t.id === saved)) {
-        setThemeIdState(saved)
-      }
-    } catch { /* ignore */ }
-  }, [])
-
-  const currentTheme = THEMES.find((t) => t.id === themeId) || THEMES[0]
+  const currentTheme = THEMES[0]
 
   const applyThemeVars = (t: ThemeConfig) => {
     if (typeof document === 'undefined') return
@@ -43,14 +32,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.style.setProperty('--theme-border', `${t.primary}55`)
   }
 
-  const setThemeId = (id: string) => {
-    const target = THEMES.find((t) => t.id === id)
-    if (!target) return
-    setThemeIdState(id)
-    try {
-      localStorage.setItem('pons_theme_color', id)
-    } catch { /* ignore */ }
-    applyThemeVars(target)
+  const setThemeId = () => {
+    applyThemeVars(currentTheme)
   }
 
   useEffect(() => {
