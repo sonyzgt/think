@@ -77,15 +77,15 @@ export default function EarthCursor() {
         <div
           className={`absolute rounded-full transition-all duration-300 ${
             isHovered
-              ? 'w-10 h-10 bg-cyan-400/40 blur-md animate-pulse'
-              : 'w-7 h-7 bg-sky-500/25 blur-sm'
+              ? 'w-10 h-10 bg-orange-500/40 blur-md animate-pulse'
+              : 'w-7 h-7 bg-orange-400/20 blur-sm'
           }`}
         />
 
         {/* Outer Orbital Ring on Hover */}
         {isHovered && (
-          <div className="absolute w-9 h-9 rounded-full border border-cyan-300/60 animate-spin opacity-80" style={{ animationDuration: '4s' }}>
-            <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_6px_#ffffff]" />
+          <div className="absolute w-9 h-9 rounded-full border border-orange-400/70 animate-spin opacity-90" style={{ animationDuration: '4s' }}>
+            <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_6px_#FF6A00]" />
           </div>
         )}
 

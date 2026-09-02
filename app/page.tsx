@@ -32,12 +32,12 @@ export default function HomePage() {
   }, [fetchTokens])
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#050506] text-[#F5F5F7] select-none">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-white text-[#111111] select-none">
       {/* Minimal Floating Top Header */}
       <Header />
 
       {/* 100% Fullscreen Real Geographic World Map Canvas */}
-      <main className="flex-1 w-full h-[calc(100vh-57px)] relative overflow-hidden flex flex-col">
+      <main className="flex-1 w-full h-[calc(100vh-57px)] relative overflow-hidden flex flex-col bg-white">
         <WorldFlagMap
           tokens={tokens}
           onTokenRefresh={fetchTokens}

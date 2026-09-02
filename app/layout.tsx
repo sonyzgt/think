@@ -20,7 +20,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
-  themeColor: '#050506',
+  themeColor: '#FFFFFF',
 }
 
 export const metadata: Metadata = {
@@ -40,21 +40,21 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased light`}
       suppressHydrationWarning
     >
       <body
-        className="min-h-full flex flex-col bg-[#050506] text-[#F5F5F7] antialiased selection:bg-[#0A84FF]/25 selection:text-white relative overflow-x-hidden"
+        className="min-h-full flex flex-col bg-white text-[#111111] antialiased selection:bg-[#FF6A00]/25 selection:text-[#111111] relative overflow-x-hidden"
         suppressHydrationWarning
       >
         {/* Desktop Custom Earth Globe Cursor */}
         <EarthCursor />
 
-        {/* Ambient Apple Vision Liquid Glass Ambient Backdrop */}
+        {/* Ambient Clean Backdrop */}
         <SparkleBackground />
 
         {/* App Content */}
-        <div className="relative z-10 flex flex-col flex-1" suppressHydrationWarning>
+        <div className="relative z-10 flex flex-col flex-1 bg-white" suppressHydrationWarning>
           <ClientProviders>{children}</ClientProviders>
         </div>
       </body>

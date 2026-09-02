@@ -1,22 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05070a;
-  --foreground: #FFFFFF;
-  --text-secondary: #CBD5E1;
-  --text-muted: #94A3B8;
-  --surface: #0B0F15;
-  --surface-elevated: rgba(255, 255, 255, 0.08);
-  --surface-border: rgba(255, 255, 255, 0.20);
-  --surface-border-subtle: rgba(255, 255, 255, 0.10);
-  --theme-color: #FFFFFF;
-  --theme-light: #F8FAFC;
-  --theme-dark: #94A3B8;
-  --theme-glow: rgba(255, 255, 255, 0.6);
-  --theme-subtle: rgba(255, 255, 255, 0.18);
-  --theme-border: rgba(255, 255, 255, 0.45);
-  --accent-white: #FFFFFF;
-  --accent-white-glow: rgba(255, 255, 255, 0.6);
+  --background: #FFFFFF;
+  --foreground: #111111;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --surface: #FFFFFF;
+  --surface-secondary: #F5F5F3;
+  --surface-elevated: #FFFFFF;
+  --surface-border: #D8D8D8;
+  --surface-border-subtle: #E2E2E2;
+  --theme-color: #FF6A00;
+  --theme-light: #FF7A00;
+  --theme-dark: #D94F00;
+  --theme-soft: #FFB067;
+  --theme-hover: #FFF0E6;
+  --theme-glow: rgba(255, 106, 0, 0.20);
+  --theme-subtle: rgba(255, 106, 0, 0.08);
+  --theme-border: #FF6A00;
+  --accent-orange: #FF6A00;
+  --accent-orange-glow: rgba(255, 106, 0, 0.20);
   --accent: var(--theme-color);
   --accent-hover: var(--theme-light);
   --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -32,8 +36,8 @@
 }
 
 body {
-  background-color: #05070a;
-  color: #FFFFFF;
+  background-color: #FFFFFF;
+  color: #111111;
   font-family: var(--apple-font);
   min-height: 100vh;
   overflow-x: hidden;
@@ -53,160 +57,125 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(0, 0, 0, 0.30);
 }
 
-/* ── SKEUOMORPHIC DESIGN SYSTEM (PURE WHITE & PLATINUM) ── */
+/* ── ORANGE ATLAS & WHITE CARTOGRAPHIC DESIGN SYSTEM ── */
 
-/* Skeuomorphic Machined Platinum / White Chassis / Panel */
+/* Clean White Cartographic Chassis / Panel */
 .skeuo-panel {
-  background: linear-gradient(180deg, #121822 0%, #0b0f16 50%, #06090e 100%) !important;
-  border-top: 2px solid #ffffff !important;
-  border-bottom: 2px solid #334155 !important;
-  border-left: 1.5px solid rgba(255, 255, 255, 0.40) !important;
-  border-right: 1.5px solid rgba(255, 255, 255, 0.40) !important;
+  background: #FFFFFF !important;
+  border: 1px solid #D8D8D8 !important;
+  border-top: 1px solid #EFEFEF !important;
   box-shadow: 
-    inset 0 1px 2px rgba(255, 255, 255, 0.8),
-    inset 0 -1px 3px rgba(0, 0, 0, 0.9),
-    0 0 30px rgba(255, 255, 255, 0.22),
-    0 16px 36px rgba(0, 0, 0, 0.9) !important;
+    0 4px 20px rgba(0, 0, 0, 0.05),
+    0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  color: #111111 !important;
 }
 
-/* Skeuomorphic Debossed Inset Screen / Tray */
+/* Recessed Inset Tray (Light Cartographic Gray) */
 .skeuo-inset {
-  background: linear-gradient(180deg, #05070a 0%, #0a0e14 100%) !important;
-  border-top: 1.5px solid rgba(0, 0, 0, 0.95) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.35) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background: #F5F5F3 !important;
+  border: 1px solid #E2E2E2 !important;
   box-shadow: 
-    inset 0 3px 8px rgba(0, 0, 0, 0.95),
-    0 1px 0 rgba(255, 255, 255, 0.20) !important;
+    inset 0 2px 4px rgba(0, 0, 0, 0.03) !important;
+  color: #111111 !important;
 }
 
-/* Skeuomorphic 3D Push Button (Platinum Finish) */
+/* Modern Clean Tactile Button (White / Chrome Accent) */
 .skeuo-button {
-  background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 48%, #cbd5e1 100%) !important;
-  color: #05070a !important;
-  border-top: 1.5px solid #ffffff !important;
-  border-bottom: 2.5px solid #64748b !important;
-  border-left: 1px solid #e2e8f0 !important;
-  border-right: 1px solid #e2e8f0 !important;
+  background: #FFFFFF !important;
+  color: #111111 !important;
+  border: 1px solid #D8D8D8 !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 1),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.25),
-    0 4px 12px rgba(0, 0, 0, 0.60),
-    0 1px 2px rgba(0, 0, 0, 0.8) !important;
-  font-weight: 800 !important;
-  transition: all 0.12s ease !important;
+    0 2px 4px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 #FFFFFF !important;
+  font-weight: 700 !important;
+  transition: all 0.15s ease !important;
 }
 
 .skeuo-button:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 48%, #e2e8f0 100%) !important;
+  background: #FFF0E6 !important;
+  border-color: #FF6A00 !important;
+  color: #FF6A00 !important;
   box-shadow: 
-    inset 0 1px 2px rgba(255, 255, 255, 1),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.20),
-    0 6px 18px rgba(255, 255, 255, 0.5),
-    0 0 15px rgba(255, 255, 255, 0.4) !important;
+    0 4px 10px rgba(255, 106, 0, 0.12),
+    inset 0 1px 0 #FFFFFF !important;
 }
 
 .skeuo-button:active {
-  transform: translateY(1.5px) !important;
-  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%) !important;
+  transform: translateY(1px) !important;
+  background: #FFE0CC !important;
   box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.5),
-    0 1px 2px rgba(0, 0, 0, 0.5) !important;
+    inset 0 2px 4px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* Skeuomorphic Primary 3D Switch (Super Bright Radiant White) */
-.skeuo-button-primary {
-  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 45%, #e2e8f0 100%) !important;
-  color: #000000 !important;
-  border-top: 2px solid #ffffff !important;
-  border-bottom: 3px solid #475569 !important;
-  border-left: 1.5px solid #ffffff !important;
-  border-right: 1.5px solid #ffffff !important;
+/* Primary Modern Orange Action Button */
+.skeuo-button-primary,
+.skeuo-button-orange {
+  background: linear-gradient(180deg, #FF7A00 0%, #FF6A00 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid #D94F00 !important;
   box-shadow: 
-    inset 0 1px 2px #ffffff,
-    0 0 25px rgba(255, 255, 255, 0.85),
-    0 6px 16px rgba(0, 0, 0, 0.9) !important;
-  font-weight: 900 !important;
-  transition: all 0.12s ease !important;
-}
-
-.skeuo-button-primary:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #ffffff 45%, #f1f5f9 100%) !important;
-  box-shadow: 
-    inset 0 1px 2px #ffffff,
-    0 0 35px rgba(255, 255, 255, 1),
-    0 8px 22px rgba(0, 0, 0, 0.9) !important;
-}
-
-.skeuo-button-primary:active {
-  transform: translateY(2px) !important;
-  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%) !important;
-  box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.5),
-    0 1px 2px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Skeuomorphic White Accent Button */
-.skeuo-button-white {
-  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 48%, #e2e8f0 100%) !important;
-  color: #000000 !important;
-  border-top: 1.5px solid #ffffff !important;
-  border-bottom: 2px solid #64748b !important;
-  border-left: 1px solid #ffffff !important;
-  border-right: 1px solid #ffffff !important;
-  box-shadow: 
-    inset 0 1px 1px #ffffff,
-    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
-    0 6px 16px rgba(255, 255, 255, 0.5),
-    0 2px 4px rgba(0, 0, 0, 0.9) !important;
+    0 4px 12px rgba(255, 106, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
   font-weight: 800 !important;
-  transition: all 0.12s ease !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.15s ease !important;
 }
 
-.skeuo-button-white:active {
-  transform: translateY(2px) !important;
-  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%) !important;
+.skeuo-button-primary:hover,
+.skeuo-button-orange:hover {
+  background: linear-gradient(180deg, #FF8A22 0%, #FF7A00 100%) !important;
   box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.6),
-    0 1px 2px rgba(0, 0, 0, 0.5) !important;
+    0 6px 16px rgba(255, 106, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.40) !important;
 }
 
-/* Skeuomorphic Glass LED Status Indicator (Pure White Diamond) */
+.skeuo-button-primary:active,
+.skeuo-button-orange:active {
+  transform: translateY(1.5px) !important;
+  background: #D94F00 !important;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+.skeuo-button-white {
+  background: #FFFFFF !important;
+  color: #111111 !important;
+  border: 1px solid #D8D8D8 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
+  font-weight: 700 !important;
+  transition: all 0.15s ease !important;
+}
+
+.skeuo-button-white:hover {
+  background: #FFF0E6 !important;
+  border-color: #FF6A00 !important;
+  color: #FF6A00 !important;
+}
+
+/* Precision Glass LED Status Indicator (Vibrant Orange) */
+.skeuo-led-orange,
+.skeuo-led-green,
 .skeuo-led-white {
-  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f1f5f9 40%, #cbd5e1 70%, #94a3b8 100%) !important;
-  border: 1px solid rgba(0, 0, 0, 0.8) !important;
+  background: radial-gradient(circle at 35% 35%, #FFA04D 0%, #FF6A00 60%, #D94F00 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
   box-shadow: 
-    inset 0 1px 1px #ffffff,
-    inset 0 -1px 2px rgba(0, 0, 0, 0.6),
-    0 0 12px #ffffff,
-    0 0 22px rgba(255, 255, 255, 0.95) !important;
-}
-
-.skeuo-led-green {
-  background: radial-gradient(circle at 35% 35%, #86efac 0%, #22c55e 50%, #15803d 100%) !important;
-  border: 1px solid rgba(0, 0, 0, 0.8) !important;
-  box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.8),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.6),
-    0 0 10px #22c55e,
-    0 0 18px rgba(34, 197, 94, 0.5) !important;
+    0 0 8px rgba(255, 106, 0, 0.60),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
 }
 
 .skeuo-led-off {
-  background: radial-gradient(circle at 35% 35%, #64748b 0%, #334155 60%, #1e293b 100%) !important;
-  border: 1px solid rgba(0, 0, 0, 0.9) !important;
+  background: radial-gradient(circle at 35% 35%, #E5E7EB 0%, #D1D5DB 60%, #9CA3AF 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.25),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.8) !important;
+    inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
 }
 
 /* ── APPLE LIQUID GLASS DESIGN SYSTEM ── */

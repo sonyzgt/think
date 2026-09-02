@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import SparkleIcon from '@/components/ui/SparkleIcon'
 import { usePrivy } from '@privy-io/react-auth'
 import { useWallet } from '@/hooks/useWallet'
 import Link from 'next/link'
@@ -17,30 +16,30 @@ export default function Header() {
     : null
 
   return (
-    <header className="sticky top-0 z-30 w-full skeuo-panel select-none border-b border-white/20 shadow-2xl">
+    <header className="sticky top-0 z-30 w-full bg-white select-none border-b border-[#E2E2E2] shadow-sm">
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
         {/* Left: Physical Embossed Emblem & Title */}
         <Link href="/" className="flex items-center gap-3 cursor-pointer group">
-          <div className="w-9 h-9 rounded-xl skeuo-button flex items-center justify-center p-1 shadow-lg group-hover:brightness-110 transition-all border border-white/30 overflow-hidden">
+          <div className="w-9 h-9 rounded-xl skeuo-button flex items-center justify-center p-1 shadow-sm group-hover:border-[#FF6A00] transition-all border border-[#D8D8D8] overflow-hidden bg-white">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="ATLAS Logo" className="w-full h-full object-contain rounded-lg drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
+            <img src="/logo.png" alt="ATLAS Logo" className="w-full h-full object-contain rounded-lg" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-black tracking-widest text-white uppercase font-mono drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
+            <span className="text-base font-black tracking-widest text-[#111111] uppercase font-mono group-hover:text-[#FF6A00] transition-colors">
               ATLAS
             </span>
-            <span className="text-[9px] text-zinc-300 font-mono tracking-wider uppercase font-bold">
+            <span className="text-[9px] text-[#FF6A00] font-mono tracking-wider uppercase font-bold">
               // WORLD TOKEN MAP
             </span>
           </div>
         </Link>
 
-        {/* Right: Tactile Network Indicator + 3D Wallet Button */}
+        {/* Right: Tactile Network Indicator + Modern Orange Wallet Button */}
         <div className="flex items-center gap-3">
           {/* Physical Instrument Status LED */}
-          <div className="hidden sm:flex items-center gap-2 skeuo-inset px-3 py-1.5 rounded-xl text-xs border border-white/20">
-            <span className="w-2.5 h-2.5 rounded-full skeuo-led-white flex-shrink-0" />
-            <span className="text-white font-mono text-[11px] font-bold tracking-tight">
+          <div className="hidden sm:flex items-center gap-2 skeuo-inset px-3 py-1.5 rounded-xl text-xs border border-[#E2E2E2] bg-[#F5F5F3]">
+            <span className="w-2.5 h-2.5 rounded-full skeuo-led-orange flex-shrink-0" />
+            <span className="text-[#111111] font-mono text-[11px] font-bold tracking-tight">
               ROBINHOOD #4663
             </span>
           </div>
@@ -50,13 +49,13 @@ export default function Header() {
             <button
               type="button"
               onClick={logout}
-              className="skeuo-button px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold text-black flex items-center gap-2 cursor-pointer active:scale-95 border border-white/40"
+              className="skeuo-button px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold text-[#111111] flex items-center gap-2 cursor-pointer active:scale-95 border border-[#D8D8D8] bg-white shadow-sm"
               title="Click to disconnect"
             >
-              <span className="w-2 h-2 rounded-full skeuo-led-white flex-shrink-0" />
-              <span className="text-black font-black">{shortAddress}</span>
+              <span className="w-2 h-2 rounded-full skeuo-led-orange flex-shrink-0" />
+              <span className="text-[#111111] font-black">{shortAddress}</span>
               {balance?.formatted && (
-                <span className="text-zinc-700 pl-1.5 border-l border-black/20 hidden md:inline font-mono font-bold">
+                <span className="text-[#FF6A00] pl-1.5 border-l border-[#D8D8D8] hidden md:inline font-mono font-bold">
                   {parseFloat(balance.formatted).toFixed(4)} ETH
                 </span>
               )}
@@ -65,7 +64,7 @@ export default function Header() {
             <button
               type="button"
               onClick={login}
-              className="skeuo-button-primary px-4 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase cursor-pointer text-black"
+              className="skeuo-button-primary px-4 py-1.5 rounded-xl text-xs font-black tracking-wider uppercase cursor-pointer text-white shadow-md hover:brightness-105"
             >
               Connect Wallet
             </button>
