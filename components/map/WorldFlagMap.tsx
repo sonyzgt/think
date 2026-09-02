@@ -6,6 +6,7 @@ import { PonsV2TokenInfo } from '@/lib/pons-v2'
 import { MAP_COUNTRY_PATHS, MapCountryPath } from '@/lib/map-paths'
 import InactiveCountryModal from '@/components/map/InactiveCountryModal'
 import ActiveCountryModal from '@/components/map/ActiveCountryModal'
+import NationLeaderboard from '@/components/map/NationLeaderboard'
 import toast from 'react-hot-toast'
 
 interface WorldFlagMapProps {
@@ -275,7 +276,14 @@ export default function WorldFlagMap({
         </div>
       </div>
 
-      {/* 2. Floating Minimal Zoom Controls */}
+      {/* 2. Left Floating Market Cap Leaderboard */}
+      <NationLeaderboard
+        tokens={tokens}
+        onSelectCountry={handleCountryClick}
+        onFocusCountry={focusCountry}
+      />
+
+      {/* 3. Floating Minimal Zoom Controls */}
       <div className="absolute bottom-5 right-5 z-20 flex flex-col gap-1 bg-[#090D12]/90 backdrop-blur-xl border border-white/15 p-1 rounded-2xl shadow-2xl">
         <button
           type="button"
