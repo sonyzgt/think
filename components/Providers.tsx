@@ -42,7 +42,18 @@ export default function Providers({ children }: { children: ReactNode }) {
         appearance: {
           theme: 'dark',
           accentColor: '#10b981',
-          walletList: ['metamask', 'wallet_connect', 'coinbase_wallet', 'rainbow', 'rabby_wallet', 'zerion'],
+          walletList: [
+            'okx_wallet',
+            'metamask',
+            'wallet_connect',
+            'rabby_wallet',
+            'coinbase_wallet',
+            'bitget_wallet',
+            'bybit_wallet',
+            'rainbow',
+            'zerion',
+            'detected_wallets',
+          ],
         },
         externalWallets: {
           walletConnect: {
