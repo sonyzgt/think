@@ -63,95 +63,97 @@ body {
 
 /* ── SKEUOMORPHIC DESIGN SYSTEM ── */
 
-/* Skeuomorphic Machined Chassis / Panel */
+/* Skeuomorphic Machined Copper / Orange Chassis / Panel */
 .skeuo-panel {
-  background: linear-gradient(180deg, #161b22 0%, #0d1117 50%, #070a0e 100%) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.9) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.10) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.10) !important;
+  background: linear-gradient(180deg, #24140a 0%, #170b04 50%, #0d0602 100%) !important;
+  border-top: 1px solid rgba(255, 160, 60, 0.45) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.95) !important;
+  border-left: 1px solid rgba(255, 107, 0, 0.30) !important;
+  border-right: 1px solid rgba(255, 107, 0, 0.30) !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.25),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.8),
-    0 20px 45px rgba(0, 0, 0, 0.85),
-    0 4px 10px rgba(0, 0, 0, 0.6) !important;
+    inset 0 1px 1px rgba(255, 180, 100, 0.45),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.9),
+    0 20px 45px rgba(0, 0, 0, 0.9),
+    0 0 25px rgba(255, 107, 0, 0.18) !important;
 }
 
 /* Skeuomorphic Debossed Inset Screen / Tray */
 .skeuo-inset {
-  background: linear-gradient(180deg, #050709 0%, #080b0f 100%) !important;
+  background: linear-gradient(180deg, #0d0602 0%, #140903 100%) !important;
   border-top: 1px solid rgba(0, 0, 0, 0.95) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-left: 1px solid rgba(0, 0, 0, 0.8) !important;
-  border-right: 1px solid rgba(0, 0, 0, 0.8) !important;
+  border-bottom: 1px solid rgba(255, 107, 0, 0.25) !important;
+  border-left: 1px solid rgba(0, 0, 0, 0.9) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.9) !important;
   box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.95),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.05),
-    0 1px 0 rgba(255, 255, 255, 0.08) !important;
+    inset 0 3px 8px rgba(0, 0, 0, 0.95),
+    inset 0 -1px 1px rgba(255, 107, 0, 0.10),
+    0 1px 0 rgba(255, 107, 0, 0.12) !important;
 }
 
-/* Skeuomorphic 3D Push Button (Neutral Titanium) */
+/* Skeuomorphic 3D Push Button (Warm Bronze / Copper Sheen) */
 .skeuo-button {
-  background: linear-gradient(180deg, #28303c 0%, #1a2028 48%, #11151c 100%) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.35) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.9) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: linear-gradient(180deg, #381d0c 0%, #241105 48%, #160802 100%) !important;
+  border-top: 1px solid rgba(255, 160, 70, 0.50) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.95) !important;
+  border-left: 1px solid rgba(255, 107, 0, 0.30) !important;
+  border-right: 1px solid rgba(255, 107, 0, 0.30) !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.35),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.75),
-    0 4px 10px rgba(0, 0, 0, 0.65),
-    0 1px 2px rgba(0, 0, 0, 0.8) !important;
+    inset 0 1px 1px rgba(255, 180, 100, 0.50),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.80),
+    0 4px 10px rgba(0, 0, 0, 0.70),
+    0 0 10px rgba(255, 107, 0, 0.15) !important;
   transition: all 0.12s ease !important;
 }
 
 .skeuo-button:hover {
-  background: linear-gradient(180deg, #323b49 0%, #202732 48%, #161c24 100%) !important;
+  background: linear-gradient(180deg, #4d260f 0%, #331707 48%, #220b02 100%) !important;
   box-shadow: 
-    inset 0 1px 2px rgba(255, 255, 255, 0.45),
-    inset 0 -2px 3px rgba(0, 0, 0, 0.8),
-    0 6px 14px rgba(0, 0, 0, 0.75) !important;
+    inset 0 1px 2px rgba(255, 200, 120, 0.6),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.85),
+    0 6px 14px rgba(0, 0, 0, 0.8),
+    0 0 16px rgba(255, 107, 0, 0.3) !important;
 }
 
 .skeuo-button:active {
   transform: translateY(1.5px) !important;
-  background: linear-gradient(180deg, #10141a 0%, #181f27 100%) !important;
+  background: linear-gradient(180deg, #180a03 0%, #291206 100%) !important;
   box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.9),
+    inset 0 3px 6px rgba(0, 0, 0, 0.95),
     0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Skeuomorphic Primary 3D Switch (Emerald / White Accent) */
+/* Skeuomorphic Primary 3D Switch (Vibrant Electric Orange) */
 .skeuo-button-primary {
-  background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 45%, #cbd5e1 100%) !important;
-  color: #05070a !important;
-  border-top: 1px solid #ffffff !important;
-  border-bottom: 2px solid #64748b !important;
-  border-left: 1px solid #e2e8f0 !important;
-  border-right: 1px solid #e2e8f0 !important;
+  background: linear-gradient(180deg, #ff8a3d 0%, #ff6b00 48%, #c2410c 100%) !important;
+  color: #ffffff !important;
+  border-top: 1px solid #ffba88 !important;
+  border-bottom: 2px solid #7c2d12 !important;
+  border-left: 1px solid #ea580c !important;
+  border-right: 1px solid #ea580c !important;
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
-    0 6px 16px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px rgba(255, 255, 255, 0.85),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.45),
+    0 6px 20px rgba(255, 107, 0, 0.55),
     0 2px 4px rgba(0, 0, 0, 0.9) !important;
   font-weight: 800 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
   transition: all 0.12s ease !important;
 }
 
 .skeuo-button-primary:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 45%, #e2e8f0 100%) !important;
+  background: linear-gradient(180deg, #ff9b57 0%, #ff7a1a 48%, #d94800 100%) !important;
   box-shadow: 
     inset 0 1px 2px rgba(255, 255, 255, 1),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.25),
-    0 8px 20px rgba(255, 255, 255, 0.15),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.35),
+    0 8px 24px rgba(255, 107, 0, 0.7),
     0 3px 6px rgba(0, 0, 0, 0.8) !important;
 }
 
 .skeuo-button-primary:active {
   transform: translateY(2px) !important;
-  background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%) !important;
+  background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%) !important;
   box-shadow: 
-    inset 0 3px 6px rgba(0, 0, 0, 0.5),
+    inset 0 3px 6px rgba(0, 0, 0, 0.6),
     0 1px 2px rgba(0, 0, 0, 0.5) !important;
 }
 
