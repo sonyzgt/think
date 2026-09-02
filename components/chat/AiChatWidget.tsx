@@ -14,7 +14,7 @@ import {
   http,
   isAddress,
 } from 'viem'
-import { usePrivy, useLoginWithOAuth, useWallets } from '@privy-io/react-auth'
+import { usePrivy, useWallets } from '@privy-io/react-auth'
 import { useWallet } from '@/hooks/useWallet'
 import { activeChain, robinhoodChain } from '@/lib/chains'
 import { PONS_CURVE_ABI, getPonsTokenInfo } from '@/lib/pons-v2'
@@ -82,14 +82,9 @@ export default function AiChatWidget({
   onClose,
 }: AiChatWidgetProps) {
   const { theme } = useTheme()
-  const { user, authenticated, ready } = usePrivy()
+  const { user, authenticated, ready, login } = usePrivy()
   const { wallets } = useWallets()
   const { address, balance, embeddedWallet, refetchBalance } = useWallet()
-  const [, setLoggingIn] = useState(false)
-  const { initOAuth } = useLoginWithOAuth({
-    onComplete: () => setLoggingIn(false),
-    onError: () => setLoggingIn(false),
-  })
 
   // Chat message state
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
@@ -194,9 +189,8 @@ export default function AiChatWidget({
     }
 
     if (!address) {
-      toast('Please connect your account first')
-      setLoggingIn(true)
-      await initOAuth({ provider: 'twitter' })
+      toast('Please connect your wallet first')
+      login()
       return
     }
 

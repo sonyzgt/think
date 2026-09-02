@@ -15,7 +15,7 @@ import {
   http,
   isAddress,
 } from 'viem'
-import { usePrivy, useLoginWithOAuth, useWallets } from '@privy-io/react-auth'
+import { usePrivy, useWallets } from '@privy-io/react-auth'
 import { useWallet } from '@/hooks/useWallet'
 import { activeChain, robinhoodChain } from '@/lib/chains'
 import {
@@ -81,16 +81,10 @@ interface UniswapQuoteResponse {
 }
 
 export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidgetProps) {
-  const { authenticated, user } = usePrivy()
+  const { authenticated, login, user } = usePrivy()
   const { wallets } = useWallets()
   const { address, balance, embeddedWallet, refetchBalance } = useWallet()
   const { theme } = useTheme()
-  const [loggingIn, setLoggingIn] = useState(false)
-
-  const { initOAuth } = useLoginWithOAuth({
-    onComplete: () => setLoggingIn(false),
-    onError: () => setLoggingIn(false),
-  })
 
   const [mode, setMode] = useState<'BUY' | 'SELL'>('BUY')
   const [amount, setAmount] = useState('')
@@ -772,13 +766,10 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
       {!authenticated || !address ? (
         <button
           type="button"
-          onClick={async () => {
-            setLoggingIn(true)
-            await initOAuth({ provider: 'twitter' })
-          }}
+          onClick={login}
           className="w-full py-3 text-xs font-black uppercase tracking-wider rounded-xl skeuo-button-primary text-white cursor-pointer shadow-lg"
         >
-          {loggingIn ? 'Connecting...' : 'Connect Wallet to Swap'}
+          Connect Wallet to Swap
         </button>
       ) : (
         <button

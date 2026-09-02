@@ -22,7 +22,7 @@ import { activeChain } from '@/lib/chains'
 import Modal from '@/components/ui/Modal'
 import Button from '@/components/ui/Button'
 import toast from 'react-hot-toast'
-import { usePrivy, useLoginWithOAuth } from '@privy-io/react-auth'
+import { usePrivy } from '@privy-io/react-auth'
 import { trackTokenAddress } from '@/hooks/useTokens'
 import type { TokenPrice } from '@/app/api/token-price/route'
 import { PONS_CURVE_ABI } from '@/lib/pons-v2'
@@ -116,29 +116,12 @@ function fmt(n: number, decimals = 6): string {
 }
 
 export default function SwapModal({ open, onClose, initialCa }: SwapModalProps) {
-  const { user, authenticated } = usePrivy()
+  const { user, authenticated, login } = usePrivy()
   const { balance, address, embeddedWallet, refetchBalance } = useWallet()
   const { theme } = useTheme()
-  const [loggingIn, setLoggingIn] = useState(false)
 
-  const { initOAuth } = useLoginWithOAuth({
-    onComplete: () => {
-      setLoggingIn(false)
-    },
-    onError: (err) => {
-      console.error('Login error:', err)
-      setLoggingIn(false)
-    },
-  })
-
-  const handleLogin = async () => {
-    try {
-      setLoggingIn(true)
-      await initOAuth({ provider: 'twitter' })
-    } catch (err) {
-      console.error('Login error:', err)
-      setLoggingIn(false)
-    }
+  const handleLogin = () => {
+    login()
   }
 
   // â”€â”€ State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -788,7 +771,6 @@ export default function SwapModal({ open, onClose, initialCa }: SwapModalProps) 
           <Button
             variant="primary"
             onClick={handleLogin}
-            loading={loggingIn}
             className="w-full text-xs font-black py-3 uppercase"
           >
             CONNECT WALLET TO SWAP

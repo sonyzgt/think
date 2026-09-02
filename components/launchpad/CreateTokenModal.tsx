@@ -12,7 +12,7 @@ import {
   formatEther,
   isAddress,
 } from 'viem'
-import { usePrivy, useLoginWithOAuth, useWallets } from '@privy-io/react-auth'
+import { usePrivy, useWallets } from '@privy-io/react-auth'
 import { useWallet } from '@/hooks/useWallet'
 import { activeChain } from '@/lib/chains'
 import Modal from '@/components/ui/Modal'

@@ -41,13 +41,14 @@ export default function Providers({ children }: { children: ReactNode }) {
       config={{
         appearance: {
           theme: 'dark',
-          accentColor: '#10b981',
+          accentColor: '#FF6A00',
           walletList: [
             'okx_wallet',
             'metamask',
             'wallet_connect',
             'rabby_wallet',
             'coinbase_wallet',
+            'phantom',
             'bitget_wallet',
             'bybit_wallet',
             'rainbow',
@@ -61,15 +62,9 @@ export default function Providers({ children }: { children: ReactNode }) {
           },
         },
         walletConnectCloudProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '3a8170812b534d0ff9d794f19a901d64',
-        embeddedWallets: {
-          showWalletUIs: false,
-          ethereum: {
-            createOnLogin: 'users-without-wallets',
-          },
-        },
         defaultChain: activeChain,
         supportedChains: [robinhoodChain],
-        loginMethods: ['twitter', 'google', 'wallet'],
+        loginMethods: ['wallet'],
       }}
     >
       <QueryClientProvider client={queryClient}>
