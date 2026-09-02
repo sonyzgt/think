@@ -16,6 +16,8 @@ const wagmiConfig = createConfig({
 })
 
 import { ThemeProvider } from '@/context/ThemeContext'
+import { SidebarProvider } from '@/context/SidebarContext'
+import AppShell from '@/components/AppShell'
 import AiFloatingButton from '@/components/chat/AiFloatingButton'
 
 export default function Providers({ children }: { children: ReactNode }) {
@@ -68,8 +70,12 @@ export default function Providers({ children }: { children: ReactNode }) {
       <QueryClientProvider client={queryClient}>
         <WagmiProvider config={wagmiConfig}>
           <ThemeProvider>
-            {children}
-            <AiFloatingButton />
+            <SidebarProvider>
+              <AppShell>
+                {children}
+              </AppShell>
+              <AiFloatingButton />
+            </SidebarProvider>
             <Toaster
               position="top-center"
               toastOptions={{

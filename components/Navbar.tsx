@@ -5,9 +5,10 @@ import { useWallet } from '@/hooks/useWallet'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Button from '@/components/ui/Button'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import LiveTicker from './LiveTicker'
 import { useTheme } from '@/context/ThemeContext'
+import { useSidebar } from '@/context/SidebarContext'
 import SparkleIcon from '@/components/ui/SparkleIcon'
 
 interface NavbarProps {
@@ -29,13 +30,7 @@ export default function Navbar({
   const { theme, setThemeId, themes } = useTheme()
   const [themeMenuOpen, setThemeMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
-
-  // Close dropdowns on route change
-  useEffect(() => {
-    setDropdownOpen(false)
-    setLoginMenuOpen(false)
-    setThemeMenuOpen(false)
-  }, [pathname])
+  const { toggleOpen, toggleCollapsed, isCollapsed } = useSidebar()
 
   const handleDisconnect = async () => {
     setIsDisconnecting(true)
@@ -67,7 +62,6 @@ export default function Navbar({
     onError: (err) => {
       console.error('Login error:', err)
       setLoggingIn(false)
-      // Fallback to standard login modal if OAuth redirect has issue on localhost
       if (typeof login === 'function') {
         login()
       }
@@ -83,8 +77,7 @@ export default function Navbar({
       } else if (typeof login === 'function') {
         login()
       }
-    } catch (err) {
-      console.error('Login error:', err)
+    } catch {
       setLoggingIn(false)
       if (typeof login === 'function') {
         login()
@@ -122,92 +115,64 @@ export default function Navbar({
   const rawAddr = address || user?.wallet?.address || walletAccount?.address
   const shortAddr = rawAddr ? `${rawAddr.slice(0, 6)}...${rawAddr.slice(-4)}` : undefined
 
-  const [navPoints, setNavPoints] = useState<number | null>(null)
-
-  useEffect(() => {
-    const handle = twitterAccount?.username || (address ? address : '')
-    if (handle) {
-      fetch(`/api/points?user=${encodeURIComponent(handle)}`)
-        .then((r) => r.json())
-        .then((d) => {
-          if (d?.success && typeof d.data?.totalPoints === 'number') {
-            setNavPoints(d.data.totalPoints)
-          }
-        })
-        .catch(() => {})
-    }
-  }, [twitterAccount?.username, address, pathname])
-
   const displayName = twitterAccount?.username
     ? `@${twitterAccount.username}`
     : googleAccount?.name ?? googleAccount?.email?.split('@')[0] ?? user?.email?.address?.split('@')[0] ?? shortAddr ?? 'CONNECTED'
 
-  const navLinks = [
-    {
-      label: 'COINS',
-      href: '/coin',
-      code: '01',
-    },
-    {
-      label: 'LAUNCH',
-      href: '/launch',
-      code: '02',
-    },
-    {
-      label: 'POINTS',
-      href: '/dashboard',
-      code: '03',
-    },
-    {
-      label: 'WALLET',
-      href: '/wallet',
-      code: '04',
-    },
-    {
-      label: 'AI CHAT',
-      href: '/chat',
-      code: '05',
-    },
-  ]
+  // Get Page Title for Breadcrumb
+  const getPageTitle = () => {
+    if (pathname.startsWith('/coin')) return 'COINS EXPLORER'
+    if (pathname.startsWith('/launch')) return 'LAUNCH TOKEN'
+    if (pathname.startsWith('/dashboard')) return 'POINTS & DASHBOARD'
+    if (pathname.startsWith('/wallet')) return 'WALLET & HOLDINGS'
+    if (pathname.startsWith('/chat')) return 'AI AGENT CHAT'
+    if (pathname.startsWith('/token')) return 'TOKEN DETAILS'
+    if (pathname.startsWith('/jembot')) return 'ADMIN DASHBOARD'
+    return 'DASHBOARD'
+  }
 
   return (
     <header className="sticky top-0 z-40 w-full border-b-2 border-zinc-800 bg-[#08090a]/95 backdrop-blur-md select-none font-mono">
       <div className="w-full max-w-[1720px] mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2 sm:gap-4">
-        {/* Left: Brand Logo */}
-        <div className="flex items-center gap-2.5 flex-shrink-0">
-          <Link
-            href="/coin"
-            className="flex items-center gap-2 group flex-shrink-0"
+        {/* Left: Mobile Drawer Trigger & Desktop Sidebar Toggle & Breadcrumb */}
+        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          {/* Mobile Hamburger Button */}
+          <button
+            type="button"
+            onClick={toggleOpen}
+            title="Open Sidebar"
+            className="md:hidden flex items-center justify-center p-2 rounded-md bg-[#12161d] border-2 border-zinc-700 hover:border-white text-zinc-200 cursor-pointer shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5"
           >
-            <SparkleIcon size={34} className="flex-shrink-0 group-hover:scale-105 transition-transform" />
-            <div className="flex items-baseline gap-1.5 sm:gap-2">
-              <span className="font-black text-lg sm:text-xl tracking-tighter text-white font-mono">
-                PONSCORE
-              </span>
-            </div>
-          </Link>
-        </div>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
 
-        {/* Center: Desktop Navigation Links Tab (Coins, Launch, Wallet) - Hidden on Mobile */}
-        <nav className="hidden md:flex items-center gap-1.5 p-1 bg-[#101317] border-2 border-zinc-800 rounded-lg shadow-[2px_2px_0px_0px_#000000] flex-shrink-0">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href))
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-mono font-bold transition-all ${
-                  isActive
-                    ? 'bg-[var(--theme-color)] text-black border-2 border-white shadow-[2px_2px_0px_0px_#ffffff]'
-                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] border-2 border-transparent'
-                }`}
-              >
-                <span className="text-[10px] opacity-70">[{link.code}]</span>
-                <span>{link.label}</span>
-              </Link>
-            )
-          })}
-        </nav>
+          {/* Desktop Toggle Collapse Button */}
+          <button
+            type="button"
+            onClick={toggleCollapsed}
+            title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            className="hidden md:flex items-center justify-center p-2 rounded-md bg-[#12161d] border-2 border-zinc-700 hover:border-white text-zinc-300 hover:text-white cursor-pointer shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5 transition-all"
+          >
+            <svg
+              className={`w-4 h-4 transition-transform duration-200 ${isCollapsed ? 'rotate-180' : ''}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Active Section Breadcrumb */}
+          <div className="flex items-center gap-2">
+            <span className="hidden sm:inline text-xs font-mono text-zinc-500 font-bold tracking-wider">//</span>
+            <span className="text-xs sm:text-sm font-black text-white uppercase tracking-tight bg-[#12161d] px-2.5 py-1 rounded border border-zinc-800">
+              {getPageTitle()}
+            </span>
+          </div>
+        </div>
 
         {/* Right Section: Theme Switcher & Profile Dropdown Button */}
         <div className="flex items-center gap-2 sm:gap-2.5 relative">
@@ -284,22 +249,9 @@ export default function Navbar({
             )}
           </div>
 
-          {/* Points Pill Chip (Desktop & Tablet) */}
-          {isConnected && (
-            <Link
-              href="/dashboard"
-              title="View Points & Leaderboard"
-              className="hidden sm:flex items-center gap-1.5 bg-[#121519] border-2 border-zinc-700 hover:border-white px-2.5 py-1.5 rounded-md text-xs font-mono font-bold text-[var(--theme-color)] transition-all cursor-pointer shadow-[2px_2px_0px_0px_#000000] active:translate-x-0.5 active:translate-y-0.5"
-            >
-              <SparkleIcon size={14} className="text-[var(--theme-color)]" />
-              <span>{(navPoints ?? 0).toLocaleString()} PTS</span>
-            </Link>
-          )}
-
           {/* Profile / Account Dropdown Trigger Button */}
           {isConnected ? (
             <div className="relative">
-              {/* Profile Button: Shows Hamburger Icon on Mobile, Display Name on Desktop */}
               <button
                 type="button"
                 onClick={() => {
@@ -313,16 +265,7 @@ export default function Navbar({
                   style={{ backgroundColor: theme.color }}
                 />
 
-                {/* Mobile View: Hamburger Icon + Label */}
-                <div className="flex sm:hidden items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                  <span className="text-[11px] font-bold uppercase">MENU</span>
-                </div>
-
-                {/* Desktop View: Full Account Name */}
-                <span className="hidden sm:inline max-w-[140px] truncate font-bold font-mono">{displayName}</span>
+                <span className="max-w-[120px] sm:max-w-[160px] truncate font-bold font-mono">{displayName}</span>
 
                 <svg
                   className={`w-3 h-3 text-zinc-400 transition-transform duration-150 flex-shrink-0 ${
@@ -336,7 +279,6 @@ export default function Navbar({
                 </svg>
               </button>
 
-              {/* Exact Same Dropdown Menu for both Mobile and Desktop */}
               {dropdownOpen && (
                 <>
                   <div
@@ -348,7 +290,7 @@ export default function Navbar({
                     style={{
                       boxShadow: `4px 4px 0px 0px ${theme.color}`,
                     }}
-                    className="absolute right-0 top-full mt-2 w-56 sm:w-60 bg-[#0e1115] border-2 border-white rounded-lg p-2 z-50 flex flex-col gap-1 shadow-2xl animate-fadeIn select-none font-mono"
+                    className="absolute right-0 top-full mt-2 w-56 bg-[#0e1115] border-2 border-white rounded-lg p-2 z-50 flex flex-col gap-1 shadow-2xl animate-fadeIn select-none font-mono"
                   >
                     <div className="px-2 py-1 mb-1 border-b border-zinc-800 flex items-center justify-between">
                       <span className="text-[10px] font-black text-zinc-500 uppercase">// ACCOUNT</span>
@@ -358,21 +300,12 @@ export default function Navbar({
                     </div>
 
                     <Link
-                      href="/coin"
+                      href="/wallet"
                       onClick={() => setDropdownOpen(false)}
                       className="flex items-center gap-2.5 px-2.5 py-2 rounded text-xs font-bold text-zinc-200 hover:text-black hover:bg-[var(--theme-color)] transition-all cursor-pointer"
                     >
-                      <span>[01]</span>
-                      <span>COINS EXPLORER</span>
-                    </Link>
-
-                    <Link
-                      href="/launch"
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-2.5 py-2 rounded text-xs font-bold text-zinc-200 hover:text-black hover:bg-[var(--theme-color)] transition-all cursor-pointer"
-                    >
-                      <span>[02]</span>
-                      <span>LAUNCH TOKEN</span>
+                      <span>💳</span>
+                      <span>WALLET & HOLDINGS</span>
                     </Link>
 
                     <Link
@@ -380,26 +313,8 @@ export default function Navbar({
                       onClick={() => setDropdownOpen(false)}
                       className="flex items-center gap-2.5 px-2.5 py-2 rounded text-xs font-bold text-zinc-200 hover:text-black hover:bg-[var(--theme-color)] transition-all cursor-pointer"
                     >
-                      <span>[03]</span>
-                      <span>POINTS & DASHBOARD</span>
-                    </Link>
-
-                    <Link
-                      href="/wallet"
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-2.5 py-2 rounded text-xs font-bold text-zinc-200 hover:text-black hover:bg-[var(--theme-color)] transition-all cursor-pointer"
-                    >
-                      <span>[04]</span>
-                      <span>WALLET & PORTFOLIO</span>
-                    </Link>
-
-                    <Link
-                      href="/chat"
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-2.5 py-2 rounded text-xs font-bold text-zinc-200 hover:text-black hover:bg-[var(--theme-color)] transition-all cursor-pointer"
-                    >
-                      <span>[05]</span>
-                      <span>AI CHAT & AGENT</span>
+                      <span>🏆</span>
+                      <span>POINTS & REWARDS</span>
                     </Link>
 
                     <div className="my-1 border-t border-zinc-800" />
@@ -419,7 +334,6 @@ export default function Navbar({
             </div>
           ) : (
             <div className="relative">
-              {/* Connect Button */}
               <Button
                 variant="primary"
                 size="sm"
@@ -428,14 +342,9 @@ export default function Navbar({
                   setThemeMenuOpen(false)
                 }}
                 loading={loggingIn}
-                className="gap-1.5 text-xs font-mono font-black py-1.5 px-2.5 sm:px-3 flex-shrink-0"
+                className="gap-1.5 text-xs font-mono font-black py-1.5 px-2.5 sm:px-3 flex-shrink-0 shadow-[2px_2px_0px_0px_#ffffff]"
               >
-                <div className="flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5 sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                  <span>CONNECT</span>
-                </div>
+                <span>CONNECT</span>
                 {!loggingIn && (
                   <svg
                     className={`w-3 h-3 transition-transform duration-150 flex-shrink-0 ${loginMenuOpen ? 'rotate-180' : ''}`}
@@ -455,8 +364,9 @@ export default function Navbar({
                     }}
                     className="absolute right-0 top-full mt-2 w-56 sm:w-60 bg-[#0e1115] border-2 border-white rounded-lg p-2 z-50 flex flex-col gap-1.5 shadow-2xl animate-fadeIn select-none font-mono"
                   >
-                    <div className="px-2 py-1 mb-0.5 border-b border-zinc-800">
+                    <div className="px-2 py-1 mb-0.5 border-b border-zinc-800 flex items-center justify-between">
                       <span className="text-[10px] font-black text-zinc-400 uppercase">// CONNECT_AUTH</span>
+                      <span className="text-[10px] text-emerald-400">#4663</span>
                     </div>
 
                     <button
@@ -496,39 +406,6 @@ export default function Navbar({
                       </svg>
                       <span>Connect Wallet</span>
                     </button>
-
-                    {/* Navigation links inside dropdown when not connected on mobile */}
-                    <div className="sm:hidden mt-1 pt-1 border-t border-zinc-800 flex flex-col gap-1">
-                      <div className="px-1 text-[9px] font-black text-zinc-500 uppercase">// NAVIGATION</div>
-                      <Link
-                        href="/coin"
-                        onClick={() => setLoginMenuOpen(false)}
-                        className="px-2 py-1 rounded text-[11px] font-bold text-zinc-300 hover:text-white"
-                      >
-                        [01] COINS EXPLORER
-                      </Link>
-                      <Link
-                        href="/launch"
-                        onClick={() => setLoginMenuOpen(false)}
-                        className="px-2 py-1 rounded text-[11px] font-bold text-zinc-300 hover:text-white"
-                      >
-                        [02] LAUNCH TOKEN
-                      </Link>
-                      <Link
-                        href="/wallet"
-                        onClick={() => setLoginMenuOpen(false)}
-                        className="px-2 py-1 rounded text-[11px] font-bold text-zinc-300 hover:text-white"
-                      >
-                        [03] WALLET & PORTFOLIO
-                      </Link>
-                      <Link
-                        href="/chat"
-                        onClick={() => setLoginMenuOpen(false)}
-                        className="px-2 py-1 rounded text-[11px] font-bold text-zinc-300 hover:text-white"
-                      >
-                        [04] AI CHAT
-                      </Link>
-                    </div>
                   </div>
                 </>
               )}

@@ -1,9 +1,5 @@
-'use client'
-
-export const dynamic = 'force-dynamic'
-
-import BankrShell from '@/components/layout/BankrShell'
+import { redirect } from 'next/navigation'
 
 export default function RootPage() {
-  return <BankrShell />
+  redirect('/coin')
 }
