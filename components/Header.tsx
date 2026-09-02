@@ -36,18 +36,17 @@ export default function Header() {
 
         {/* Right: Twitter Button + Modern Orange Wallet Button */}
         <div className="flex items-center gap-3">
-          {/* Official Twitter (X) Button */}
+          {/* Official X Logo Button */}
           <a
             href="https://x.com"
             target="_blank"
             rel="noopener noreferrer"
-            title="Follow on X (Twitter)"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono font-bold text-[#F5F5F5] hover:text-white bg-[#15191E] hover:bg-[#1C2229] border border-[#343A41] hover:border-[#FF6A00] transition-all cursor-pointer shadow-sm active:scale-95 group"
+            title="Follow on X"
+            className="w-9 h-9 flex items-center justify-center rounded-xl text-[#F5F5F5] hover:text-white bg-[#15191E] hover:bg-[#1C2229] border border-[#343A41] hover:border-[#FF6A00] transition-all cursor-pointer shadow-sm active:scale-95 group"
           >
-            <svg className="w-3.5 h-3.5 fill-current text-[#F5F5F5] group-hover:text-[#FF6A00] transition-colors" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 fill-current text-[#F5F5F5] group-hover:text-[#FF6A00] transition-colors" viewBox="0 0 24 24">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
             </svg>
-            <span className="text-[11px] tracking-tight">TWITTER</span>
           </a>
 
           {/* 3D Tactile Wallet Button */}
