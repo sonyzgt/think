@@ -21,8 +21,9 @@ export default function Header() {
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
         {/* Left: Physical Embossed Emblem & Title */}
         <Link href="/" className="flex items-center gap-3 cursor-pointer group">
-          <div className="w-9 h-9 rounded-xl skeuo-button flex items-center justify-center p-1.5 shadow-lg group-hover:brightness-110 transition-all border border-white/30">
-            <SparkleIcon size={18} className="text-black drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)]" />
+          <div className="w-9 h-9 rounded-xl skeuo-button flex items-center justify-center p-1 shadow-lg group-hover:brightness-110 transition-all border border-white/30 overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.png" alt="ATLAS Logo" className="w-full h-full object-contain rounded-lg drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" />
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-black tracking-widest text-white uppercase font-mono drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">

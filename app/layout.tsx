@@ -29,10 +29,10 @@ export const metadata: Metadata = {
   description: 'ATLAS — Geographical World Country Token Map and Fair Launchpad on Robinhood Chain.',
   icons: {
     icon: [
-      { url: '/sparkle-logo.svg', type: 'image/svg+xml' },
+      { url: '/logo.png', type: 'image/png' },
     ],
-    shortcut: '/sparkle-logo.svg',
-    apple: '/sparkle-logo.svg',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
   },
 }
 
