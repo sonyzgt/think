@@ -23,7 +23,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ponscore.app'),
+  metadataBase: new URL('https://ponsthink.com'),
   title: 'PONSTHINK — Intelligent Web3 Platform on Robinhood Chain',
   description: 'PONSTHINK — Intelligent token exploration, fair launchpad, Apple-grade portfolio management, and universal AI trading on Robinhood Chain.',
   icons: {
