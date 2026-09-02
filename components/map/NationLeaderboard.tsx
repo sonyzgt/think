@@ -83,9 +83,9 @@ export default function NationLeaderboard({
         type="button"
         onClick={() => setIsCollapsed(false)}
         title="Open Market Cap Leaderboard"
-        className="absolute left-4 top-16 z-20 skeuo-panel px-3.5 py-2.5 rounded-2xl flex items-center gap-3 shadow-2xl cursor-pointer group hover:brightness-110 active:translate-y-0.5 transition-all select-none border border-white/20"
+        className="absolute left-4 top-16 z-20 skeuo-panel px-3.5 py-2.5 rounded-2xl flex items-center gap-3 shadow-2xl cursor-pointer group hover:brightness-110 active:translate-y-0.5 transition-all select-none border border-orange-500/20"
       >
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-b from-yellow-300 via-amber-400 to-yellow-600 flex items-center justify-center text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_2px_5px_rgba(0,0,0,0.7)] border border-yellow-200 flex-shrink-0">
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-b from-amber-300 via-orange-500 to-orange-700 flex items-center justify-center text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_2px_5px_rgba(0,0,0,0.7)] border border-orange-300 flex-shrink-0">
           🏆
         </div>
         <div className="flex flex-col text-left">
@@ -93,9 +93,9 @@ export default function NationLeaderboard({
             LEADERBOARD
           </span>
           <div className="flex items-center gap-1.5 mt-0.5">
-            <span className="w-2 h-2 rounded-full skeuo-led-green flex-shrink-0" />
+            <span className="w-2 h-2 rounded-full skeuo-led-orange flex-shrink-0" />
             <span className="text-[10px] font-mono text-zinc-300">
-              <strong className="text-emerald-400">{activeCount}</strong> ACTIVE
+              <strong className="text-orange-400">{activeCount}</strong> ACTIVE
             </span>
           </div>
         </div>
@@ -106,11 +106,11 @@ export default function NationLeaderboard({
   // 2. Full Skeuomorphic Hardware Console when Expanded
   return (
     <div className="absolute left-4 top-16 z-20 w-80 sm:w-[350px] transition-all duration-300 pointer-events-auto select-none">
-      <div className="skeuo-panel rounded-2xl overflow-hidden flex flex-col max-h-[calc(100vh-130px)]">
+      <div className="skeuo-panel rounded-2xl overflow-hidden flex flex-col max-h-[calc(100vh-130px)] border border-orange-500/20">
         {/* Console Header Bar */}
-        <div className="flex items-center justify-between px-3.5 py-3 border-b border-black/80 bg-gradient-to-r from-white/[0.08] via-transparent to-black/30">
+        <div className="flex items-center justify-between px-3.5 py-3 border-b border-black/80 bg-gradient-to-r from-orange-500/[0.12] via-transparent to-black/30">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-b from-yellow-300 via-amber-400 to-yellow-600 flex items-center justify-center text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_2px_5px_rgba(0,0,0,0.7)] border border-yellow-200 flex-shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-b from-amber-300 via-orange-500 to-orange-700 flex items-center justify-center text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_2px_5px_rgba(0,0,0,0.7)] border border-orange-300 flex-shrink-0">
               🏆
             </div>
             <div className="flex flex-col">
@@ -118,9 +118,9 @@ export default function NationLeaderboard({
                 MCAP LEADERBOARD
               </span>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="w-2 h-2 rounded-full skeuo-led-green flex-shrink-0" />
+                <span className="w-2 h-2 rounded-full skeuo-led-orange flex-shrink-0" />
                 <span className="text-[10px] text-zinc-300 font-mono">
-                  <strong className="text-emerald-400">{activeCount}</strong> ACTIVE NATIONS
+                  <strong className="text-orange-400">{activeCount}</strong> ACTIVE NATIONS
                 </span>
               </div>
             </div>
@@ -158,8 +158,8 @@ export default function NationLeaderboard({
                 onClick={() => setActiveTab('active')}
                 className={`px-2.5 py-1 text-[10px] font-mono font-bold rounded-lg transition-all cursor-pointer ${
                   activeTab === 'active'
-                    ? 'skeuo-button-green text-black'
-                    : 'text-emerald-400 hover:text-emerald-300'
+                    ? 'skeuo-button-orange text-white'
+                    : 'text-orange-400 hover:text-orange-300'
                 }`}
               >
                 ACTIVE ({activeCount})
@@ -199,7 +199,7 @@ export default function NationLeaderboard({
                   }}
                   className={`flex items-center justify-between p-2 rounded-lg transition-all cursor-pointer group mb-1 ${
                     isActive
-                      ? 'bg-gradient-to-r from-emerald-950/40 via-emerald-900/20 to-transparent border-t border-emerald-500/30 border-b border-black hover:brightness-125'
+                      ? 'bg-gradient-to-r from-orange-950/40 via-orange-900/20 to-transparent border-t border-orange-500/30 border-b border-black hover:brightness-125'
                       : 'hover:bg-white/[0.04] border-t border-white/[0.04] border-b border-black'
                   }`}
                 >
@@ -209,7 +209,7 @@ export default function NationLeaderboard({
                     <div
                       className={`w-5 h-5 rounded flex items-center justify-center text-[10px] font-mono font-black flex-shrink-0 shadow-sm ${
                         rank === 1
-                          ? 'bg-gradient-to-b from-yellow-300 via-amber-400 to-yellow-600 text-black border border-yellow-200'
+                          ? 'bg-gradient-to-b from-yellow-300 via-amber-400 to-orange-600 text-black border border-yellow-200'
                           : rank === 2
                           ? 'bg-gradient-to-b from-slate-200 via-slate-300 to-slate-500 text-black border border-white'
                           : rank === 3
@@ -233,11 +233,11 @@ export default function NationLeaderboard({
                     {/* Country Name & Ticker */}
                     <div className="flex flex-col overflow-hidden">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors truncate drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
+                        <span className="text-xs font-bold text-white group-hover:text-orange-300 transition-colors truncate drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
                           {country.name}
                         </span>
                         {isActive && (
-                          <span className="w-1.5 h-1.5 rounded-full skeuo-led-green flex-shrink-0" />
+                          <span className="w-1.5 h-1.5 rounded-full skeuo-led-orange flex-shrink-0" />
                         )}
                       </div>
                       <span className="text-[9px] font-mono text-zinc-400">
@@ -250,7 +250,7 @@ export default function NationLeaderboard({
                   <div className="flex flex-col items-end flex-shrink-0">
                     {isActive && token ? (
                       <div className="flex flex-col items-end">
-                        <span className="text-xs font-mono font-bold text-emerald-400 tracking-tight drop-shadow-[0_0_6px_rgba(52,211,153,0.4)]">
+                        <span className="text-xs font-mono font-bold text-orange-400 tracking-tight drop-shadow-[0_0_6px_rgba(249,115,22,0.4)]">
                           ${mcapUsd >= 1000 ? (mcapUsd / 1000).toFixed(1) + 'k' : mcapUsd.toFixed(0)}
                         </span>
                         
@@ -258,11 +258,11 @@ export default function NationLeaderboard({
                         <div className="flex items-center gap-1.5 mt-0.5">
                           <div className="w-12 h-1.5 skeuo-inset rounded-full overflow-hidden p-0.5">
                             <div
-                              className="h-full bg-gradient-to-r from-emerald-500 to-teal-300 rounded-full shadow-[0_0_6px_rgba(52,211,153,0.6)]"
+                              className="h-full bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300 rounded-full shadow-[0_0_6px_rgba(249,115,22,0.6)]"
                               style={{ width: `${Math.min(100, Math.max(3, progress))}%` }}
                             />
                           </div>
-                          <span className="text-[9px] font-mono font-bold text-emerald-300">
+                          <span className="text-[9px] font-mono font-bold text-orange-300">
                             {progress}%
                           </span>
                         </div>
@@ -284,7 +284,7 @@ export default function NationLeaderboard({
         {/* Chassis Footer Trim */}
         <div className="px-3 py-2 border-t border-black/80 bg-black/50 flex items-center justify-between text-[10px] font-mono text-zinc-400">
           <span>SYS: ROBINHOOD MAINNET</span>
-          <span className="text-emerald-500 font-bold">● ONLINE</span>
+          <span className="text-orange-500 font-bold">● ONLINE</span>
         </div>
       </div>
     </div>

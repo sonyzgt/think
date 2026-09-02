@@ -192,9 +192,9 @@ export default function WorldFlagMap({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onWheel={handleWheel}
-      className="relative w-full h-full min-h-[calc(100vh-57px)] flex-1 overflow-hidden bg-[#050506] select-none cursor-grab active:cursor-grabbing"
+      className="relative w-full h-full min-h-[calc(100vh-57px)] flex-1 overflow-hidden bg-[#030914] select-none cursor-grab active:cursor-grabbing"
       style={{
-        backgroundImage: 'radial-gradient(circle at 50% 50%, #0c1117 0%, #050506 100%)',
+        backgroundImage: 'radial-gradient(ellipse at 50% 50%, #0f2742 0%, #091a2e 50%, #030a14 100%)',
       }}
     >
       {/* 1. Floating Top Overlay: Minimal Search Bar & Real Dynamic Legend */}
@@ -247,7 +247,7 @@ export default function WorldFlagMap({
                     </div>
 
                     {isActive ? (
-                      <span className="text-[9px] font-bold font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-2 py-0.5 rounded">
+                      <span className="text-[9px] font-bold font-mono text-orange-400 bg-orange-950/60 border border-orange-500/40 px-2 py-0.5 rounded">
                         ● ACTIVE
                       </span>
                     ) : (
@@ -265,7 +265,7 @@ export default function WorldFlagMap({
         {/* Minimal Floating Map Legend */}
         <div className="hidden sm:flex items-center gap-3 skeuo-panel px-3.5 py-1.5 rounded-xl text-xs shadow-xl pointer-events-auto">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full skeuo-led-green flex-shrink-0" />
+            <span className="w-2.5 h-2.5 rounded-full skeuo-led-orange flex-shrink-0" />
             <span className="text-white font-mono font-bold text-[11px]">{activeCount} ACTIVE</span>
           </div>
           <span className="text-white/15">|</span>
@@ -366,8 +366,8 @@ export default function WorldFlagMap({
             </filter>
           </defs>
 
-          {/* Graticule / Subtle Ocean Grid */}
-          <g opacity="0.04" stroke="#ffffff" strokeWidth="0.5" strokeDasharray="3,3">
+          {/* Graticule / Nautical Ocean Grid */}
+          <g opacity="0.12" stroke="#38BDF8" strokeWidth="0.5" strokeDasharray="3,3">
             <line x1="0" y1="260" x2="1000" y2="260" />
             <line x1="500" y1="0" x2="500" y2="520" />
             <line x1="250" y1="0" x2="250" y2="520" />
@@ -422,19 +422,19 @@ export default function WorldFlagMap({
                   <path
                     d={item.d}
                     fill={`url(#flag-pattern-${item.code.toLowerCase()})`}
-                    fillOpacity={isActive ? 1 : 0.72}
+                    fillOpacity={isActive ? 1 : 0.75}
                     stroke={
                       isHighlighted
                         ? '#38BDF8'
                         : isActive
-                        ? '#34D399'
+                        ? '#FF7A00'
                         : 'rgba(255, 255, 255, 0.35)'
                     }
                     strokeWidth={
                       isHighlighted
                         ? 2.5
                         : isActive
-                        ? 1.5
+                        ? 1.8
                         : 0.65
                     }
                     className="hover:stroke-white hover:stroke-[2px] hover:opacity-100 transition-all duration-100 filter hover:brightness-125"
@@ -446,12 +446,12 @@ export default function WorldFlagMap({
                     <g transform={`translate(${item.center.x}, ${item.center.y})`}>
                       <circle
                         r="5"
-                        fill="#34D399"
+                        fill="#FF7A00"
                         className="animate-ping opacity-75"
                       />
                       <circle
                         r="3.5"
-                        fill="#34D399"
+                        fill="#FF7A00"
                         stroke="#ffffff"
                         strokeWidth="1"
                       />
@@ -467,7 +467,7 @@ export default function WorldFlagMap({
       {/* 4. Minimal Clean Country Hover Tooltip */}
       {hoveredCountry && (
         <div
-          className="absolute z-30 pointer-events-none bg-[#070A0E]/95 backdrop-blur-2xl border border-white/20 rounded-xl px-3 py-1.5 shadow-2xl flex items-center gap-2 animate-fadeIn transition-transform"
+          className="absolute z-30 pointer-events-none skeuo-panel rounded-xl px-3 py-1.5 shadow-2xl flex items-center gap-2 animate-fadeIn transition-transform"
           style={{
             left: `${Math.min(
               (containerRef.current?.clientWidth || 500) - 170,
@@ -485,7 +485,7 @@ export default function WorldFlagMap({
               {hoveredCountry.country.name}
             </span>
             {hoveredCountry.isActive ? (
-              <span className="text-[10px] font-bold text-emerald-400">
+              <span className="text-[10px] font-bold text-orange-400">
                 ● ACTIVE
               </span>
             ) : (
