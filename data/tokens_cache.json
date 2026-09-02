@@ -21,10 +21,10 @@
     "tickSpacing": 200,
     "creatorTaxBps": 100,
     "graduationThreshold": "4200000000000000000",
-    "realQuoteReserve": "48846421040315",
-    "quoteReserve": "1680048846421040315",
-    "tokenReserve": "999970925594726386750744854",
-    "sellableTokens": "714256639880440672465030569",
+    "realQuoteReserve": "1586524442",
+    "quoteReserve": "1680000001586524442",
+    "tokenReserve": "999999999055640216087831339",
+    "sellableTokens": "714285713341354501802117054",
     "readyToGraduate": false,
     "graduated": false,
     "poolAddress": null,
@@ -33,9 +33,9 @@
     "route": "BONDING_CURVE",
     "isUsdgPaired": false,
     "isNative": true,
-    "priceNative": 1.6800976942623025e-9,
-    "priceUsd": 0.0000042002442356557565,
-    "progress": 0.000011630100247694047
+    "priceNative": 1.6800000031730489e-9,
+    "priceUsd": 0.000004200000007932622,
+    "progress": 3.7774391476190474e-10
   },
   {
     "tokenAddress": "0x869e8E65A35Eb22901975B33c759299001d4488E",
@@ -401,10 +401,10 @@
     "tickSpacing": 200,
     "creatorTaxBps": 100,
     "graduationThreshold": "4200000000000000000",
-    "realQuoteReserve": "15997912214320736",
-    "quoteReserve": "1695997912214320736",
-    "tokenReserve": "990567257129795868138592390",
-    "sellableTokens": "704852971415510153852878105",
+    "realQuoteReserve": "35597912214320736",
+    "quoteReserve": "1715597912214320736",
+    "tokenReserve": "979250433938582652707729984",
+    "sellableTokens": "693536148224296938422015699",
     "readyToGraduate": false,
     "graduated": false,
     "poolAddress": null,
@@ -413,9 +413,9 @@
     "route": "BONDING_CURVE",
     "isUsdgPaired": false,
     "isNative": true,
-    "priceNative": 1.7121481656162706e-9,
-    "priceUsd": 0.000004280370414040676,
-    "progress": 0.0038090267176954127
+    "priceNative": 1.7519501169012715e-9,
+    "priceUsd": 0.000004379875292253179,
+    "progress": 0.00847569338436208
   },
   {
     "tokenAddress": "0x5B51B664462f0464fab0f88dFf79458A7cB667ca",
@@ -477,10 +477,10 @@
     "tickSpacing": 200,
     "creatorTaxBps": 100,
     "graduationThreshold": "4200000000000000000",
-    "realQuoteReserve": "479793921",
-    "quoteReserve": "1680000000479793921",
-    "tokenReserve": "999999999714408388975133601",
-    "sellableTokens": "714285714000122674689419316",
+    "realQuoteReserve": "983006743203099",
+    "quoteReserve": "1680983006743203099",
+    "tokenReserve": "999415219107355762472740023",
+    "sellableTokens": "713700933393070048187025738",
     "readyToGraduate": false,
     "graduated": false,
     "poolAddress": null,
@@ -489,9 +489,9 @@
     "route": "BONDING_CURVE",
     "isUsdgPaired": false,
     "isNative": true,
-    "priceNative": 1.680000000959588e-9,
-    "priceUsd": 0.00000420000000239897,
-    "progress": 1.1423664785714285e-10
+    "priceNative": 1.6819665886663212e-9,
+    "priceUsd": 0.000004204916471665803,
+    "progress": 0.0002340492245721664
   },
   {
     "tokenAddress": "0xf3734609cAB98Cb4c23Ce7ff6D3F9bF7AeB23ce9",
@@ -533,8 +533,8 @@
     "route": "UNISWAP_V4",
     "isUsdgPaired": false,
     "isNative": true,
-    "priceNative": 3.082e-8,
-    "priceUsd": 0.0000773,
+    "priceNative": 2.881e-9,
+    "priceUsd": 0.00000693,
     "progress": 1
   }
 ]
