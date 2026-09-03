@@ -23,6 +23,7 @@ import Modal from '@/components/ui/Modal'
 import Button from '@/components/ui/Button'
 import toast from 'react-hot-toast'
 import { usePrivy } from '@privy-io/react-auth'
+import { recordSwapEvent } from '@/lib/swap-events'
 import { trackTokenAddress } from '@/hooks/useTokens'
 import type { TokenPrice } from '@/app/api/token-price/route'
 import { PONS_CURVE_ABI } from '@/lib/pons-v2'
@@ -526,6 +527,15 @@ export default function SwapModal({ open, onClose, initialCa }: SwapModalProps) 
       }
 
       toast.success(`Swap ${fromSymbol} → ${toSymbol} successful!`)
+
+      // Synchronously fire laser beam on World Map and record event
+      recordSwapEvent({
+        fromCountry: isBuy ? 'US' : (tokenInfo?.symbol || 'US'),
+        toCountry: isBuy ? (tokenInfo?.symbol || 'RU') : 'US',
+        amount: `${amount} ${fromSymbol}`,
+        tokenSymbol: tokenInfo?.symbol || toSymbol,
+        type: isBuy ? 'BUY' : 'SELL',
+      })
 
       if (isBuy && tokenInfo?.address) {
         if (user?.id) trackTokenAddress(user.id, tokenInfo.address)

@@ -185,7 +185,7 @@ RULES:
     if (!recipientHandle) {
       const mentions = clean.match(/@([A-Za-z0-9_]{1,30})/gi)
       if (mentions) {
-        const botHandle = (process.env.TWITTER_BOT_HANDLE || 'agent_ponscore').replace('@', '').toLowerCase()
+        const botHandle = (process.env.TWITTER_BOT_HANDLE || 'apollodotapp').replace('@', '').toLowerCase()
         const otherMentions = mentions
           .map((m) => m.replace('@', ''))
           .filter((m) => m.toLowerCase() !== botHandle && m.toLowerCase() !== tweet.authorUsername.toLowerCase())

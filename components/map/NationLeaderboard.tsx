@@ -83,7 +83,7 @@ export default function NationLeaderboard({
         type="button"
         onClick={() => setIsCollapsed(false)}
         title="Open Market Cap Leaderboard"
-        className="absolute left-4 top-16 z-20 bg-[#0B0E12] px-3.5 py-2.5 rounded-2xl flex items-center gap-3 shadow-2xl cursor-pointer group hover:border-[#FF6A00] transition-all select-none border border-[#2A3036]"
+        className="bg-[#0B0E12] px-3.5 py-2.5 rounded-2xl flex items-center gap-3 shadow-2xl cursor-pointer group hover:border-[#FF6A00] transition-all select-none border border-[#2A3036] pointer-events-auto"
       >
         <div className="w-8 h-8 rounded-xl bg-[#FF6A00] flex items-center justify-center text-sm shadow-md border border-[#D94F00] flex-shrink-0 text-white">
           🏆
@@ -105,8 +105,8 @@ export default function NationLeaderboard({
 
   // 2. Full Dark Command Center Console when Expanded
   return (
-    <div className="absolute left-4 top-16 z-20 w-80 sm:w-[350px] transition-all duration-300 pointer-events-auto select-none">
-      <div className="bg-[#0B0E12] rounded-2xl overflow-hidden flex flex-col max-h-[calc(100vh-130px)] border border-[#2A3036] shadow-2xl">
+    <div className="w-80 sm:w-[350px] transition-all duration-300 pointer-events-auto select-none">
+      <div className="bg-[#0B0E12] rounded-2xl overflow-hidden flex flex-col max-h-[380px] border border-[#2A3036] shadow-2xl">
         {/* Console Header Bar */}
         <div className="flex items-center justify-between px-3.5 py-3 border-b border-[#20252B] bg-[#080A0D]">
           <div className="flex items-center gap-2.5">
@@ -119,7 +119,7 @@ export default function NationLeaderboard({
               </span>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <span className="w-2 h-2 rounded-full skeuo-led-orange flex-shrink-0" />
-                <span className="text-[10px] text-[#8A929B] font-mono">
+                <span className="text-[10px] font-mono text-[#8A929B]">
                   <strong className="text-[#FF6A00] font-bold">{activeCount}</strong> ACTIVE NATIONS
                 </span>
               </div>
@@ -180,7 +180,7 @@ export default function NationLeaderboard({
         </div>
 
         {/* Nations List */}
-        <div className="overflow-y-auto divide-y divide-[#20252B] p-1.5 flex-1 max-h-[460px] bg-[#0B0E12] m-1 rounded-xl">
+        <div className="overflow-y-auto divide-y divide-[#20252B] p-1.5 flex-1 max-h-[300px] bg-[#0B0E12]">
           {filteredList.length === 0 ? (
             <div className="py-8 text-center text-xs text-[#5A626C] font-mono">
               NO MATCHING TOKENS
@@ -253,7 +253,7 @@ export default function NationLeaderboard({
                         <span className="text-xs font-mono font-bold text-[#FF6A00] tracking-tight">
                           ${mcapUsd >= 1000 ? (mcapUsd / 1000).toFixed(1) + 'k' : mcapUsd.toFixed(0)}
                         </span>
-                        
+
                         {/* Progress Meter Bar */}
                         <div className="flex items-center gap-1.5 mt-0.5">
                           <div className="w-12 h-1.5 bg-[#20252B] rounded-full overflow-hidden p-0.5">

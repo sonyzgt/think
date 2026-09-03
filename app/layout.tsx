@@ -24,7 +24,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://apollo.world'),
+  metadataBase: new URL('https://apollorh.app'),
   title: 'APOLLO — World Country Token Map on Robinhood Chain',
   description: 'APOLLO — Geographical World Country Token Map and Fair Launchpad on Robinhood Chain.',
   icons: {

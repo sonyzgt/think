@@ -7,6 +7,8 @@ import { MAP_COUNTRY_PATHS, MapCountryPath } from '@/lib/map-paths'
 import InactiveCountryModal from '@/components/map/InactiveCountryModal'
 import ActiveCountryModal from '@/components/map/ActiveCountryModal'
 import NationLeaderboard from '@/components/map/NationLeaderboard'
+import LiveSwapLogPanel from '@/components/map/LiveSwapLogPanel'
+import SatelliteNetworkLayer from '@/components/map/SatelliteNetworkLayer'
 import toast from 'react-hot-toast'
 
 interface WorldFlagMapProps {
@@ -279,12 +281,19 @@ export default function WorldFlagMap({
         </div>
       </div>
 
-      {/* 2. Left Floating Dark Market Cap Leaderboard */}
-      <NationLeaderboard
-        tokens={tokens}
-        onSelectCountry={handleCountryClick}
-        onFocusCountry={focusCountry}
-      />
+      {/* 2. Left Floating HUD: Market Cap Leaderboard + Standalone Live Swap Log Feed */}
+      <div className="absolute left-4 top-16 z-20 flex flex-col gap-2.5 max-h-[calc(100vh-90px)] pointer-events-none">
+        <NationLeaderboard
+          tokens={tokens}
+          onSelectCountry={handleCountryClick}
+          onFocusCountry={focusCountry}
+        />
+
+        <LiveSwapLogPanel
+          onSelectCountry={handleCountryClick}
+          onFocusCountry={focusCountry}
+        />
+      </div>
 
       {/* 3. Floating Tactile 3D Zoom Controls (Dark Hardware Panel) */}
       <div className="absolute bottom-5 right-5 z-20 flex flex-col gap-1.5 bg-[#0B0E12] border border-[#2A3036] p-1.5 rounded-xl shadow-2xl">
@@ -463,6 +472,9 @@ export default function WorldFlagMap({
               )
             })}
           </g>
+
+          {/* 4. Animated Satellite Constellation Mesh Network Layer */}
+          <SatelliteNetworkLayer />
         </svg>
       </div>
 

@@ -25,6 +25,7 @@ import {
 import Button from '@/components/ui/Button'
 import toast from 'react-hot-toast'
 import { useTheme } from '@/context/ThemeContext'
+import { triggerMapSwapBeam } from '@/components/map/SatelliteNetworkLayer'
 
 interface TokenSwapWidgetProps {
   token: PonsV2TokenInfo
@@ -507,6 +508,14 @@ export default function TokenSwapWidget({ token, onSwapSuccess }: TokenSwapWidge
           throw new Error('Swap transaction reverted on-chain.')
         }
       }
+
+      // Trigger live Laser Beam across the World Map
+      triggerMapSwapBeam({
+        toCountry: token.symbol,
+        amount: isBuy ? `${amount} ETH` : `${amount} $${token.symbol}`,
+        tokenSymbol: token.symbol,
+        type: isBuy ? 'BUY' : 'SELL',
+      })
 
       setAmount('')
       await Promise.all([refetchBalance(), fetchTokenBal()])

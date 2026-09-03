@@ -38,10 +38,10 @@ export default function Header() {
         <div className="flex items-center gap-3">
           {/* Official X Logo Button */}
           <a
-            href="https://x.com"
+            href="https://x.com/apollodotapp"
             target="_blank"
             rel="noopener noreferrer"
-            title="Follow on X"
+            title="Follow @apollodotapp on X"
             className="w-9 h-9 flex items-center justify-center rounded-xl text-[#F5F5F5] hover:text-white bg-[#15191E] hover:bg-[#1C2229] border border-[#343A41] hover:border-[#FF6A00] transition-all cursor-pointer shadow-sm active:scale-95 group"
           >
             <svg className="w-4 h-4 fill-current text-[#F5F5F5] group-hover:text-[#FF6A00] transition-colors" viewBox="0 0 24 24">
