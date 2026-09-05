@@ -587,20 +587,18 @@ export default function CreateTokenModal({
             </div>
           </div>
 
-          {/* Logo File Upload (Locked for Official Country Flags) */}
+          {/* Logo File Upload (Supports custom upload and changing) */}
           <div>
             <label className="text-xs font-black uppercase text-zinc-300 mb-1 block">
-              TOKEN LOGO {initialLogo && <span className="text-[#FF6A00] text-[10px] lowercase font-normal">(locked to official national flag)</span>}
+              TOKEN LOGO <span className="text-[#8A929B] text-[10px] font-normal lowercase">(upload custom image or keep default flag)</span>
             </label>
-            {!initialLogo && (
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileInputChange}
-                accept="image/*"
-                className="hidden"
-              />
-            )}
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileInputChange}
+              accept="image/*"
+              className="hidden"
+            />
 
             {previewLogo || logo ? (
               <div className="flex items-center justify-between p-3 bg-[#121519] border border-[#2A3036] rounded-xl shadow-inner">
@@ -615,35 +613,33 @@ export default function CreateTokenModal({
                   </div>
                   <div>
                     <p className="text-xs font-black text-white uppercase">
-                      {initialLogo ? 'OFFICIAL NATIONAL FLAG' : 'LOGO READY'}
+                      {previewLogo ? 'CUSTOM IMAGE READY' : 'LOGO READY'}
                     </p>
                     <p className="text-[10px] text-[#FF6A00] font-mono">
-                      {initialLogo ? 'Permanent Authentic Flag' : 'Ready for deploy'}
+                      Click change to replace image
                     </p>
                   </div>
                 </div>
 
-                {!initialLogo && (
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => fileInputRef.current?.click()}
-                      className="text-xs px-2 py-1 rounded bg-[#181b20] hover:bg-white text-zinc-200 hover:text-black border border-zinc-600 hover:border-white transition-all cursor-pointer font-bold"
-                    >
-                      CHANGE
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setLogo('')
-                        setPreviewLogo('')
-                      }}
-                      className="text-xs px-2 py-1 rounded bg-rose-600 hover:bg-rose-500 text-white border border-black transition-all cursor-pointer font-bold"
-                    >
-                      REMOVE
-                    </button>
-                  </div>
-                )}
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-xs px-2.5 py-1 rounded-lg bg-[#181b20] hover:bg-[#FF6A00] text-zinc-200 hover:text-white border border-zinc-600 hover:border-[#FF6A00] transition-all cursor-pointer font-bold"
+                  >
+                    CHANGE
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLogo('')
+                      setPreviewLogo('')
+                    }}
+                    className="text-xs px-2.5 py-1 rounded-lg bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white border border-rose-600/40 transition-all cursor-pointer font-bold"
+                  >
+                    REMOVE
+                  </button>
+                </div>
               </div>
             ) : (
               <div
